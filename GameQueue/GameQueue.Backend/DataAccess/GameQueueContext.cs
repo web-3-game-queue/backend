@@ -11,6 +11,10 @@ public class GameQueueContext : DbContext
 
     public DbSet<User> Users { get; set; }
 
+    public DbSet<MapSearchRequest> MapSearchRequests { get; set; }
+
+    public DbSet<RequestToMap> RequestsToMap { get; set; }
+
     public GameQueueContext(DbContextOptions<GameQueueContext> options) : base(options) { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -21,7 +25,7 @@ public class GameQueueContext : DbContext
             .HasConversion(
                 v => v.ToString(),
                 v => (MapStatus)Enum.Parse(typeof(MapStatus), v))
-            .HasDefaultValue(MapStatus.Unknown);
+            .HasDefaultValue(MapStatus.Pending);
 
         modelBuilder
             .Entity<MapSearchRequest>()

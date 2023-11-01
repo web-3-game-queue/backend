@@ -9,6 +9,7 @@ public sealed record Map
 {
     [Required]
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
 
     [Required]
@@ -35,7 +36,7 @@ public sealed record Map
     public decimal Price { get; set; }
 
     [Required]
-    public MapStatus Status { get; set; } = MapStatus.Available;
+    public MapStatus Status { get; set; } = MapStatus.Pending;
 
     public List<MapSearchRequest> SearchRequests { get; } = new List<MapSearchRequest>();
 

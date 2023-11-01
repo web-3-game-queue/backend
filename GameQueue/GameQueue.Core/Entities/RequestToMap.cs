@@ -8,6 +8,7 @@ public sealed record RequestToMap
 {
     [Required]
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
 
     [Required]

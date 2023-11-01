@@ -2,7 +2,7 @@
 
 public enum MapSearchRequestStatus
 {
-    Saved,
+    Draft,
     InProgress,
     Done,
     Cancelled,

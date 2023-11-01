@@ -9,13 +9,17 @@ public sealed record MapSearchRequest
 {
     [Required]
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
 
     [Required]
     public int CreatorUserId { get; set; }
 
     [Required]
-    public MapSearchRequestStatus Status { get; set; }
+    public MapSearchRequestStatus Status { get; set; } = MapSearchRequestStatus.Draft;
+
+    [Required]
+    public DateTime CreationDate { get; set; } = DateTime.Now;
 
     public User CreatorUser { get; set; } = null!;
 

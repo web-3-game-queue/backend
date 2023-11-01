@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace GameQueue.Backend.Migrations
 {
     [DbContext(typeof(GameQueueContext))]
-    [Migration("20231101153024_Initial")]
+    [Migration("20231101155704_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -61,7 +61,7 @@ namespace GameQueue.Backend.Migrations
                         .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("text")
-                        .HasDefaultValue("Unknown")
+                        .HasDefaultValue("Pending")
                         .HasColumnName("status");
 
                     b.Property<int>("Width")
@@ -82,6 +82,10 @@ namespace GameQueue.Backend.Migrations
                         .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("creation_date");
 
                     b.Property<int>("CreatorUserId")
                         .HasColumnType("integer")

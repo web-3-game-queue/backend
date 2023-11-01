@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\GameQueue.Core.Contracts\GameQueue.Core.Contracts.csproj" />
     <ProjectReference Include="..\GameQueue.Core\GameQueue.Core.csproj" />
   </ItemGroup>
 

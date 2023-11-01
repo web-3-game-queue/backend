@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
@@ -23,7 +24,7 @@ namespace GameQueue.Backend.Migrations
                     max_players_count = table.Column<int>(type: "integer", nullable: false),
                     cover_image_url = table.Column<string>(type: "text", nullable: false),
                     price = table.Column<decimal>(type: "numeric", nullable: false),
-                    status = table.Column<string>(type: "text", nullable: false, defaultValue: "Unknown")
+                    status = table.Column<string>(type: "text", nullable: false, defaultValue: "Pending")
                 },
                 constraints: table =>
                 {
@@ -53,6 +54,7 @@ namespace GameQueue.Backend.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     creator_user_id = table.Column<int>(type: "integer", nullable: false),
                     status = table.Column<string>(type: "text", nullable: false),
+                    creation_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     map_id = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
