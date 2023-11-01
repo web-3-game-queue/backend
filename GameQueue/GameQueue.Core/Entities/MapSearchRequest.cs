@@ -1,11 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using GameQueue.Core.Entities.MapSearchRequests.Status;
-using GameQueue.Core.Entities.Users;
 
-namespace GameQueue.Core.Entities.MapSearchRequests;
+namespace GameQueue.Core.Entities;
 
-[Table("MapSearchRequests")]
+[Table("map_search_requests")]
 public sealed record MapSearchRequest
 {
     [Required]

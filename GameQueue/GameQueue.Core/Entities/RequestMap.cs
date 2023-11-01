@@ -1,11 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using GameQueue.Core.Entities.Maps;
-using GameQueue.Core.Entities.MapSearchRequests;
 
-namespace GameQueue.Core.Entities.RequestMaps;
+namespace GameQueue.Core.Entities;
 
-[Table("RequestMaps")]
+[Table("request_to_maps")]
 public sealed record RequestMap
 {
     [Required]
@@ -16,7 +14,7 @@ public sealed record RequestMap
     public int SearchRequestId { get; set; }
 
     public MapSearchRequest SearchRequest { get; set; } = null!;
-    
+
     [Required]
     public int MapId { get; set; }
 

@@ -2,9 +2,9 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using GameQueue.Core.Models;
 
-namespace GameQueue.Core.Entities.Maps;
+namespace GameQueue.Core.Entities;
 
-[Table("Maps")]
+[Table("maps")]
 public sealed record Map
 {
     [Required]

@@ -1,7 +1,5 @@
-﻿using GameQueue.Core.Entities.Maps;
-using GameQueue.Core.Entities.MapSearchRequests;
+﻿using GameQueue.Core.Entities;
 using GameQueue.Core.Entities.MapSearchRequests.Status;
-using GameQueue.Core.Entities.Users;
 using GameQueue.Core.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,10 +11,7 @@ public class GameQueueContext : DbContext
 
     public DbSet<User> Users { get; set; }
 
-    public GameQueueContext(
-        DbContextOptions<GameQueueContext> options) : base(options)
-    {
-    }
+    public GameQueueContext(DbContextOptions<GameQueueContext> options) : base(options) { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

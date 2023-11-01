@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace GameQueue.Core.Entities.Users;
+namespace GameQueue.Core.Entities;
 
-[Table("Users")]
+[Table("users")]
 public sealed record class User
 {
     [Required]
