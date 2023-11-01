@@ -15,8 +15,9 @@ public sealed record MapSearchRequest
     public int CreatorUserId { get; set; }
 
     [Required]
+    public MapSearchRequestStatus Status { get; set; }
+
     public User CreatorUser { get; set; } = null!;
 
-    [Required]
-    public MapSearchRequestStatus Status { get; set; }
+    public List<RequestToMap> RequestsToMap { get; } = new List<RequestToMap>();
 }

@@ -20,4 +20,6 @@ public sealed record class User
     [Required]
     [Range(0, int.MaxValue)]
     public int Level { get; set; }
+
+    public List<MapSearchRequest> SearchRequests { get; } = new List<MapSearchRequest>();
 }
