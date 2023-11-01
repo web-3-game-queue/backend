@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using GameQueue.Core.Models.MapSearchRequests.Status;
-using GameQueue.Core.Models.Users;
+using GameQueue.Core.Entities.MapSearchRequests.Status;
+using GameQueue.Core.Entities.Users;
 
-namespace GameQueue.Core.Models.MapSearchRequests;
+namespace GameQueue.Core.Entities.MapSearchRequests;
 
 [Table("MapSearchRequests")]
 public sealed record MapSearchRequest

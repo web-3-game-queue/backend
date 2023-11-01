@@ -1,4 +1,4 @@
-﻿namespace GameQueue.Core.Models.MapSearchRequests.Status;
+﻿namespace GameQueue.Core.Entities.MapSearchRequests.Status;
 
 public enum MapSearchRequestStatus
 {

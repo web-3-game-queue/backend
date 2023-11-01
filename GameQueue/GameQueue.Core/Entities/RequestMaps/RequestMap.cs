@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using GameQueue.Core.Models.Maps;
-using GameQueue.Core.Models.MapSearchRequests;
+using GameQueue.Core.Entities.Maps;
+using GameQueue.Core.Entities.MapSearchRequests;
 
-namespace GameQueue.Core.Models.RequestMaps;
+namespace GameQueue.Core.Entities.RequestMaps;
 
 [Table("RequestMaps")]
 public sealed record RequestMap

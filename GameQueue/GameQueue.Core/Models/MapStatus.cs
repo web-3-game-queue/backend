@@ -1,4 +1,4 @@
-﻿namespace GameQueue.Core.Models.Maps.Status;
+﻿namespace GameQueue.Core.Models;
 
 public enum MapStatus
 {

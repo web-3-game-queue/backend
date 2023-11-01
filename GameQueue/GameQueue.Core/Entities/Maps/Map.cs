@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using GameQueue.Core.Models.Maps.Status;
+using GameQueue.Core.Models;
 
-namespace GameQueue.Core.Models.Maps;
+namespace GameQueue.Core.Entities.Maps;
 
 [Table("Maps")]
 public sealed record Map

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace GameQueue.Core.Models.Users;
+namespace GameQueue.Core.Entities.Users;
 
 [Table("Users")]
 public sealed record class User
