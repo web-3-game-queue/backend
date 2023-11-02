@@ -1,12 +1,9 @@
-﻿using System.ComponentModel;
-using GameQueue.Backend.Api.Contracts.Controllers;
-using GameQueue.Backend.Api.Contracts.Models;
+﻿using GameQueue.Backend.Api.Contracts.Controllers;
 using GameQueue.Backend.Api.Contracts.Responses;
 using GameQueue.Core.Backend.Api.Contracts.Requests.Maps;
 using GameQueue.Core.Commands.SearchMapsRequests;
 using GameQueue.Core.Contracts.Services.Managers;
 using GameQueue.Core.Extensions;
-using GameQueue.Core.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GameQueue.Backend.Controllers;

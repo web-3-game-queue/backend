@@ -3,7 +3,6 @@ using GameQueue.Backend.Api.Contracts.Responses;
 using GameQueue.Core.Backend.Api.Contracts.Requests.Maps;
 using GameQueue.Core.Commands.Maps;
 using GameQueue.Core.Extensions;
-using GameQueue.Core.Models;
 using GameQueue.Core.Services.Managers;
 using Microsoft.AspNetCore.Mvc;
 

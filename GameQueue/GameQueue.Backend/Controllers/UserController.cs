@@ -4,7 +4,6 @@ using GameQueue.Core.Backend.Api.Contracts.Requests.Maps;
 using GameQueue.Core.Commands.Users;
 using GameQueue.Core.Contracts.Services.Managers;
 using GameQueue.Core.Extensions;
-using GameQueue.Core.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GameQueue.Backend.Controllers;
