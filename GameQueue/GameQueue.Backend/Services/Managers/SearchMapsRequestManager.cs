@@ -9,14 +9,20 @@ namespace GameQueue.Backend.Services.Managers;
 internal class SearchMapsRequestManager : ISearchMapsRequestManager
 {
     private readonly ISearchMapsRequestRepository searchMapsRequestRepository;
+    private readonly IUserRepository userRepository;
+    private readonly IMapRepository mapRepository;
 
     private readonly ModeratorUser moderatorUser;
 
     public SearchMapsRequestManager(
         ISearchMapsRequestRepository searchMapsRequestRepository,
+        IUserRepository userRepository,
+        IMapRepository mapRepository,
         ModeratorUser moderatorUser)
     {
         this.searchMapsRequestRepository = searchMapsRequestRepository;
+        this.userRepository = userRepository;
+        this.mapRepository = mapRepository;
         this.moderatorUser = moderatorUser;
     }
 
@@ -28,11 +34,13 @@ internal class SearchMapsRequestManager : ISearchMapsRequestManager
 
     public async Task AddAsync(AddSearchMapsRequestCommand addSearchMapsRequestCommand, CancellationToken token = default)
     {
+        var user = await userRepository.GetByIdAsync(addSearchMapsRequestCommand.CreatorUserId, token);
+        var map = await mapRepository.GetByIdAsync(addSearchMapsRequestCommand.MapId, token);
         var searchMapsRequest = new SearchMapsRequest {
-            CreatorUserId = addSearchMapsRequestCommand.CreatorUserId
+            CreatorUserId = user.Id
         };
         var requestToMap = new RequestToMap {
-            MapId = addSearchMapsRequestCommand.MapId,
+            MapId = map.Id,
             SearchMapsRequest = searchMapsRequest,
         };
         searchMapsRequest.RequestsToMap.Add(requestToMap);

@@ -32,6 +32,10 @@ public class GameQueueContext : DbContext
                 v => v.ToString(),
                 v => (SearchMapsRequestStatus)Enum.Parse(typeof(SearchMapsRequestStatus), v)
             );
+
+        modelBuilder
+            .Entity<RequestToMap>()
+            .HasAlternateKey("SearchMapsRequestId", "MapId");
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

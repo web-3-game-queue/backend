@@ -18,7 +18,7 @@ public sealed record SearchMapsRequest
     public SearchMapsRequestStatus Status { get; set; } = SearchMapsRequestStatus.Draft;
 
     [Required]
-    public DateTime CreationDate { get; set; } = DateTime.Now;
+    public DateTimeOffset CreationDate { get; set; } = DateTimeOffset.UtcNow;
 
     public User CreatorUser { get; set; } = null!;
 

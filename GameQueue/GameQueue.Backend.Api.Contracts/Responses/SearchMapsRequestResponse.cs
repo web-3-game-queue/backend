@@ -1,4 +1,5 @@
-﻿using GameQueue.Backend.Api.Contracts.Models;
+﻿using System.Text.Json.Serialization;
+using GameQueue.Backend.Api.Contracts.Models;
 
 namespace GameQueue.Backend.Api.Contracts.Responses;
 
@@ -10,5 +11,11 @@ public sealed record SearchMapsRequestResponse
 
     public SearchMapsRequestStatusApi Status { get; set; } = SearchMapsRequestStatusApi.Draft;
 
-    public DateTime CreationDate { get; set; } = DateTime.Now;
+    public DateTimeOffset CreationDate { get; set; } = DateTimeOffset.UtcNow;
+
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public UserResponse? CreatorUser { get; set; } = null;
+
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public List<MapResponse>? Maps { get; set; } = null;
 }

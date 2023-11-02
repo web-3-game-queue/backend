@@ -2,11 +2,9 @@
 
 public sealed record AddSearchMapsRequestCommand
 {
-    public int SearchMapsRequestId { get; set; }
-
     public int CreatorUserId { get; set; }
 
     public int MapId { get; set; }
 
-    public DateTime CreationDate { get; set; } = DateTime.Now;
+    public DateTimeOffset CreationDate { get; set; } = DateTimeOffset.UtcNow;
 }

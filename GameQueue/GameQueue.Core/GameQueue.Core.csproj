@@ -10,4 +10,8 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.13" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\GameQueue.Backend.Api.Contracts\GameQueue.Backend.Api.Contracts.csproj" />
+  </ItemGroup>
+
 </Project>

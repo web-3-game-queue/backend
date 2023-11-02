@@ -2,6 +2,7 @@
 using GameQueue.Backend.Api.Contracts.Responses;
 using GameQueue.Core.Backend.Api.Contracts.Requests.Maps;
 using GameQueue.Core.Commands.Maps;
+using GameQueue.Core.Extensions;
 using GameQueue.Core.Models;
 using GameQueue.Core.Services.Managers;
 using Microsoft.AspNetCore.Mvc;
@@ -18,14 +19,15 @@ public class MapController : ControllerBase, IMapController
     [HttpGet]
     public async Task<ICollection<MapResponse>> GetAll(CancellationToken token = default)
         => (await mapManager.GetAllAsync(token))
-                .Select(convertMap)
+                .Select(x => x.ToMapResponse())
                 .ToList();
 
     [HttpGet("{id:int:min(0)}")]
     public async Task<MapResponse> GetById(
         [FromRoute(Name = "id")] int id,
         CancellationToken token = default)
-            => convertMap(await mapManager.GetByIdAsync(id, token));
+            => (await mapManager.GetByIdAsync(id, token))
+                .ToMapResponse();
 
     [HttpPost]
     public async Task Add(
@@ -64,17 +66,6 @@ public class MapController : ControllerBase, IMapController
             MaxPlayersCount = addMapRequest.MaxPlayersCount,
             CoverImageUrl = addMapRequest.CoverImageUrl,
             Price = addMapRequest.Price
-        };
-
-    private MapResponse convertMap(Map map)
-        => new MapResponse {
-            Id = map.Id,
-            Name = map.Name,
-            Width = map.Width,
-            Height = map.Height,
-            MaxPlayersCount = map.MaxPlayersCount,
-            CoverImageUrl = map.CoverImageUrl,
-            Price = map.Price
         };
 
     private UpdateMapCommand convertUpdateMapRequest(int id, UpdateMapRequest updateMapRequest)

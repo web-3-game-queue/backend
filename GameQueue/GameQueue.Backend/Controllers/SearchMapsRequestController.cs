@@ -5,30 +5,37 @@ using GameQueue.Backend.Api.Contracts.Responses;
 using GameQueue.Core.Backend.Api.Contracts.Requests.Maps;
 using GameQueue.Core.Commands.SearchMapsRequests;
 using GameQueue.Core.Contracts.Services.Managers;
+using GameQueue.Core.Extensions;
 using GameQueue.Core.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GameQueue.Backend.Controllers;
 [Route("api/search_maps_request")]
 [ApiController]
-public class SearchMapRequestController : ControllerBase, ISearchMapsRequestController
+public class SearchMapsRequestController : ControllerBase, ISearchMapsRequestController
 {
     private readonly ISearchMapsRequestManager searchMapsRequestManager;
 
-    public SearchMapRequestController(ISearchMapsRequestManager searchMapsRequestManager)
+    public SearchMapsRequestController(ISearchMapsRequestManager searchMapsRequestManager)
         => this.searchMapsRequestManager = searchMapsRequestManager;
 
     [HttpGet]
     public async Task<ICollection<SearchMapsRequestResponse>> GetAll(CancellationToken token = default)
         => (await searchMapsRequestManager.GetAllAsync(token))
-            .Select(convertSearchMapsRequest)
+            .Select(x => x.ToSearchMapsRequestResponse())
             .ToList();
 
     [HttpGet("{id:int:min(0)}")]
     public async Task<SearchMapsRequestResponse> GetById(
         [FromRoute(Name = "id")] int id,
         CancellationToken token = default)
-            => convertSearchMapsRequest(await searchMapsRequestManager.GetByIdAsync(id, token));
+    {
+        var searchMapsRequest = await searchMapsRequestManager.GetByIdAsync(id, token);
+        var response = searchMapsRequest.ToSearchMapsRequestResponse();
+        response.Maps = searchMapsRequest.RequestsToMap.Select(x => x.Map.ToMapResponse()).ToList();
+        response.CreatorUser = searchMapsRequest.CreatorUser.ToUserResponse();
+        return response;
+    }
 
     [HttpPost]
     public async Task Add(
@@ -64,27 +71,8 @@ public class SearchMapRequestController : ControllerBase, ISearchMapsRequestCont
         CancellationToken token = default)
             => await searchMapsRequestManager.FinishAsync(moderatorId, id, token);
 
-    private SearchMapsRequestResponse convertSearchMapsRequest(SearchMapsRequest searchMapsRequest)
-        => new SearchMapsRequestResponse {
-            Id = searchMapsRequest.Id,
-            CreatorUserId = searchMapsRequest.CreatorUserId,
-            Status = convertSearchMapsRequestStatus(searchMapsRequest.Status),
-            CreationDate = searchMapsRequest.CreationDate
-        };
-
-    private SearchMapsRequestStatusApi convertSearchMapsRequestStatus(SearchMapsRequestStatus status)
-        => status switch {
-            SearchMapsRequestStatus.Draft => SearchMapsRequestStatusApi.Draft,
-            SearchMapsRequestStatus.Composed => SearchMapsRequestStatusApi.Composed,
-            SearchMapsRequestStatus.Done => SearchMapsRequestStatusApi.Done,
-            SearchMapsRequestStatus.Cancelled => SearchMapsRequestStatusApi.Cancelled,
-            SearchMapsRequestStatus.Deleted => SearchMapsRequestStatusApi.Deleted,
-            _ => throw new InvalidEnumArgumentException(nameof(status)),
-        };
-
     private AddSearchMapsRequestCommand convertAddSearchMapsRequestRequest(AddSearchMapsRequestRequest request)
         => new AddSearchMapsRequestCommand {
-            SearchMapsRequestId = request.SearchMapsRequestId,
             CreatorUserId = request.CreatorUserId,
             MapId = request.MapId,
             CreationDate = request.CreationDate

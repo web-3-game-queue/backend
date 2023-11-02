@@ -16,7 +16,16 @@ internal class SearchMapsRequestRepository : ISearchMapsRequestRepository
         => await db.SearchMapsRequests.ToListAsync(token);
 
     public async Task<SearchMapsRequest> GetByIdAsync(int id, CancellationToken token = default)
-        => await findOrThrow(id, token);
+    {
+        var searchMapsRequest = await db.SearchMapsRequests
+            .Include(x => x.RequestsToMap)
+            .ThenInclude(y => y.Map)
+            .Include(x => x.CreatorUser)
+            .Where(x => x.Id == id)
+            .FirstAsync()
+            ?? throw new EntityNotFoundException(typeof(SearchMapsRequest), id);
+        return searchMapsRequest;
+    }
 
     public async Task AddAsync(SearchMapsRequest SearchMapsRequest, CancellationToken token = default)
     {
