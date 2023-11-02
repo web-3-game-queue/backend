@@ -9,8 +9,13 @@ namespace GameQueue.Backend.Services.Managers;
 public class MapManager : IMapManager
 {
     private IMapRepository mapRepository;
+    private ISearchMapsRequestRepository searchMapsRequestRepository;
 
-    public MapManager(IMapRepository mapRepository) => this.mapRepository = mapRepository;
+    public MapManager(IMapRepository mapRepository, ISearchMapsRequestRepository searchMapsRequestRepository)
+    {
+        this.mapRepository = mapRepository;
+        this.searchMapsRequestRepository = searchMapsRequestRepository;
+    }
 
     public async Task<ICollection<Map>> GetAllAsync(CancellationToken token = default)
         => await mapRepository.GetAllAsync(token);
@@ -27,9 +32,10 @@ public class MapManager : IMapManager
     public async Task AddToSearchMapsRequestAsync(int mapId, int searchMapsRequestId, CancellationToken token = default)
     {
         var map = await mapRepository.GetByIdAsync(mapId, token);
+        var searchMapsRequest = await searchMapsRequestRepository.GetByIdAsync(searchMapsRequestId, token);
         var requestToMap = new RequestToMap {
             Map = map,
-            SearchMapsRequestId = searchMapsRequestId
+            SearchMapsRequest = searchMapsRequest
         };
         map.RequestsToMap.Add(requestToMap);
         await mapRepository.UpdateAsync(map, token);

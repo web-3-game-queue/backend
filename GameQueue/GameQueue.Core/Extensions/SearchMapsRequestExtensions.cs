@@ -12,4 +12,14 @@ public static class SearchMapsRequestExtensions
             Status = searchMapsRequest.Status.ToSearchMapsRequestStatusApi(),
             CreationDate = searchMapsRequest.CreationDate
         };
+
+    public static SearchMapsRequestResponseVerbose ToSerchMapsRequestResponseVerbose(this SearchMapsRequest searchMapsRequest)
+        => new SearchMapsRequestResponseVerbose {
+            Id = searchMapsRequest.Id,
+            CreatorUserId = searchMapsRequest.CreatorUserId,
+            Status = searchMapsRequest.Status.ToSearchMapsRequestStatusApi(),
+            CreationDate = searchMapsRequest.CreationDate,
+            CreatorUser = searchMapsRequest.CreatorUser.ToUserResponse(),
+            Maps = searchMapsRequest.RequestsToMap.Select(x => x.Map.ToMapResponse()).ToList()
+        };
 }

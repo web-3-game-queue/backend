@@ -7,7 +7,7 @@ public interface ISearchMapsRequestController
 {
     Task<ICollection<SearchMapsRequestResponse>> GetAll(CancellationToken token = default);
 
-    Task<SearchMapsRequestResponse> GetById(int id, CancellationToken token = default);
+    Task<SearchMapsRequestResponseVerbose> GetById(int id, CancellationToken token = default);
 
     Task Add(AddSearchMapsRequestRequest addSearchMapsRequestCommand, CancellationToken token = default);
 

@@ -26,16 +26,11 @@ public class SearchMapsRequestController : ControllerBase, ISearchMapsRequestCon
             .ToList();
 
     [HttpGet("{id:int:min(0)}")]
-    public async Task<SearchMapsRequestResponse> GetById(
+    public async Task<SearchMapsRequestResponseVerbose> GetById(
         [FromRoute(Name = "id")] int id,
         CancellationToken token = default)
-    {
-        var searchMapsRequest = await searchMapsRequestManager.GetByIdAsync(id, token);
-        var response = searchMapsRequest.ToSearchMapsRequestResponse();
-        response.Maps = searchMapsRequest.RequestsToMap.Select(x => x.Map.ToMapResponse()).ToList();
-        response.CreatorUser = searchMapsRequest.CreatorUser.ToUserResponse();
-        return response;
-    }
+            => (await searchMapsRequestManager.GetByIdAsync(id, token))
+                .ToSerchMapsRequestResponseVerbose();
 
     [HttpPost]
     public async Task Add(

@@ -22,7 +22,7 @@ internal class SearchMapsRequestRepository : ISearchMapsRequestRepository
             .ThenInclude(y => y.Map)
             .Include(x => x.CreatorUser)
             .Where(x => x.Id == id)
-            .FirstAsync()
+            .FirstOrDefaultAsync()
             ?? throw new EntityNotFoundException(typeof(SearchMapsRequest), id);
         return searchMapsRequest;
     }
