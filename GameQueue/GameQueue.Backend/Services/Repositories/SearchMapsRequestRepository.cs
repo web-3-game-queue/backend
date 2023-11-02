@@ -13,7 +13,9 @@ internal class SearchMapsRequestRepository : ISearchMapsRequestRepository
     public SearchMapsRequestRepository(GameQueueContext db) => this.db = db;
 
     public async Task<ICollection<SearchMapsRequest>> GetAllAsync(CancellationToken token = default)
-        => await db.SearchMapsRequests.ToListAsync(token);
+        => await db.SearchMapsRequests
+            .Include(x => x.RequestsToMap)
+            .ToListAsync(token);
 
     public async Task<SearchMapsRequest> GetByIdAsync(int id, CancellationToken token = default)
     {
@@ -35,8 +37,37 @@ internal class SearchMapsRequestRepository : ISearchMapsRequestRepository
 
     public async Task AddMap(int searchMapsRequestId, int mapId, CancellationToken token = default)
     {
-        var map = await db.Maps.FindAsync(mapId, token);
         var searchMapsRequest = await findOrThrow(searchMapsRequestId, token);
+        var map = await db.Maps.FindAsync(mapId, token)
+            ?? throw new EntityNotFoundException(typeof(Map), mapId);
+        await db.RequestsToMap.AddAsync(new RequestToMap {
+            SearchMapsRequestId = searchMapsRequest.Id,
+            MapId = map.Id
+        }, token);
+    }
+
+    public async Task RemoveMap(int searchMapsRequestId, int mapId, CancellationToken token = default)
+    {
+        var searchMapsRequest = await db.SearchMapsRequests
+            .Include(x => x.RequestsToMap)
+            .Where(x => x.Id == searchMapsRequestId)
+            .FirstOrDefaultAsync()
+            ?? throw new EntityNotFoundException(typeof(SearchMapsRequest), searchMapsRequestId);
+        var map = await db.Maps.FindAsync(mapId, token);
+        if (map == null)
+        {
+            return;
+        }
+        var requestToMap = searchMapsRequest
+            .RequestsToMap
+            .Where(y => y.MapId == mapId)
+            .First();
+        db.RequestsToMap.Remove(requestToMap);
+        if (searchMapsRequest.RequestsToMap.Count <= 1)
+        {
+            db.SearchMapsRequests.Remove(searchMapsRequest);
+        }
+        await db.SaveChangesAsync(token);
     }
 
     public async Task ComposeAsync(int id, CancellationToken token = default)

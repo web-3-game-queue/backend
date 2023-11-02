@@ -13,6 +13,8 @@ public interface ISearchMapsRequestManager
 
     Task AddMap(int searchMapsRequestId, int mapId, CancellationToken token = default);
 
+    Task RemoveMap(int searchMapsRequestId, int mapId, CancellationToken token = default);
+
     Task ComposeAsync(int creatorId, int id, CancellationToken token = default);
 
     Task DeleteAsync(int creatorId, int id, CancellationToken token = default);

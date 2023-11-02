@@ -38,18 +38,6 @@ internal class MapRepository : IMapRepository
         await db.SaveChangesAsync(token);
     }
 
-    public async Task AddToSearchRequest(int mapId, int requestId, CancellationToken token = default)
-    {
-        var request = await db.SearchMapsRequests.FindAsync(requestId)
-            ?? throw new EntityNotFoundException(typeof(SearchMapsRequest), mapId);
-        var map = await db.Maps.FindAsync(mapId)
-            ?? throw new EntityNotFoundException(typeof(Map), mapId);
-        await db.RequestsToMap.AddAsync(new RequestToMap {
-            SearchMapsRequestId = request.Id,
-            MapId = map.Id
-        }, token);
-    }
-
     private async Task<Map> findOrThrow(int id, CancellationToken token)
         => await db.Maps.FindAsync(id, token)
             ?? throw new EntityNotFoundException(typeof(Map), id);

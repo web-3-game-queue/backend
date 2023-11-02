@@ -47,6 +47,12 @@ internal class SearchMapsRequestManager : ISearchMapsRequestManager
         await searchMapsRequestRepository.AddAsync(searchMapsRequest, token);
     }
 
+    public async Task AddMap(int searchMapsRequestId, int mapId, CancellationToken token = default)
+        => await searchMapsRequestRepository.AddMap(searchMapsRequestId, mapId, token);
+
+    public async Task RemoveMap(int searchMapsRequestId, int mapId, CancellationToken token = default)
+        => await searchMapsRequestRepository.RemoveMap(searchMapsRequestId, mapId, token);
+
     public async Task ComposeAsync(int clientId, int id, CancellationToken token = default)
     {
         var request = await searchMapsRequestRepository.GetByIdAsync(id);

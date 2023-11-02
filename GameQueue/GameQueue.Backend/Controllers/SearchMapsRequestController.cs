@@ -35,6 +35,20 @@ public class SearchMapsRequestController : ControllerBase, ISearchMapsRequestCon
         CancellationToken token = default)
             => await searchMapsRequestManager.AddAsync(convertAddSearchMapsRequestRequest(addSearchMapsRequestCommand), token);
 
+    [HttpPut("{search_maps_request_id:int:min(0)}/add_map/{map_id:int:min(0)}")]
+    public async Task AddMap(
+        [FromRoute(Name = "search_maps_request_id")] int searchMapsRequestId,
+        [FromRoute(Name = "map_id")] int mapId,
+        CancellationToken token = default)
+            => await searchMapsRequestManager.AddMap(searchMapsRequestId, mapId, token);
+
+    [HttpDelete("{search_maps_request_id:int:min(0)}/add_map/{map_id:int:min(0)}")]
+    public async Task RemoveMap(
+        [FromRoute(Name = "search_maps_request_id")] int searchMapsRequestId,
+        [FromRoute(Name = "map_id")] int mapId,
+        CancellationToken token = default)
+            => await searchMapsRequestManager.RemoveMap(searchMapsRequestId, mapId, token);
+
     [HttpPut("compose/{id:int:min(0)}")]
     public async Task Compose(
         [FromQuery(Name = "creator_id")] int creatorId,

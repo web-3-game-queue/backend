@@ -11,8 +11,6 @@ public interface IMapManager
 
     Task AddAsync(AddMapCommand addMapCommand, CancellationToken token = default);
 
-    Task AddToSearchMapsRequestAsync(int mapId, int searchMapsRequestId, CancellationToken token = default);
-
     Task UpdateAsync(UpdateMapCommand updateMapCommand, CancellationToken token = default);
 
     Task DeleteAsync(int id, CancellationToken token = default);

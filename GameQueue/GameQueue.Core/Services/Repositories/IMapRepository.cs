@@ -13,6 +13,4 @@ public interface IMapRepository
     Task UpdateAsync(Map map, CancellationToken token = default);
 
     Task DeleteAsync(int id, CancellationToken token = default);
-
-    Task AddToSearchRequest(int mapId, int requestId, CancellationToken token = default);
 }

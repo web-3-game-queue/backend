@@ -29,18 +29,6 @@ public class MapManager : IMapManager
         await mapRepository.AddAsync(map, token);
     }
 
-    public async Task AddToSearchMapsRequestAsync(int mapId, int searchMapsRequestId, CancellationToken token = default)
-    {
-        var map = await mapRepository.GetByIdAsync(mapId, token);
-        var searchMapsRequest = await searchMapsRequestRepository.GetByIdAsync(searchMapsRequestId, token);
-        var requestToMap = new RequestToMap {
-            Map = map,
-            SearchMapsRequest = searchMapsRequest
-        };
-        map.RequestsToMap.Add(requestToMap);
-        await mapRepository.UpdateAsync(map, token);
-    }
-
     public async Task UpdateAsync(UpdateMapCommand updateMapCommand, CancellationToken token = default)
     {
         if (updateMapCommand.FieldsAreEmpty())

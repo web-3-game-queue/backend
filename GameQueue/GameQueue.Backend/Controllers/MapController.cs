@@ -35,14 +35,6 @@ public class MapController : ControllerBase, IMapController
             => await mapManager
                 .AddAsync(convertAddMapRequest(addMapRequest), token);
 
-    [HttpPost("{map_id:int:min(0)}/add_to_request/{search_maps_request_id:int:min(0)}")]
-    public async Task AddToSearchMapsRequest(
-        [FromRoute(Name = "map_id")] int mapId,
-        [FromRoute(Name = "search_maps_request_id")] int searchMapsRequestId,
-        CancellationToken token = default)
-            => await mapManager
-                .AddToSearchMapsRequestAsync(mapId, searchMapsRequestId, token);
-
     [HttpPut("{id:int:min(0)}")]
     public async Task Update(
         [FromRoute(Name = "id")] int id,

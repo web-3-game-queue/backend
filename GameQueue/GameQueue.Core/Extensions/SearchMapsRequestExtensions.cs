@@ -10,13 +10,13 @@ public static class SearchMapsRequestExtensions
             Id = searchMapsRequest.Id,
             CreatorUserId = searchMapsRequest.CreatorUserId,
             Status = searchMapsRequest.Status.ToSearchMapsRequestStatusApi(),
-            CreationDate = searchMapsRequest.CreationDate
+            CreationDate = searchMapsRequest.CreationDate,
+            MapsCount = searchMapsRequest.RequestsToMap.Count
         };
 
     public static SearchMapsRequestResponseVerbose ToSerchMapsRequestResponseVerbose(this SearchMapsRequest searchMapsRequest)
         => new SearchMapsRequestResponseVerbose {
             Id = searchMapsRequest.Id,
-            CreatorUserId = searchMapsRequest.CreatorUserId,
             Status = searchMapsRequest.Status.ToSearchMapsRequestStatusApi(),
             CreationDate = searchMapsRequest.CreationDate,
             CreatorUser = searchMapsRequest.CreatorUser.ToUserResponse(),

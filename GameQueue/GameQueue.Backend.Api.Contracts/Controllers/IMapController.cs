@@ -11,8 +11,6 @@ public interface IMapController
 
     Task Add(AddMapRequest addMapRequest, CancellationToken token = default);
 
-    Task AddToSearchMapsRequest(int mapId, int searchMapsRequestId, CancellationToken token = default);
-
     Task Update(int id, UpdateMapRequest updateMapRequest, CancellationToken token = default);
 
     Task Delete(int id, CancellationToken token = default);
