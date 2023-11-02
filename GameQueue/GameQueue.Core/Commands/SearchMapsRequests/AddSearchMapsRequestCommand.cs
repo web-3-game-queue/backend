@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace GameQueue.Core.Commands.SearchMapsRequests;
+﻿namespace GameQueue.Core.Commands.SearchMapsRequests;
 
 public sealed record AddSearchMapsRequestCommand
 {

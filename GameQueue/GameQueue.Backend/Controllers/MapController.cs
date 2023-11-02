@@ -1,6 +1,5 @@
 ﻿using GameQueue.Backend.Api.Contracts.Controllers;
 using GameQueue.Backend.Api.Contracts.Responses;
-using GameQueue.Backend.Services.Managers;
 using GameQueue.Core.Backend.Api.Contracts.Requests.Maps;
 using GameQueue.Core.Commands.Maps;
 using GameQueue.Core.Models;
@@ -8,7 +7,7 @@ using GameQueue.Core.Services.Managers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GameQueue.Backend.Controllers;
-[Route("api/[controller]")]
+[Route("api/map")]
 [ApiController]
 public class MapController : ControllerBase, IMapController
 {

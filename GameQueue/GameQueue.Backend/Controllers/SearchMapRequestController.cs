@@ -9,7 +9,7 @@ using GameQueue.Core.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GameQueue.Backend.Controllers;
-[Route("api/[controller]")]
+[Route("api/search_maps_request")]
 [ApiController]
 public class SearchMapRequestController : ControllerBase, ISearchMapsRequestController
 {

@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace GameQueue.Core.Commands.Users;
+﻿namespace GameQueue.Core.Commands.Users;
 
 public sealed record AddUserCommand
 {
