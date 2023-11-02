@@ -1,0 +1,51 @@
+﻿using GameQueue.Backend.DataAccess;
+using GameQueue.Core.Contracts.Services.Repositories;
+using GameQueue.Core.Contracts.Services.Repositories.Exceptions;
+using GameQueue.Core.Entities;
+using GameQueue.Core.Entities.SearchMapsRequests.Status;
+using Microsoft.EntityFrameworkCore;
+
+namespace GameQueue.Backend.Services.Repositories;
+
+internal class SearchMapsRequestRepository : ISearchMapsRequestRepository
+{
+    private readonly GameQueueContext db;
+
+    public SearchMapsRequestRepository(GameQueueContext db) => this.db = db;
+
+    public async Task<ICollection<SearchMapsRequest>> GetAllAsync(CancellationToken token = default)
+        => await db.SearchMapsRequests.ToListAsync(token);
+
+    public async Task<SearchMapsRequest> GetByIdAsync(int id, CancellationToken token = default)
+        => await findOrThrow(id, token);
+
+    public async Task AddAsync(SearchMapsRequest SearchMapsRequest, CancellationToken token = default)
+    {
+        await db.SearchMapsRequests.AddAsync(SearchMapsRequest, token);
+        await db.SaveChangesAsync();
+    }
+
+    public async Task ApproveAsync(int id, CancellationToken token = default)
+        => await updateStatus(id, SearchMapsRequestStatus.InProgress);
+
+    public async Task CancelAsync(int id, CancellationToken token = default)
+        => await updateStatus(id, SearchMapsRequestStatus.Cancelled, token);
+
+    public async Task DeleteAsync(int id, CancellationToken token = default)
+        => await updateStatus(id, SearchMapsRequestStatus.Deleted, token);
+
+    public async Task FinishAsync(int id, CancellationToken token = default)
+        => await updateStatus(id, SearchMapsRequestStatus.Done, token);
+
+    private async Task updateStatus(int id, SearchMapsRequestStatus status, CancellationToken token = default)
+    {
+        var SearchMapsRequest = await findOrThrow(id, token);
+        db.Update(SearchMapsRequest);
+        SearchMapsRequest.Status = status;
+        await db.SaveChangesAsync();
+    }
+
+    private async Task<SearchMapsRequest> findOrThrow(int id, CancellationToken token)
+        => await db.SearchMapsRequests.FindAsync(id, token)
+            ?? throw new EntityNotFound(typeof(SearchMapsRequest), id);
+}

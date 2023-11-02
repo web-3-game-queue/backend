@@ -1,11 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using GameQueue.Core.Entities.MapSearchRequests.Status;
+using GameQueue.Core.Entities.SearchMapsRequests.Status;
 
 namespace GameQueue.Core.Entities;
 
-[Table("map_search_requests")]
-public sealed record MapSearchRequest
+[Table("search_maps_requests")]
+public sealed record SearchMapsRequest
 {
     [Required]
     [Key]
@@ -16,7 +16,7 @@ public sealed record MapSearchRequest
     public int CreatorUserId { get; set; }
 
     [Required]
-    public MapSearchRequestStatus Status { get; set; } = MapSearchRequestStatus.Draft;
+    public SearchMapsRequestStatus Status { get; set; } = SearchMapsRequestStatus.Draft;
 
     [Required]
     public DateTime CreationDate { get; set; } = DateTime.Now;

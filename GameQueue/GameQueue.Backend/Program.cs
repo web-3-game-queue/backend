@@ -1,4 +1,5 @@
 using GameQueue.Backend.DataAccess;
+using GameQueue.Backend.ExceptionFilters;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,7 +10,7 @@ builder.Services.AddDbContext<GameQueueContext>(
     opt => opt.UseNpgsql(configuration.GetConnectionString("DB_URL"))
 );
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options => options.Filters.Add(new ExceptionFilter));
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

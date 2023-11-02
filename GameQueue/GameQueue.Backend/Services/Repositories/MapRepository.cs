@@ -41,12 +41,12 @@ internal class MapRepository : IMapRepository
 
     public async Task AddToSearchRequest(int mapId, int requestId, CancellationToken token = default)
     {
-        var request = await db.MapSearchRequests.FindAsync(requestId)
-            ?? throw new EntityNotFound(typeof(MapSearchRequest), mapId);
+        var request = await db.SearchMapsRequests.FindAsync(requestId)
+            ?? throw new EntityNotFound(typeof(SearchMapsRequest), mapId);
         var map = await db.Maps.FindAsync(mapId)
             ?? throw new EntityNotFound(typeof(Map), mapId);
         await db.RequestsToMap.AddAsync(new RequestToMap {
-            SearchRequestId = request.Id,
+            SearchMapsRequestId = request.Id,
             MapId = map.Id
         });
     }

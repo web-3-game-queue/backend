@@ -22,5 +22,5 @@ public sealed record class User
     [Range(0, int.MaxValue)]
     public int Level { get; set; }
 
-    public List<MapSearchRequest> SearchRequests { get; } = new List<MapSearchRequest>();
+    public List<SearchMapsRequest> SearchMapsRequests { get; } = new List<SearchMapsRequest>();
 }

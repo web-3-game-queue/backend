@@ -1,5 +1,5 @@
 ﻿using GameQueue.Core.Entities;
-using GameQueue.Core.Entities.MapSearchRequests.Status;
+using GameQueue.Core.Entities.SearchMapsRequests.Status;
 using GameQueue.Core.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,7 +11,7 @@ public class GameQueueContext : DbContext
 
     public DbSet<User> Users { get; set; }
 
-    public DbSet<MapSearchRequest> MapSearchRequests { get; set; }
+    public DbSet<SearchMapsRequest> SearchMapsRequests { get; set; }
 
     public DbSet<RequestToMap> RequestsToMap { get; set; }
 
@@ -28,11 +28,11 @@ public class GameQueueContext : DbContext
             .HasDefaultValue(MapStatus.Pending);
 
         modelBuilder
-            .Entity<MapSearchRequest>()
+            .Entity<SearchMapsRequest>()
             .Property(m => m.Status)
             .HasConversion(
                 v => v.ToString(),
-                v => (MapSearchRequestStatus)Enum.Parse(typeof(MapSearchRequestStatus), v)
+                v => (SearchMapsRequestStatus)Enum.Parse(typeof(SearchMapsRequestStatus), v)
             );
     }
 

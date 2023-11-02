@@ -12,12 +12,12 @@ public sealed record RequestToMap
     public int Id { get; set; }
 
     [Required]
-    public int SearchRequestId { get; set; }
+    public int SearchMapsRequestId { get; set; }
 
     [Required]
     public int MapId { get; set; }
 
-    public MapSearchRequest SearchRequest { get; set; } = null!;
+    public SearchMapsRequest SearchMapsRequest { get; set; } = null!;
 
     public Map Map { get; set; } = null!;
 }
