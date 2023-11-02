@@ -33,7 +33,7 @@ public sealed record UpdateMapCommand
             && CoverImageUrl == null
             && Price == null;
 
-    public void Update(Map map)
+    public void Update(ref Map map)
         => map = map with {
             Name = Name ?? map.Name,
             Width = Width ?? map.Width,

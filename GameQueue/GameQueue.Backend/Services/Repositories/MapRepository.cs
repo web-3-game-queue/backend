@@ -1,5 +1,4 @@
 ﻿using GameQueue.Backend.DataAccess;
-using GameQueue.Core.Commands.Maps;
 using GameQueue.Core.Contracts.Services.Repositories;
 using GameQueue.Core.Contracts.Services.Repositories.Exceptions;
 using GameQueue.Core.Entities;
@@ -36,6 +35,7 @@ internal class MapRepository : IMapRepository
     {
         var map = await findOrThrow(id, token);
         map.Status = MapStatus.Deleted;
+        map.RequestsToMap.Clear();
         await db.SaveChangesAsync(token);
     }
 

@@ -38,7 +38,7 @@ public sealed record Map
     [Required]
     public MapStatus Status { get; set; } = MapStatus.Pending;
 
-    public List<SearchMapsRequest> SearchRequests { get; } = new List<SearchMapsRequest>();
+    public List<RequestToMap> RequestsToMap { get; } = new List<RequestToMap>();
 
     public override string ToString()
         => string.Format("{0} {1}x{2} ({3}p)", Name, Width, Height, MaxPlayersCount);

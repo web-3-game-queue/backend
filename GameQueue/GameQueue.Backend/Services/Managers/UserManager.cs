@@ -28,11 +28,11 @@ internal class UserManager : IUserManager
 
     public async Task AddAsync(AddUserCommand addUserCommand, CancellationToken token = default)
     {
-        var user = ConvertAddCommandToUser(addUserCommand);
+        var user = convertAddCommandToUser(addUserCommand);
         await userRepository.AddAsync(user, token);
     }
 
-    private User ConvertAddCommandToUser(AddUserCommand addUserCommand)
+    private User convertAddCommandToUser(AddUserCommand addUserCommand)
     {
         var user = new User {
             Name = addUserCommand.Name,
