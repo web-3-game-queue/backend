@@ -1,19 +1,22 @@
-using GameQueue.Backend.DataAccess;
 using GameQueue.Backend.ExceptionFilters;
-using Microsoft.EntityFrameworkCore;
+using GameQueue.Backend.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var configuration = builder.Configuration;
 
-builder.Services.AddDbContext<GameQueueContext>(
-    opt => opt.UseNpgsql(configuration.GetConnectionString("DB_URL"))
-);
+builder.Services
+    .AddDb(builder.Configuration)
+    .AddRepositories()
+    .AddManagers();
 
-builder.Services.AddControllers(options => options.Filters.Add(new ExceptionFilter));
+builder.Services
+    .AddControllers(
+        options => options.Filters.Add(new ExceptionFilter()));
 
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services
+    .AddEndpointsApiExplorer()
+    .AddSwaggerGen();
 
 var app = builder.Build();
 
@@ -23,9 +26,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
+app
+    .UseHttpsRedirection()
+    .UseAuthorization();
 
 app.MapControllers();
 

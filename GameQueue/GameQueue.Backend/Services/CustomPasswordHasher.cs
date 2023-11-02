@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace GameQueue.Backend.Services;
 
-internal class PasswordHasher : IPasswordHasher<User>
+internal class CustomPasswordHasher : IPasswordHasher<User>
 {
     private const int KeySize = 64;
     private const int Iterations = 350_000;
