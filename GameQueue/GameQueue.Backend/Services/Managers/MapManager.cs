@@ -39,7 +39,7 @@ public class MapManager : IMapManager
     {
         if (updateMapCommand.FieldsAreEmpty())
         {
-            throw new UpdateCommandEmptyException();
+            throw new ValidationException("Update command can not be empty");
         }
         var map = await mapRepository.GetByIdAsync(updateMapCommand.Id, token);
         updateMapFromCommand(updateMapCommand, ref map);

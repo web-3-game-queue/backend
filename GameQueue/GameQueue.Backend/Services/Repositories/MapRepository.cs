@@ -1,6 +1,6 @@
 ﻿using GameQueue.Backend.DataAccess;
 using GameQueue.Core.Contracts.Services.Repositories;
-using GameQueue.Core.Contracts.Services.Repositories.Exceptions;
+using GameQueue.Core.Exceptions;
 using GameQueue.Core.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -41,9 +41,9 @@ internal class MapRepository : IMapRepository
     public async Task AddToSearchRequest(int mapId, int requestId, CancellationToken token = default)
     {
         var request = await db.SearchMapsRequests.FindAsync(requestId)
-            ?? throw new EntityNotFound(typeof(SearchMapsRequest), mapId);
+            ?? throw new EntityNotFoundException(typeof(SearchMapsRequest), mapId);
         var map = await db.Maps.FindAsync(mapId)
-            ?? throw new EntityNotFound(typeof(Map), mapId);
+            ?? throw new EntityNotFoundException(typeof(Map), mapId);
         await db.RequestsToMap.AddAsync(new RequestToMap {
             SearchMapsRequestId = request.Id,
             MapId = map.Id
@@ -52,5 +52,5 @@ internal class MapRepository : IMapRepository
 
     private async Task<Map> findOrThrow(int id, CancellationToken token)
         => await db.Maps.FindAsync(id, token)
-            ?? throw new EntityNotFound(typeof(Map), id);
+            ?? throw new EntityNotFoundException(typeof(Map), id);
 }

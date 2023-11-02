@@ -1,8 +1,41 @@
-﻿using Microsoft.AspNetCore.Mvc.Filters;
+﻿using GameQueue.Core.Exceptions;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace GameQueue.Backend.ExceptionFilters;
 
 public class ExceptionFilter : IAsyncExceptionFilter
 {
-    public Task OnExceptionAsync(ExceptionContext context) => throw new NotImplementedException();
+    public async Task OnExceptionAsync(ExceptionContext context)
+    {
+        var exception = context.Exception;
+
+        context.HttpContext.Response.Headers.ContentType = "text/plain; charset=utf-8";
+
+        switch (exception)
+        {
+            case EntityNotFoundException e:
+                context.HttpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
+                await context.HttpContext.Response.WriteAsync(string.Format("Not found {0}", e.Message));
+                break;
+
+            case UnauthorizedException e:
+                context.HttpContext.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                await context.HttpContext.Response.WriteAsync(string.Format("Unauthorized: {0}", e.Message));
+                break;
+
+            case ValidationException e:
+                context.HttpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
+                await context.HttpContext.Response.WriteAsync(string.Format("Invalid request: {0}", e.Message));
+                break;
+
+            default:
+                context.HttpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
+                await context.HttpContext.Response.WriteAsync(string.Format("Internal error: {0}", exception.Message));
+                break;
+        }
+
+        await context.HttpContext.Response.CompleteAsync();
+
+        return;
+    }
 }

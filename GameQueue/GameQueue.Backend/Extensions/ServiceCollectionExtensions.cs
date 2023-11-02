@@ -5,6 +5,7 @@ using GameQueue.Backend.Services.Repositories;
 using GameQueue.Core.Contracts.Services.Managers;
 using GameQueue.Core.Contracts.Services.Repositories;
 using GameQueue.Core.Models;
+using GameQueue.Core.Services.Managers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,5 +27,6 @@ public static class ServiceCollectionExtensions
         => services
             .AddScoped<IPasswordHasher<User>, CustomPasswordHasher>()
             .AddScoped<IUserManager, UserManager>()
+            .AddScoped<IMapManager, MapManager>()
             .AddScoped<ISearchMapsRequestManager, SearchMapsRequestManager>();
 }

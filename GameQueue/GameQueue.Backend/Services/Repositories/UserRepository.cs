@@ -1,6 +1,6 @@
 ﻿using GameQueue.Backend.DataAccess;
 using GameQueue.Core.Contracts.Services.Repositories;
-using GameQueue.Core.Contracts.Services.Repositories.Exceptions;
+using GameQueue.Core.Exceptions;
 using GameQueue.Core.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,7 +16,7 @@ internal class UserRepository : IUserRepository
         => await db.Users.ToListAsync(token);
 
     public async Task<User> GetByIdAsync(int id, CancellationToken token = default)
-        => await db.Users.FindAsync(id) ?? throw new EntityNotFound(typeof(User), id);
+        => await db.Users.FindAsync(id) ?? throw new EntityNotFoundException(typeof(User), id);
 
     public async Task AddAsync(User user, CancellationToken token = default)
     {
