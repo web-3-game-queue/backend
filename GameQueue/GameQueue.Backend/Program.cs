@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using GameQueue.Backend;
 using GameQueue.Backend.ExceptionFilters;
 using GameQueue.Backend.Extensions;
@@ -7,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 
 builder.Services
-    .AddSingleton(new ModeratorUser { 
+    .AddSingleton(new ModeratorUser {
         Id = int.Parse(configuration["ModeratorId"])
     });
 
@@ -17,8 +18,10 @@ builder.Services
     .AddManagers();
 
 builder.Services
-    .AddControllers(
-        options => options.Filters.Add(new ExceptionFilter()));
+    .AddControllers(options
+        => options.Filters.Add(new ExceptionFilter()))
+    .AddJsonOptions(options
+        => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
 builder.Services
     .AddEndpointsApiExplorer()
