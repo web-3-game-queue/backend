@@ -1,4 +1,4 @@
-﻿using GameQueue.Core.Entities;
+﻿using GameQueue.Core.Models;
 
 namespace GameQueue.Core.Contracts.Services.Repositories;
 
@@ -10,7 +10,7 @@ public interface ISearchMapsRequestRepository
 
     Task AddAsync(SearchMapsRequest request, CancellationToken token = default);
 
-    Task ApproveAsync(int id, CancellationToken token = default);
+    Task ComposeAsync(int id, CancellationToken token = default);
 
     Task CancelAsync(int id, CancellationToken token = default);
 

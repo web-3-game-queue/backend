@@ -1,7 +1,7 @@
 ﻿using GameQueue.Core.Commands.SearchMapsRequests;
 using GameQueue.Core.Contracts.Services.Managers;
 using GameQueue.Core.Contracts.Services.Repositories;
-using GameQueue.Core.Entities;
+using GameQueue.Core.Models;
 
 namespace GameQueue.Backend.Services.Managers;
 
@@ -31,8 +31,8 @@ internal class SearchMapsRequestManager : ISearchMapsRequestManager
         await searchMapsRequestRepository.AddAsync(searchMapsRequest, token);
     }
 
-    public async Task ApproveAsync(int id, CancellationToken token = default)
-        => await searchMapsRequestRepository.ApproveAsync(id, token);
+    public async Task ComposeAsync(int id, CancellationToken token = default)
+        => await searchMapsRequestRepository.ComposeAsync(id, token);
 
     public async Task CancelAsync(int id, CancellationToken token = default)
         => await searchMapsRequestRepository.CancelAsync(id, token);

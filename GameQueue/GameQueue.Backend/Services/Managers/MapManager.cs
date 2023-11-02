@@ -1,6 +1,7 @@
 ﻿using GameQueue.Core.Commands.Maps;
 using GameQueue.Core.Contracts.Services.Repositories;
-using GameQueue.Core.Entities;
+using GameQueue.Core.Models;
+using GameQueue.Core.Exceptions;
 using GameQueue.Core.Services.Managers;
 
 namespace GameQueue.Backend.Services.Managers;
@@ -23,7 +24,7 @@ public class MapManager : IMapManager
         await mapRepository.AddAsync(map, token);
     }
 
-    public async Task AddToSearchMapsRequest(int mapId, int searchMapsRequestId, CancellationToken token = default)
+    public async Task AddToSearchMapsRequestAsync(int mapId, int searchMapsRequestId, CancellationToken token = default)
     {
         var map = await mapRepository.GetByIdAsync(mapId, token);
         var requestToMap = new RequestToMap {
@@ -36,8 +37,12 @@ public class MapManager : IMapManager
 
     public async Task UpdateAsync(UpdateMapCommand updateMapCommand, CancellationToken token = default)
     {
+        if (updateMapCommand.FieldsAreEmpty())
+        {
+            throw new UpdateCommandEmptyException();
+        }
         var map = await mapRepository.GetByIdAsync(updateMapCommand.Id, token);
-        updateMapCommand.Update(ref map);
+        updateMapFromCommand(updateMapCommand, ref map);
         await mapRepository.UpdateAsync(map, token);
     }
 
@@ -52,5 +57,15 @@ public class MapManager : IMapManager
             MaxPlayersCount = addMapCommand.MaxPlayersCount,
             CoverImageUrl = addMapCommand.CoverImageUrl,
             Price = addMapCommand.Price
+        };
+
+    private void updateMapFromCommand(UpdateMapCommand updateMapCommand, ref Map map)
+        => map = map with {
+            Name = updateMapCommand.Name ?? map.Name,
+            Width = updateMapCommand.Width ?? map.Width,
+            Height = updateMapCommand.Height ?? map.Height,
+            MaxPlayersCount = updateMapCommand.MaxPlayersCount ?? map.MaxPlayersCount,
+            CoverImageUrl = updateMapCommand.CoverImageUrl ?? map.CoverImageUrl,
+            Price = updateMapCommand.Price ?? map.Price,
         };
 }

@@ -1,4 +1,4 @@
-﻿using GameQueue.Core.Entities;
+﻿using GameQueue.Core.Models;
 
 namespace GameQueue.Core.Contracts.Services.Repositories;
 

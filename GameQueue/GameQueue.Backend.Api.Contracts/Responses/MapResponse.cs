@@ -1,7 +1,9 @@
-﻿namespace GameQueue.Core.Commands.Maps;
+﻿namespace GameQueue.Backend.Api.Contracts.Responses;
 
-public sealed record AddMapCommand
+public sealed record MapResponse
 {
+    public int Id { get; set; }
+
     public string Name { get; set; } = null!;
 
     public int Width { get; set; }

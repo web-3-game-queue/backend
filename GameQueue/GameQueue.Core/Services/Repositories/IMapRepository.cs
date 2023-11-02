@@ -1,5 +1,4 @@
-﻿using GameQueue.Core.Commands.Maps;
-using GameQueue.Core.Entities;
+﻿using GameQueue.Core.Models;
 
 namespace GameQueue.Core.Contracts.Services.Repositories;
 

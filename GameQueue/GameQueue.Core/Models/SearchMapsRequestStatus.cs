@@ -1,9 +1,9 @@
-﻿namespace GameQueue.Core.Entities.SearchMapsRequests.Status;
+﻿namespace GameQueue.Core.Models;
 
 public enum SearchMapsRequestStatus
 {
     Draft,
-    InProgress,
+    Composed,
     Done,
     Cancelled,
     Deleted

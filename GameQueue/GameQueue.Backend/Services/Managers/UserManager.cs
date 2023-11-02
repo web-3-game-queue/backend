@@ -1,7 +1,7 @@
 ﻿using GameQueue.Core.Commands.Users;
 using GameQueue.Core.Contracts.Services.Managers;
 using GameQueue.Core.Contracts.Services.Repositories;
-using GameQueue.Core.Entities;
+using GameQueue.Core.Models;
 using Microsoft.AspNetCore.Identity;
 
 namespace GameQueue.Backend.Services.Managers;

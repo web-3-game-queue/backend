@@ -1,5 +1,5 @@
 ﻿using GameQueue.Core.Commands.SearchMapsRequests;
-using GameQueue.Core.Entities;
+using GameQueue.Core.Models;
 
 namespace GameQueue.Core.Contracts.Services.Managers;
 
@@ -11,7 +11,7 @@ public interface ISearchMapsRequestManager
 
     Task AddAsync(AddSearchMapsRequestCommand addSearchMapsRequestCommand, CancellationToken token = default);
 
-    Task ApproveAsync(int id, CancellationToken token = default);
+    Task ComposeAsync(int id, CancellationToken token = default);
 
     Task CancelAsync(int id, CancellationToken token = default);
 

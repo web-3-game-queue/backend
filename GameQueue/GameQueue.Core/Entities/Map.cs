@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using GameQueue.Core.Models;
 
-namespace GameQueue.Core.Entities;
+namespace GameQueue.Core.Models;
 
 [Table("maps")]
 public sealed record Map

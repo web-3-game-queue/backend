@@ -1,8 +1,7 @@
 ﻿using GameQueue.Backend.DataAccess;
 using GameQueue.Core.Contracts.Services.Repositories;
 using GameQueue.Core.Contracts.Services.Repositories.Exceptions;
-using GameQueue.Core.Entities;
-using GameQueue.Core.Entities.SearchMapsRequests.Status;
+using GameQueue.Core.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace GameQueue.Backend.Services.Repositories;
@@ -25,8 +24,8 @@ internal class SearchMapsRequestRepository : ISearchMapsRequestRepository
         await db.SaveChangesAsync();
     }
 
-    public async Task ApproveAsync(int id, CancellationToken token = default)
-        => await updateStatus(id, SearchMapsRequestStatus.InProgress);
+    public async Task ComposeAsync(int id, CancellationToken token = default)
+        => await updateStatus(id, SearchMapsRequestStatus.Composed);
 
     public async Task CancelAsync(int id, CancellationToken token = default)
         => await updateStatus(id, SearchMapsRequestStatus.Cancelled, token);

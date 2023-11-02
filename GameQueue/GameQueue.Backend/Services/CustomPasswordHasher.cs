@@ -1,6 +1,6 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
-using GameQueue.Core.Entities;
+using GameQueue.Core.Models;
 using Microsoft.AspNetCore.Identity;
 
 namespace GameQueue.Backend.Services;

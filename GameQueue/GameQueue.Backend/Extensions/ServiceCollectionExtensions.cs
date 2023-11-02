@@ -4,7 +4,7 @@ using GameQueue.Backend.Services.Managers;
 using GameQueue.Backend.Services.Repositories;
 using GameQueue.Core.Contracts.Services.Managers;
 using GameQueue.Core.Contracts.Services.Repositories;
-using GameQueue.Core.Entities;
+using GameQueue.Core.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 

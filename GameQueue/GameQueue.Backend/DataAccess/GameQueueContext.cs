@@ -1,6 +1,4 @@
-﻿using GameQueue.Core.Entities;
-using GameQueue.Core.Entities.SearchMapsRequests.Status;
-using GameQueue.Core.Models;
+﻿using GameQueue.Core.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace GameQueue.Backend.DataAccess;

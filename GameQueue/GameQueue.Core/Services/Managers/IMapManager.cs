@@ -1,5 +1,5 @@
 ﻿using GameQueue.Core.Commands.Maps;
-using GameQueue.Core.Entities;
+using GameQueue.Core.Models;
 
 namespace GameQueue.Core.Services.Managers;
 
@@ -11,7 +11,7 @@ public interface IMapManager
 
     Task AddAsync(AddMapCommand addMapCommand, CancellationToken token = default);
 
-    Task AddToSearchMapsRequest(int mapId, int searchMapsRequestId, CancellationToken token = default);
+    Task AddToSearchMapsRequestAsync(int mapId, int searchMapsRequestId, CancellationToken token = default);
 
     Task UpdateAsync(UpdateMapCommand updateMapCommand, CancellationToken token = default);
 
