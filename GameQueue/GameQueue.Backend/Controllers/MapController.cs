@@ -50,7 +50,10 @@ public class MapController : ControllerBase, IMapController
             => await mapManager
                 .UpdateAsync(convertUpdateMapRequest(id, updateMapRequest), token);
 
-    public async Task Delete(int id, CancellationToken token = default)
+    [HttpDelete("{id:int:min(0)}")]
+    public async Task Delete(
+        [FromRoute(Name = "id")] int id,
+        CancellationToken token = default)
         => await mapManager.DeleteAsync(id, token);
 
     private AddMapCommand convertAddMapRequest(AddMapRequest addMapRequest)

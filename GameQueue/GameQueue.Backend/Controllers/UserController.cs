@@ -18,16 +18,23 @@ public class UserController : ControllerBase, IUserController
         this.userManager = userManager;
     }
 
+    [HttpGet]
     public async Task<ICollection<UserResponse>> GetAllAsync(CancellationToken token = default)
         => (await userManager.GetAllAsync(token))
             .Select(convertUser)
             .ToList();
 
-    public async Task<UserResponse> GetByIdAsync(int id, CancellationToken token = default)
-        => convertUser(await userManager.GetByIdAsync(id, token));
+    [HttpGet("{id:int:min(0)}")]
+    public async Task<UserResponse> GetByIdAsync(
+        [FromRoute(Name = "id")] int id,
+        CancellationToken token = default)
+            => convertUser(await userManager.GetByIdAsync(id, token));
 
-    public async Task AddAsync(AddUserRequest addUserRequest, CancellationToken token = default)
-        => await userManager.AddAsync(convertAddUserRequest(addUserRequest), token);
+    [HttpPost]
+    public async Task AddAsync(
+        [FromBody] AddUserRequest addUserRequest,
+        CancellationToken token = default)
+            => await userManager.AddAsync(convertAddUserRequest(addUserRequest), token);
 
     private UserResponse convertUser(User user)
         => new UserResponse {
