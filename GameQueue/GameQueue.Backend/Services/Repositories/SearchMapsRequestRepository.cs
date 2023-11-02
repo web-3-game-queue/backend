@@ -27,11 +27,11 @@ internal class SearchMapsRequestRepository : ISearchMapsRequestRepository
     public async Task ComposeAsync(int id, CancellationToken token = default)
         => await updateStatus(id, SearchMapsRequestStatus.Composed);
 
-    public async Task CancelAsync(int id, CancellationToken token = default)
-        => await updateStatus(id, SearchMapsRequestStatus.Cancelled, token);
-
     public async Task DeleteAsync(int id, CancellationToken token = default)
         => await updateStatus(id, SearchMapsRequestStatus.Deleted, token);
+
+    public async Task CancelAsync(int id, CancellationToken token = default)
+        => await updateStatus(id, SearchMapsRequestStatus.Cancelled, token);
 
     public async Task FinishAsync(int id, CancellationToken token = default)
         => await updateStatus(id, SearchMapsRequestStatus.Done, token);

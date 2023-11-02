@@ -1,6 +1,7 @@
 ﻿using GameQueue.Core.Commands.SearchMapsRequests;
 using GameQueue.Core.Contracts.Services.Managers;
 using GameQueue.Core.Contracts.Services.Repositories;
+using GameQueue.Core.Exceptions;
 using GameQueue.Core.Models;
 
 namespace GameQueue.Backend.Services.Managers;
@@ -9,8 +10,15 @@ internal class SearchMapsRequestManager : ISearchMapsRequestManager
 {
     private readonly ISearchMapsRequestRepository searchMapsRequestRepository;
 
-    public SearchMapsRequestManager(ISearchMapsRequestRepository searchMapsRequestRepository)
-        => this.searchMapsRequestRepository = searchMapsRequestRepository;
+    private readonly ModeratorUser moderatorUser;
+
+    public SearchMapsRequestManager(
+        ISearchMapsRequestRepository searchMapsRequestRepository,
+        ModeratorUser moderatorUser)
+    {
+        this.searchMapsRequestRepository = searchMapsRequestRepository;
+        this.moderatorUser = moderatorUser;
+    }
 
     public async Task<ICollection<SearchMapsRequest>> GetAllAsync(CancellationToken token = default)
         => await searchMapsRequestRepository.GetAllAsync(token);
@@ -31,15 +39,41 @@ internal class SearchMapsRequestManager : ISearchMapsRequestManager
         await searchMapsRequestRepository.AddAsync(searchMapsRequest, token);
     }
 
-    public async Task ComposeAsync(int id, CancellationToken token = default)
-        => await searchMapsRequestRepository.ComposeAsync(id, token);
+    public async Task ComposeAsync(int clientId, int id, CancellationToken token = default)
+    {
+        var request = await searchMapsRequestRepository.GetByIdAsync(id);
+        if (clientId != request.CreatorUserId)
+        {
+            throw new UnauthorizedException("Client ids do not match");
+        }
+        await searchMapsRequestRepository.ComposeAsync(id, token);
+    }
 
-    public async Task CancelAsync(int id, CancellationToken token = default)
-        => await searchMapsRequestRepository.CancelAsync(id, token);
+    public async Task DeleteAsync(int clientId, int id, CancellationToken token = default)
+    {
+        var request = await searchMapsRequestRepository.GetByIdAsync(id);
+        if (clientId != request.CreatorUserId)
+        {
+            throw new UnauthorizedException("Client ids do not match");
+        }
+        await searchMapsRequestRepository.DeleteAsync(id, token);
+    }
 
-    public async Task FinishAsync(int id, CancellationToken token = default)
-        => await searchMapsRequestRepository.FinishAsync(id, token);
+    public async Task CancelAsync(int moderatorId, int id, CancellationToken token = default)
+    {
+        if (moderatorId != moderatorUser.Id)
+        {
+            throw new UnauthorizedException("Invalid moderator id");
+        }
+        await searchMapsRequestRepository.CancelAsync(id, token);
+    }
 
-    public async Task DeleteAsync(int id, CancellationToken token = default)
-        => await searchMapsRequestRepository.DeleteAsync(id, token);
+    public async Task FinishAsync(int moderatorId, int id, CancellationToken token = default)
+    {
+        if (moderatorId != moderatorUser.Id)
+        {
+            throw new UnauthorizedException("Invalid moderator id");
+        }
+        await searchMapsRequestRepository.FinishAsync(id, token);
+    }
 }

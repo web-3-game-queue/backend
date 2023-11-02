@@ -4,9 +4,6 @@ namespace GameQueue.Core.Backend.Api.Contracts.Requests.Maps;
 
 public sealed record UpdateMapRequest
 {
-    [Required]
-    public int Id { get; set; }
-
     [StringLength(100)]
     public string? Name { get; set; } = null!;
 

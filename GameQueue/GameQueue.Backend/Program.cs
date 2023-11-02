@@ -1,3 +1,4 @@
+using GameQueue.Backend;
 using GameQueue.Backend.ExceptionFilters;
 using GameQueue.Backend.Extensions;
 
@@ -6,7 +7,12 @@ var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 
 builder.Services
-    .AddDb(builder.Configuration)
+    .AddSingleton(new ModeratorUser { 
+        Id = int.Parse(configuration["ModeratorId"])
+    });
+
+builder.Services
+    .AddDb(configuration)
     .AddRepositories()
     .AddManagers();
 

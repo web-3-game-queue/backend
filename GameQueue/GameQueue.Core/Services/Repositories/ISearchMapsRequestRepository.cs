@@ -12,9 +12,9 @@ public interface ISearchMapsRequestRepository
 
     Task ComposeAsync(int id, CancellationToken token = default);
 
+    Task DeleteAsync(int id, CancellationToken token = default);
+
     Task CancelAsync(int id, CancellationToken token = default);
 
     Task FinishAsync(int id, CancellationToken token = default);
-
-    Task DeleteAsync(int id, CancellationToken token = default);
 }
