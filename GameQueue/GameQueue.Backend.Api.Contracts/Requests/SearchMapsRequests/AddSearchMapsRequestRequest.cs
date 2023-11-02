@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace GameQueue.Core.Backend.Api.Contracts.Requests.Maps;
 
@@ -10,6 +11,6 @@ public sealed record AddSearchMapsRequestRequest
     [Required]
     public int MapId { get; set; }
 
-    [Required]
+    [JsonIgnore]
     public DateTimeOffset CreationDate { get; set; } = DateTimeOffset.UtcNow;
 }
