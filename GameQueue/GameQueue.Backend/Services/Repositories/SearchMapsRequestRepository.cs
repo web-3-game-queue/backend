@@ -22,7 +22,7 @@ internal class SearchMapsRequestRepository : ISearchMapsRequestRepository
             .ThenInclude(y => y.Map)
             .Include(x => x.CreatorUser)
             .Where(x => x.Id == id)
-            .FirstOrDefaultAsync()
+            .FirstOrDefaultAsync(token)
             ?? throw new EntityNotFoundException(typeof(SearchMapsRequest), id);
         return searchMapsRequest;
     }
@@ -30,7 +30,13 @@ internal class SearchMapsRequestRepository : ISearchMapsRequestRepository
     public async Task AddAsync(SearchMapsRequest SearchMapsRequest, CancellationToken token = default)
     {
         await db.SearchMapsRequests.AddAsync(SearchMapsRequest, token);
-        await db.SaveChangesAsync();
+        await db.SaveChangesAsync(token);
+    }
+
+    public async Task AddMap(int searchMapsRequestId, int mapId, CancellationToken token = default)
+    {
+        var map = await db.Maps.FindAsync(mapId, token);
+        var searchMapsRequest = await findOrThrow(searchMapsRequestId, token);
     }
 
     public async Task ComposeAsync(int id, CancellationToken token = default)
@@ -50,7 +56,7 @@ internal class SearchMapsRequestRepository : ISearchMapsRequestRepository
         var SearchMapsRequest = await findOrThrow(id, token);
         db.Update(SearchMapsRequest);
         SearchMapsRequest.Status = status;
-        await db.SaveChangesAsync();
+        await db.SaveChangesAsync(token);
     }
 
     private async Task<SearchMapsRequest> findOrThrow(int id, CancellationToken token)

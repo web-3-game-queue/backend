@@ -47,7 +47,7 @@ internal class MapRepository : IMapRepository
         await db.RequestsToMap.AddAsync(new RequestToMap {
             SearchMapsRequestId = request.Id,
             MapId = map.Id
-        });
+        }, token);
     }
 
     private async Task<Map> findOrThrow(int id, CancellationToken token)
