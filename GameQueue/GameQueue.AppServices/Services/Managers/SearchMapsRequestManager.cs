@@ -3,8 +3,9 @@ using GameQueue.Core.Contracts.Services.Managers;
 using GameQueue.Core.Contracts.Services.Repositories;
 using GameQueue.Core.Exceptions;
 using GameQueue.Core.Models;
+using Microsoft.Extensions.Configuration;
 
-namespace GameQueue.Backend.Services.Managers;
+namespace GameQueue.AppServices.Services.Managers;
 
 internal class SearchMapsRequestManager : ISearchMapsRequestManager
 {
@@ -12,18 +13,18 @@ internal class SearchMapsRequestManager : ISearchMapsRequestManager
     private readonly IUserRepository userRepository;
     private readonly IMapRepository mapRepository;
 
-    private readonly ModeratorUser moderatorUser;
+    private readonly int moderatorId;
 
     public SearchMapsRequestManager(
         ISearchMapsRequestRepository searchMapsRequestRepository,
         IUserRepository userRepository,
         IMapRepository mapRepository,
-        ModeratorUser moderatorUser)
+        IConfiguration configuration)
     {
         this.searchMapsRequestRepository = searchMapsRequestRepository;
         this.userRepository = userRepository;
         this.mapRepository = mapRepository;
-        this.moderatorUser = moderatorUser;
+        moderatorId = int.Parse(configuration["ModeratorId"] ?? throw new NullReferenceException("ModeratorId"));
     }
 
     public async Task<ICollection<SearchMapsRequest>> GetAllAsync(CancellationToken token = default)
@@ -75,7 +76,7 @@ internal class SearchMapsRequestManager : ISearchMapsRequestManager
 
     public async Task CancelAsync(int moderatorId, int id, CancellationToken token = default)
     {
-        if (moderatorId != moderatorUser.Id)
+        if (moderatorId != this.moderatorId)
         {
             throw new UnauthorizedException("Invalid moderator id");
         }
@@ -84,7 +85,7 @@ internal class SearchMapsRequestManager : ISearchMapsRequestManager
 
     public async Task FinishAsync(int moderatorId, int id, CancellationToken token = default)
     {
-        if (moderatorId != moderatorUser.Id)
+        if (moderatorId != this.moderatorId)
         {
             throw new UnauthorizedException("Invalid moderator id");
         }

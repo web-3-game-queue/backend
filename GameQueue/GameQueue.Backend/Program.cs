@@ -8,11 +8,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 var configuration = builder.Configuration;
 
-builder.Services
-    .AddSingleton(new ModeratorUser {
-        Id = int.Parse(configuration["ModeratorId"])
-    });
-
 var minioClient = new MinioClient()
     .WithEndpoint(configuration["MINIO_ENDPOINT"])
     .WithCredentials(

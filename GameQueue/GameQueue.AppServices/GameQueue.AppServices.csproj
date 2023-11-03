@@ -7,11 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.13" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GameQueue.Backend.Api.Contracts\GameQueue.Api.Contracts.csproj" />
+    <ProjectReference Include="..\GameQueue.Core\GameQueue.Core.csproj" />
   </ItemGroup>
 
 </Project>

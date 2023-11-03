@@ -4,7 +4,7 @@ using GameQueue.Core.Models;
 using GameQueue.Core.Exceptions;
 using GameQueue.Core.Services.Managers;
 
-namespace GameQueue.Backend.Services.Managers;
+namespace GameQueue.AppServices.Services.Managers;
 
 public class MapManager : IMapManager
 {

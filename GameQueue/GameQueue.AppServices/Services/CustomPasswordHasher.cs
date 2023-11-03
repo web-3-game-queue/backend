@@ -1,9 +1,9 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 using GameQueue.Core.Models;
-using Microsoft.AspNetCore.Identity;
+using GameQueue.Core.Services;
 
-namespace GameQueue.Backend.Services;
+namespace GameQueue.AppServices.Services;
 
 internal class CustomPasswordHasher : IPasswordHasher<User>
 {
@@ -23,11 +23,9 @@ internal class CustomPasswordHasher : IPasswordHasher<User>
         return Convert.ToHexString(hash);
     }
 
-    public PasswordVerificationResult VerifyHashedPassword(User user, string hashedPassword, string providedPassword)
+    public bool IsCorrectPasword(User user, string hashedPassword, string providedPassword)
     {
         var hashedProvidedPassword = HashPassword(user, hashedPassword);
-        return hashedPassword == hashedProvidedPassword
-            ? PasswordVerificationResult.Success
-            : PasswordVerificationResult.Failed;
+        return hashedPassword == hashedProvidedPassword;
     }
 }

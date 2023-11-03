@@ -2,9 +2,9 @@
 using GameQueue.Core.Contracts.Services.Managers;
 using GameQueue.Core.Contracts.Services.Repositories;
 using GameQueue.Core.Models;
-using Microsoft.AspNetCore.Identity;
+using GameQueue.Core.Services;
 
-namespace GameQueue.Backend.Services.Managers;
+namespace GameQueue.AppServices.Services.Managers;
 
 internal class UserManager : IUserManager
 {
