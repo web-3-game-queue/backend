@@ -13,10 +13,15 @@ builder.Services
         Id = int.Parse(configuration["ModeratorId"])
     });
 
-builder.Services
-    .AddMinio(
+var minioClient = new MinioClient()
+    .WithEndpoint(configuration["MINIO_ENDPOINT"])
+    .WithCredentials(
         configuration["MINIO_ACCESS_KEY"],
-        configuration["MINIO_SECRET_KEY"]);
+        configuration["MINIO_SECRET_KEY"])
+    .WithSSL(false)
+    .Build();
+
+builder.Services.AddSingleton(minioClient);
 
 builder.Services
     .AddHttpClient();

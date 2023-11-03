@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Minio;
+using Minio.DataModel;
 using Minio.DataModel.Args;
 
 namespace GameQueue.Backend.Controllers;
@@ -9,7 +10,7 @@ namespace GameQueue.Backend.Controllers;
 [ApiController]
 public class StaticDataController : ControllerBase, IStaticDataController
 {
-    private readonly string minioUrl;
+    private readonly string staticDataUrl;
     private readonly HttpClient httpClient;
     private readonly IMinioClient minioClient;
 
@@ -18,7 +19,7 @@ public class StaticDataController : ControllerBase, IStaticDataController
         IHttpClientFactory httpClientFactory,
         IMinioClient minioClient)
     {
-        minioUrl = configuration["MINIO_ENDPOINT"] ?? throw new NullReferenceException("MINIO_ENDPOINT");
+        staticDataUrl = configuration["STATIC_DATA_URL"] ?? throw new NullReferenceException("STATIC_DATA_URL");
         httpClient = httpClientFactory.CreateClient();
         this.minioClient = minioClient;
     }
@@ -27,9 +28,25 @@ public class StaticDataController : ControllerBase, IStaticDataController
     public async Task GetUrl(
         [FromRoute(Name = "urlSuffix")] string urlSuffix)
     {
-        var dataUrl = new Uri(new Uri(minioUrl), urlSuffix);
+
+        var dataUrl = new Uri(new Uri(staticDataUrl), urlSuffix);
         var data = await httpClient.GetAsync(dataUrl);
         await copyResponseMessageIntoContext(HttpContext, data);
+    }
+
+    [HttpGet("test_minio")]
+    public async Task TestMinio()
+    {
+        var bucketsList = await minioClient.ListBucketsAsync();
+        foreach (var bucket in bucketsList.Buckets)
+        {
+            var observable = minioClient.ListObjectsAsync(new ListObjectsArgs().WithBucket(bucket.Name).WithRecursive(true));
+            var subscription = observable.Subscribe(
+                item => Console.WriteLine($"Object: {item.Key}"),
+                ex => Console.WriteLine($"OnError: {ex}"),
+                () => Console.WriteLine($"Listed all objects in bucket {bucket.Name}\n"));
+        }
+        Console.WriteLine(string.Join(", ", bucketsList));
     }
 
     private async Task copyResponseMessageIntoContext(

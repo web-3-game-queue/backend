@@ -6,8 +6,6 @@ x-minio-common: &minio-common
   command: server --console-address ":9001" http://minio{1...4}/data{1...2}
 
   environment:
-    MINIO_ACCESS_KEY: minioadmin123
-    MINIO_SECRET_KEY: minioadmin123
     MINIO_ROOT_USER: minioadmin
     MINIO_ROOT_PASSWORD: minioadmin
 
@@ -44,7 +42,8 @@ services:
       - "2023:80"
 
     environment:
-      - MINIO_ENDPOINT=http://nginx:9000
+      - MINIO_ENDPOINT=nginx:9000
+      - STATIC_DATA_URL=http://nginx:9000
       - DOTNET_USE_POLLING_FILE_WATCHER=true
 
     depends_on:
