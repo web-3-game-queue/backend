@@ -7,18 +7,20 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["GameQueue.Backend/GameQueue.Backend.csproj", "GameQueue.Backend/"]
-COPY ["GameQueue.Backend.Api.Contracts/GameQueue.Backend.Api.Contracts.csproj", "GameQueue.Backend.Api.Contracts/"]
+COPY ["GameQueue.Backend/GameQueue.Host.csproj", "GameQueue.Backend/"]
+COPY ["GameQueue.AppServices/GameQueue.AppServices.csproj", "GameQueue.AppServices/"]
 COPY ["GameQueue.Core/GameQueue.Core.csproj", "GameQueue.Core/"]
-RUN dotnet restore "GameQueue.Backend/GameQueue.Backend.csproj"
+COPY ["GameQueue.Backend.Api.Contracts/GameQueue.Api.Contracts.csproj", "GameQueue.Backend.Api.Contracts/"]
+COPY ["GameQueue.DataAccess/GameQueue.DataAccess.csproj", "GameQueue.DataAccess/"]
+RUN dotnet restore "GameQueue.Backend/GameQueue.Host.csproj"
 COPY . .
 WORKDIR "/src/GameQueue.Backend"
-RUN dotnet build "GameQueue.Backend.csproj" -c Release -o /app/build
+RUN dotnet build "GameQueue.Host.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "GameQueue.Backend.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "GameQueue.Host.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "GameQueue.Backend.dll"]
+ENTRYPOINT ["dotnet", "GameQueue.Host.dll"]

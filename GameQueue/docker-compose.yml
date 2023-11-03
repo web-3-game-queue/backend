@@ -43,6 +43,7 @@ services:
 
     environment:
       - MINIO_ENDPOINT=nginx:9000
+      - MINIO_BUCKET=root
       - STATIC_DATA_URL=http://nginx:9000
       - DOTNET_USE_POLLING_FILE_WATCHER=true
 
