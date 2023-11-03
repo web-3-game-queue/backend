@@ -8,7 +8,6 @@ namespace GameQueue.S3Access;
 
 internal class S3Manager : IS3Manager
 {
-    private readonly string staticDataUrl;
     private readonly string minioBucket;
 
     private readonly IMinioClient minioClient;
@@ -17,7 +16,6 @@ internal class S3Manager : IS3Manager
         IConfiguration configuration,
         IMinioClient minioClient)
     {
-        staticDataUrl = configuration["STATIC_DATA_URL"] ?? throw new NullReferenceException("STATIC_DATA_URL");
         minioBucket = configuration["MINIO_BUCKET"] ?? throw new NullReferenceException("MINIO_BUCKET");
 
         this.minioClient = minioClient;

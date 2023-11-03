@@ -3,18 +3,21 @@ using GameQueue.Core.Contracts.Services.Repositories;
 using GameQueue.Core.Models;
 using GameQueue.Core.Exceptions;
 using GameQueue.Core.Services.Managers;
+using GameQueue.Core.Services;
 
 namespace GameQueue.AppServices.Services.Managers;
 
 public class MapManager : IMapManager
 {
     private IMapRepository mapRepository;
-    private ISearchMapsRequestRepository searchMapsRequestRepository;
+    private IS3Manager s3Manager;
 
-    public MapManager(IMapRepository mapRepository, ISearchMapsRequestRepository searchMapsRequestRepository)
+    public MapManager(
+        IMapRepository mapRepository,
+        IS3Manager s3Manager)
     {
         this.mapRepository = mapRepository;
-        this.searchMapsRequestRepository = searchMapsRequestRepository;
+        this.s3Manager = s3Manager;
     }
 
     public async Task<ICollection<Map>> GetAllAsync(CancellationToken token = default)
@@ -41,7 +44,19 @@ public class MapManager : IMapManager
     }
 
     public async Task DeleteAsync(int id, CancellationToken token = default)
-        => await mapRepository.DeleteAsync(id, token);
+    {
+        Map map;
+        try
+        {
+            map = await mapRepository.GetByIdAsync(id, token);
+        }
+        catch (EntityNotFoundException)
+        {
+            return;
+        }
+        await mapRepository.DeleteAsync(id, token);
+        await s3Manager.DeleteObjectAsync(map.CoverImageUrl);
+    }
 
     private Map convertAddCommandToMap(AddMapCommand addMapCommand)
         => new Map {
