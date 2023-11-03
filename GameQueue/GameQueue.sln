@@ -9,9 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameQueue.Core", "GameQueue
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameQueue.Api.Contracts", "GameQueue.Backend.Api.Contracts\GameQueue.Api.Contracts.csproj", "{BE5A7EC2-60E4-43A0-9393-DB9A6A9B5FF0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameQueue.AppServices", "GameQueue.AppServices\GameQueue.AppServices.csproj", "{0DDE5C64-9ED8-4948-BC60-CB917E31E8C5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameQueue.AppServices", "GameQueue.AppServices\GameQueue.AppServices.csproj", "{0DDE5C64-9ED8-4948-BC60-CB917E31E8C5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameQueue.DataAccess", "GameQueue.DataAccess\GameQueue.DataAccess.csproj", "{46DB940D-1FB7-4FED-953A-197925EC50FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameQueue.DataAccess", "GameQueue.DataAccess\GameQueue.DataAccess.csproj", "{46DB940D-1FB7-4FED-953A-197925EC50FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameQueue.S3Access", "GameQueue.S3Access\GameQueue.S3Access.csproj", "{C2202831-91A0-42E0-BCEC-740D19A575B7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{46DB940D-1FB7-4FED-953A-197925EC50FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{46DB940D-1FB7-4FED-953A-197925EC50FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{46DB940D-1FB7-4FED-953A-197925EC50FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2202831-91A0-42E0-BCEC-740D19A575B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2202831-91A0-42E0-BCEC-740D19A575B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2202831-91A0-42E0-BCEC-740D19A575B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2202831-91A0-42E0-BCEC-740D19A575B7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

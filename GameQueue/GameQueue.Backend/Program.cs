@@ -2,6 +2,7 @@ using System.Text.Json.Serialization;
 using GameQueue.Backend.ExceptionFilters;
 using GameQueue.Backend.Extensions;
 using GameQueue.DataAccess.Extensions;
+using GameQueue.S3Access.Extensions;
 using Minio;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,6 +23,7 @@ builder.Services
     .AddHttpClient();
 
 builder.Services
+    .AddS3Manager()
     .AddDb(configuration)
     .AddRepositories()
     .AddManagers();

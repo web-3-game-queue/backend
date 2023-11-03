@@ -21,6 +21,7 @@
     <ProjectReference Include="..\GameQueue.Backend.Api.Contracts\GameQueue.Api.Contracts.csproj" />
     <ProjectReference Include="..\GameQueue.Core\GameQueue.Core.csproj" />
     <ProjectReference Include="..\GameQueue.DataAccess\GameQueue.DataAccess.csproj" />
+    <ProjectReference Include="..\GameQueue.S3Access\GameQueue.S3Access.csproj" />
   </ItemGroup>
 
 </Project>
