@@ -11,6 +11,8 @@ namespace GameQueue.Backend.Controllers;
 public class StaticDataController : ControllerBase, IStaticDataController
 {
     private readonly string staticDataUrl;
+    private readonly string minioBucket;
+
     private readonly HttpClient httpClient;
     private readonly IMinioClient minioClient;
 
@@ -20,6 +22,8 @@ public class StaticDataController : ControllerBase, IStaticDataController
         IMinioClient minioClient)
     {
         staticDataUrl = configuration["STATIC_DATA_URL"] ?? throw new NullReferenceException("STATIC_DATA_URL");
+        minioBucket = configuration["MINIO_BUCKET"] ?? throw new NullReferenceException("MINIO_BUCKET");
+
         httpClient = httpClientFactory.CreateClient();
         this.minioClient = minioClient;
     }
@@ -28,8 +32,12 @@ public class StaticDataController : ControllerBase, IStaticDataController
     public async Task GetUrl(
         [FromRoute(Name = "urlSuffix")] string urlSuffix)
     {
+        var removeArgs = new RemoveObjectArgs()
+                            .WithBucket(minioBucket)
+                            .WithObject("static/DOTA.jpg");
+        await minioClient.RemoveObjectAsync(removeArgs);
 
-        var dataUrl = new Uri(new Uri(staticDataUrl), urlSuffix);
+        var dataUrl = new Uri(new Uri(new Uri(staticDataUrl), minioBucket), urlSuffix);
         var data = await httpClient.GetAsync(dataUrl);
         await copyResponseMessageIntoContext(HttpContext, data);
     }
@@ -46,7 +54,6 @@ public class StaticDataController : ControllerBase, IStaticDataController
                 ex => Console.WriteLine($"OnError: {ex}"),
                 () => Console.WriteLine($"Listed all objects in bucket {bucket.Name}\n"));
         }
-        Console.WriteLine(string.Join(", ", bucketsList));
     }
 
     private async Task copyResponseMessageIntoContext(
