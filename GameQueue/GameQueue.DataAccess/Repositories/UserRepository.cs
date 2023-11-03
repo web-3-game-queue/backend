@@ -1,10 +1,9 @@
-﻿using GameQueue.Backend.DataAccess;
-using GameQueue.Core.Contracts.Services.Repositories;
+﻿using GameQueue.Core.Contracts.Services.Repositories;
 using GameQueue.Core.Exceptions;
 using GameQueue.Core.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace GameQueue.Backend.Services.Repositories;
+namespace GameQueue.DataAccess.Repositories;
 
 internal class UserRepository : IUserRepository
 {

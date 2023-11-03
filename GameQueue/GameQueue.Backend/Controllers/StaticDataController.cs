@@ -1,8 +1,6 @@
 ﻿using GameQueue.Backend.Api.Contracts.Controllers;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Minio;
-using Minio.DataModel;
 using Minio.DataModel.Args;
 
 namespace GameQueue.Backend.Controllers;

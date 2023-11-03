@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameQueue.Api.Contracts", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameQueue.AppServices", "GameQueue.AppServices\GameQueue.AppServices.csproj", "{0DDE5C64-9ED8-4948-BC60-CB917E31E8C5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameQueue.DataAccess", "GameQueue.DataAccess\GameQueue.DataAccess.csproj", "{46DB940D-1FB7-4FED-953A-197925EC50FC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{0DDE5C64-9ED8-4948-BC60-CB917E31E8C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0DDE5C64-9ED8-4948-BC60-CB917E31E8C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0DDE5C64-9ED8-4948-BC60-CB917E31E8C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46DB940D-1FB7-4FED-953A-197925EC50FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46DB940D-1FB7-4FED-953A-197925EC50FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46DB940D-1FB7-4FED-953A-197925EC50FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46DB940D-1FB7-4FED-953A-197925EC50FC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,7 +1,7 @@
 ﻿using GameQueue.Core.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace GameQueue.Backend.DataAccess;
+namespace GameQueue.DataAccess;
 
 public class GameQueueContext : DbContext
 {

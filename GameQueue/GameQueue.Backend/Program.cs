@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
-using GameQueue.Backend;
 using GameQueue.Backend.ExceptionFilters;
 using GameQueue.Backend.Extensions;
+using GameQueue.DataAccess.Extensions;
 using Minio;
 
 var builder = WebApplication.CreateBuilder(args);

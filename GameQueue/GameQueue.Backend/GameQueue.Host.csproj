@@ -7,15 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EFCore.NamingConventions" Version="7.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.5" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.13" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.13">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Minio" Version="6.0.0" />
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.11" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
@@ -23,6 +20,7 @@
     <ProjectReference Include="..\GameQueue.AppServices\GameQueue.AppServices.csproj" />
     <ProjectReference Include="..\GameQueue.Backend.Api.Contracts\GameQueue.Api.Contracts.csproj" />
     <ProjectReference Include="..\GameQueue.Core\GameQueue.Core.csproj" />
+    <ProjectReference Include="..\GameQueue.DataAccess\GameQueue.DataAccess.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,15 +1,17 @@
-﻿using GameQueue.Backend.DataAccess;
-using GameQueue.Backend.Services.Repositories;
-using GameQueue.Core.Contracts.Services.Repositories;
+﻿using GameQueue.Core.Contracts.Services.Repositories;
+using GameQueue.DataAccess.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace GameQueue.Backend.Extensions;
+namespace GameQueue.DataAccess.Extensions;
 
 public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddDb(this IServiceCollection services, IConfiguration configuration)
         => services.AddDbContext<GameQueueContext>(
-            opt => opt.UseNpgsql(configuration.GetConnectionString("DB_URL")));
+            opt => opt
+                    .UseNpgsql(configuration.GetConnectionString("DB_URL"), b => b.MigrationsAssembly("GameQueue.Host")));
 
     public static IServiceCollection AddRepositories(this IServiceCollection services)
         => services
