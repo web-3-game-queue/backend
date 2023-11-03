@@ -74,6 +74,29 @@ services:
     networks:
       - game-queue-network
 
+  nginx:
+    image: nginx:1.19.2-alpine
+
+    hostname: nginx
+
+    volumes:
+      - type: bind
+        source: ./nginx.conf
+        target: /etc/nginx/nginx.conf
+
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+
+    depends_on:
+      - minio1
+      - minio2
+      - minio3
+      - minio4
+
+    networks:
+      - game-queue-network
+
   minio1:
     <<: *minio-common
     hostname: minio1
@@ -108,29 +131,6 @@ services:
     volumes:
       - data4-1:/data1
       - data4-2:/data2
-
-  nginx:
-    image: nginx:1.19.2-alpine
-
-    hostname: nginx
-
-    volumes:
-      - type: bind
-        source: ./nginx.conf
-        target: /etc/nginx/nginx.conf:ro
-
-    ports:
-      - "9000:9000"
-      - "9001:9001"
-
-    depends_on:
-      - minio1
-      - minio2
-      - minio3
-      - minio4
-
-    networks:
-      - game-queue-network
 
 volumes:
   db-data:

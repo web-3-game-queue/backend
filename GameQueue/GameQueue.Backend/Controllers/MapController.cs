@@ -47,7 +47,7 @@ public class MapController : ControllerBase, IMapController
     public async Task Delete(
         [FromRoute(Name = "id")] int id,
         CancellationToken token = default)
-        => await mapManager.DeleteAsync(id, token);
+            => await mapManager.DeleteAsync(id, token);
 
     private AddMapCommand convertAddMapRequest(AddMapRequest addMapRequest)
         => new AddMapCommand {

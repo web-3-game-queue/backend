@@ -2,6 +2,7 @@ using System.Text.Json.Serialization;
 using GameQueue.Backend;
 using GameQueue.Backend.ExceptionFilters;
 using GameQueue.Backend.Extensions;
+using Minio;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,14 @@ builder.Services
     .AddSingleton(new ModeratorUser {
         Id = int.Parse(configuration["ModeratorId"])
     });
+
+builder.Services
+    .AddMinio(
+        configuration["MINIO_ACCESS_KEY"],
+        configuration["MINIO_SECRET_KEY"]);
+
+builder.Services
+    .AddHttpClient();
 
 builder.Services
     .AddDb(configuration)
@@ -31,8 +40,8 @@ var app = builder.Build();
 
 //if (app.Environment.IsDevelopment())
 //{
-    app.UseSwagger();
-    app.UseSwaggerUI();
+app.UseSwagger();
+app.UseSwaggerUI();
 //}
 
 app
