@@ -4,6 +4,8 @@ using GameQueue.Core.Models;
 using GameQueue.Core.Exceptions;
 using GameQueue.Core.Services.Managers;
 using GameQueue.Core.Services;
+using Microsoft.Extensions.Logging;
+using System.Diagnostics;
 
 namespace GameQueue.AppServices.Services.Managers;
 
@@ -29,7 +31,12 @@ public class MapManager : IMapManager
     public async Task AddAsync(AddMapCommand addMapCommand, CancellationToken token = default)
     {
         var map = convertAddCommandToMap(addMapCommand);
-        await s3Manager.AddObjectAsync(addMapCommand.CoverImageUrl, addMapCommand.CoverImageData, addMapCommand.ContentType, token);
+        var image = addMapCommand.CoverImageFile;
+        await s3Manager.AddObjectAsync(
+            image.Url ?? throw new NullReferenceException(nameof(image.Url)),
+            image.FileData,
+            image.ContentType,
+            token);
         await mapRepository.AddAsync(map, token);
     }
 
@@ -40,6 +47,16 @@ public class MapManager : IMapManager
             throw new ValidationException("Update command can not be empty");
         }
         var map = await mapRepository.GetByIdAsync(updateMapCommand.Id, token);
+        if (updateMapCommand.CoverImageFile != null)
+        {
+            var image = updateMapCommand.CoverImageFile;
+            await s3Manager.DeleteObjectAsync(map.CoverImageUrl, token);
+            await s3Manager.AddObjectAsync(
+                image.Url ?? map.CoverImageUrl,
+                image.FileData,
+                image.ContentType,
+                token);
+        }
         updateMapFromCommand(updateMapCommand, ref map);
         await mapRepository.UpdateAsync(map, token);
     }
@@ -72,17 +89,17 @@ public class MapManager : IMapManager
             Width = addMapCommand.Width,
             Height = addMapCommand.Height,
             MaxPlayersCount = addMapCommand.MaxPlayersCount,
-            CoverImageUrl = addMapCommand.CoverImageUrl,
+            CoverImageUrl = addMapCommand.CoverImageFile.Url ?? throw new NullReferenceException(nameof(addMapCommand.CoverImageFile.Url)),
             Price = addMapCommand.Price
         };
 
     private void updateMapFromCommand(UpdateMapCommand updateMapCommand, ref Map map)
-        => map = map with {
-            Name = updateMapCommand.Name ?? map.Name,
-            Width = updateMapCommand.Width ?? map.Width,
-            Height = updateMapCommand.Height ?? map.Height,
-            MaxPlayersCount = updateMapCommand.MaxPlayersCount ?? map.MaxPlayersCount,
-            CoverImageUrl = updateMapCommand.CoverImageUrl ?? map.CoverImageUrl,
-            Price = updateMapCommand.Price ?? map.Price,
-        };
+    {
+        map.Name = updateMapCommand.Name ?? map.Name;
+        map.Width = updateMapCommand.Width ?? map.Width;
+        map.Height = updateMapCommand.Height ?? map.Height;
+        map.MaxPlayersCount = updateMapCommand.MaxPlayersCount ?? map.MaxPlayersCount;
+        map.CoverImageUrl = updateMapCommand.CoverImageFile?.Url ?? map.CoverImageUrl;
+        map.Price = updateMapCommand.Price ?? map.Price;
+    }
 }

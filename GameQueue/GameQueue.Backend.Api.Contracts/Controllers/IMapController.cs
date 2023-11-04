@@ -12,7 +12,7 @@ public interface IMapController
 
     Task Add(AddMapRequest addMapRequest, IFormFile coverImageFile, CancellationToken token = default);
 
-    Task Update(int id, UpdateMapRequest updateMapRequest, CancellationToken token = default);
+    Task Update(int id, UpdateMapRequest updateMapRequest, IFormFile? coverImageFile, CancellationToken token = default);
 
     Task Delete(int id, CancellationToken token = default);
 

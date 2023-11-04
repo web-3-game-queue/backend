@@ -3,6 +3,7 @@ using GameQueue.Backend.Api.Contracts.Responses;
 using GameQueue.Core.Backend.Api.Contracts.Requests.Maps;
 using GameQueue.Core.Commands.Maps;
 using GameQueue.Core.Extensions;
+using GameQueue.Core.Models;
 using GameQueue.Core.Services.Managers;
 using GameQueue.Host.Exceptions;
 using Microsoft.AspNetCore.Mvc;
@@ -52,10 +53,11 @@ public class MapController : ControllerBase, IMapController
     [HttpPut("{id:int:min(0)}")]
     public async Task Update(
         [FromRoute(Name = "id")] int id,
-        [FromBody] UpdateMapRequest updateMapRequest,
+        [FromForm] UpdateMapRequest updateMapRequest,
+        IFormFile? coverImageFile,
         CancellationToken token = default)
             => await mapManager
-                .UpdateAsync(convertUpdateMapRequest(id, updateMapRequest), token);
+                .UpdateAsync(convertUpdateMapRequest(id, updateMapRequest, coverImageFile), token);
 
     [HttpDelete("{id:int:min(0)}")]
     public async Task Delete(
@@ -75,20 +77,26 @@ public class MapController : ControllerBase, IMapController
             Width = addMapRequest.Width,
             Height = addMapRequest.Height,
             MaxPlayersCount = addMapRequest.MaxPlayersCount,
-            CoverImageUrl = addMapRequest.CoverImageUrl,
             Price = addMapRequest.Price,
-            CoverImageData = coverImageFile.OpenReadStream(),
-            ContentType = coverImageFile.ContentType
+            CoverImageFile = new CoverImageUploadModel {
+                Url = addMapRequest.CoverImageUrl,
+                FileData = coverImageFile.OpenReadStream(),
+                ContentType = coverImageFile.ContentType
+            }
         };
 
-    private UpdateMapCommand convertUpdateMapRequest(int id, UpdateMapRequest updateMapRequest)
+    private UpdateMapCommand convertUpdateMapRequest(int id, UpdateMapRequest updateMapRequest, IFormFile? coverImageFile)
         => new UpdateMapCommand {
             Id = id,
             Name = updateMapRequest.Name,
             Width = updateMapRequest.Width,
             Height = updateMapRequest.Height,
             MaxPlayersCount = updateMapRequest.MaxPlayersCount,
-            CoverImageUrl = updateMapRequest.CoverImageUrl,
-            Price = updateMapRequest.Price
+            Price = updateMapRequest.Price,
+            CoverImageFile = coverImageFile == null ? null : new CoverImageUploadModel {
+                Url = updateMapRequest.CoverImageUrl,
+                FileData = coverImageFile.OpenReadStream(),
+                ContentType = coverImageFile.ContentType
+            }
         };
 }

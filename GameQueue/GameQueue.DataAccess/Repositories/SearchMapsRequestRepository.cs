@@ -23,7 +23,7 @@ internal class SearchMapsRequestRepository : ISearchMapsRequestRepository
             .ThenInclude(y => y.Map)
             .Include(x => x.CreatorUser)
             .Where(x => x.Id == id)
-            .FirstOrDefaultAsync(token)
+            .SingleOrDefaultAsync(token)
             ?? throw new EntityNotFoundException(typeof(SearchMapsRequest), id);
         return searchMapsRequest;
     }
@@ -50,7 +50,7 @@ internal class SearchMapsRequestRepository : ISearchMapsRequestRepository
         var searchMapsRequest = await db.SearchMapsRequests
             .Include(x => x.RequestsToMap)
             .Where(x => x.Id == searchMapsRequestId)
-            .FirstOrDefaultAsync()
+            .SingleOrDefaultAsync()
             ?? throw new EntityNotFoundException(typeof(SearchMapsRequest), searchMapsRequestId);
         var map = await db.Maps.FindAsync(mapId, token);
         if (map == null)
