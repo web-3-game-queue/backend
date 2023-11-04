@@ -1,12 +1,12 @@
-﻿using GameQueue.Backend.Api.Contracts.Controllers;
-using GameQueue.Backend.Api.Contracts.Responses;
-using GameQueue.Core.Backend.Api.Contracts.Requests.Maps;
+﻿using GameQueue.Api.Contracts.Controllers;
+using GameQueue.Api.Contracts.Requests.SearchMapsRequests;
+using GameQueue.Api.Contracts.Responses;
 using GameQueue.Core.Commands.SearchMapsRequests;
-using GameQueue.Core.Contracts.Services.Managers;
 using GameQueue.Core.Extensions;
+using GameQueue.Core.Services.Managers;
 using Microsoft.AspNetCore.Mvc;
 
-namespace GameQueue.Backend.Controllers;
+namespace GameQueue.Host.Controllers;
 [Route("api/search_maps_request")]
 [ApiController]
 public class SearchMapsRequestController : ControllerBase, ISearchMapsRequestController

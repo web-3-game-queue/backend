@@ -1,8 +1,8 @@
-﻿using GameQueue.Backend.Api.Contracts.Responses;
-using GameQueue.Core.Backend.Api.Contracts.Requests.Maps;
+﻿using GameQueue.Api.Contracts.Requests.Maps;
+using GameQueue.Api.Contracts.Responses;
 using Microsoft.AspNetCore.Http;
 
-namespace GameQueue.Backend.Api.Contracts.Controllers;
+namespace GameQueue.Api.Contracts.Controllers;
 
 public interface IMapController
 {

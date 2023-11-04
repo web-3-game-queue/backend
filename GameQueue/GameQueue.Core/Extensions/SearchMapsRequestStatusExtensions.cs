@@ -1,4 +1,4 @@
-﻿using GameQueue.Backend.Api.Contracts.Models;
+﻿using GameQueue.Api.Contracts.Models;
 using GameQueue.Core.Models;
 using System.ComponentModel;
 

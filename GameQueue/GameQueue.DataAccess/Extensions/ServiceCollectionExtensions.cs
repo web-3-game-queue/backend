@@ -1,4 +1,4 @@
-﻿using GameQueue.Core.Contracts.Services.Repositories;
+﻿using GameQueue.Core.Services.Repositories;
 using GameQueue.DataAccess.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;

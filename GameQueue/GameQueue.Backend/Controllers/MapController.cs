@@ -1,6 +1,6 @@
-﻿using GameQueue.Backend.Api.Contracts.Controllers;
-using GameQueue.Backend.Api.Contracts.Responses;
-using GameQueue.Core.Backend.Api.Contracts.Requests.Maps;
+﻿using GameQueue.Api.Contracts.Controllers;
+using GameQueue.Api.Contracts.Requests.Maps;
+using GameQueue.Api.Contracts.Responses;
 using GameQueue.Core.Commands.Maps;
 using GameQueue.Core.Extensions;
 using GameQueue.Core.Models;
@@ -8,7 +8,7 @@ using GameQueue.Core.Services.Managers;
 using GameQueue.Host.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 
-namespace GameQueue.Backend.Controllers;
+namespace GameQueue.Host.Controllers;
 [Route("api/map")]
 [ApiController]
 public class MapController : ControllerBase, IMapController

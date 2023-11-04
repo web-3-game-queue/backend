@@ -1,9 +1,9 @@
-﻿using GameQueue.Backend.Api.Contracts.Controllers;
+﻿using GameQueue.Api.Contracts.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Minio;
 using Minio.DataModel.Args;
 
-namespace GameQueue.Backend.Controllers;
+namespace GameQueue.Host.Controllers;
 [Route("api/static_data")]
 [ApiController]
 public class StaticDataController : ControllerBase, IStaticDataController

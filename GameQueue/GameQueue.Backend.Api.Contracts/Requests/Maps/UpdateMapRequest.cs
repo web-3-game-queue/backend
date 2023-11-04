@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace GameQueue.Core.Backend.Api.Contracts.Requests.Maps;
+namespace GameQueue.Api.Contracts.Requests.Maps;
 
 public sealed record UpdateMapRequest
 {

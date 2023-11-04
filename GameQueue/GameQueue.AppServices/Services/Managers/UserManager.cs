@@ -1,8 +1,8 @@
 ﻿using GameQueue.Core.Commands.Users;
-using GameQueue.Core.Contracts.Services.Managers;
-using GameQueue.Core.Contracts.Services.Repositories;
-using GameQueue.Core.Models;
+using GameQueue.Core.Entities;
 using GameQueue.Core.Services;
+using GameQueue.Core.Services.Managers;
+using GameQueue.Core.Services.Repositories;
 
 namespace GameQueue.AppServices.Services.Managers;
 

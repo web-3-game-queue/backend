@@ -1,11 +1,12 @@
 ﻿using GameQueue.Core.Commands.Maps;
-using GameQueue.Core.Contracts.Services.Repositories;
 using GameQueue.Core.Models;
 using GameQueue.Core.Exceptions;
 using GameQueue.Core.Services.Managers;
 using GameQueue.Core.Services;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
+using GameQueue.Core.Entities;
+using GameQueue.Core.Services.Repositories;
 
 namespace GameQueue.AppServices.Services.Managers;
 

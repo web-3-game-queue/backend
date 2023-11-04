@@ -1,4 +1,4 @@
-﻿namespace GameQueue.Backend.Api.Contracts.Controllers;
+﻿namespace GameQueue.Api.Contracts.Controllers;
 
 public interface IStaticDataController
 {

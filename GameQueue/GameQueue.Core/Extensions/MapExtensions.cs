@@ -1,5 +1,5 @@
-﻿using GameQueue.Backend.Api.Contracts.Responses;
-using GameQueue.Core.Models;
+﻿using GameQueue.Api.Contracts.Responses;
+using GameQueue.Core.Entities;
 
 namespace GameQueue.Core.Extensions;
 

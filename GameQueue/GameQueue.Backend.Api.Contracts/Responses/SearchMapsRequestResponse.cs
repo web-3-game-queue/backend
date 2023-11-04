@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
-using GameQueue.Backend.Api.Contracts.Models;
+using GameQueue.Api.Contracts.Models;
 
-namespace GameQueue.Backend.Api.Contracts.Responses;
+namespace GameQueue.Api.Contracts.Responses;
 
 public sealed record SearchMapsRequestResponse
 {

@@ -1,4 +1,5 @@
-﻿using GameQueue.Core.Models;
+﻿using GameQueue.Core.Entities;
+using GameQueue.Core.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace GameQueue.DataAccess;

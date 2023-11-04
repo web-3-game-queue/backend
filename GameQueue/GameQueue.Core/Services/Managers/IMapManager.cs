@@ -1,5 +1,5 @@
 ﻿using GameQueue.Core.Commands.Maps;
-using GameQueue.Core.Models;
+using GameQueue.Core.Entities;
 
 namespace GameQueue.Core.Services.Managers;
 

@@ -2,7 +2,7 @@
 using GameQueue.Host.Exceptions;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace GameQueue.Backend.ExceptionFilters;
+namespace GameQueue.Host.ExceptionFilters;
 
 public class ExceptionFilter : IAsyncExceptionFilter
 {

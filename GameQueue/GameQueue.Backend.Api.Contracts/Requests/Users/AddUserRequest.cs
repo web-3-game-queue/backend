@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace GameQueue.Core.Backend.Api.Contracts.Requests.Maps;
+namespace GameQueue.Api.Contracts.Requests.Users;
 
 public sealed record AddUserRequest
 {

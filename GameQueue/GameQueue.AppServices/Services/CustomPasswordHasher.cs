@@ -1,6 +1,6 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
-using GameQueue.Core.Models;
+using GameQueue.Core.Entities;
 using GameQueue.Core.Services;
 
 namespace GameQueue.AppServices.Services;

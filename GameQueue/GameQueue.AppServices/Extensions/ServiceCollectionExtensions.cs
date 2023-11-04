@@ -1,12 +1,11 @@
 ﻿using GameQueue.AppServices.Services;
 using GameQueue.AppServices.Services.Managers;
-using GameQueue.Core.Contracts.Services.Managers;
-using GameQueue.Core.Models;
+using GameQueue.Core.Entities;
 using GameQueue.Core.Services;
 using GameQueue.Core.Services.Managers;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace GameQueue.Backend.Extensions;
+namespace GameQueue.AppServices.Extensions;
 
 public static class ServiceCollectionExtensions
 {

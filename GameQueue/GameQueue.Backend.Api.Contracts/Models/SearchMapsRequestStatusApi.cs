@@ -1,4 +1,4 @@
-﻿namespace GameQueue.Backend.Api.Contracts.Models;
+﻿namespace GameQueue.Api.Contracts.Models;
 
 public enum SearchMapsRequestStatusApi
 {

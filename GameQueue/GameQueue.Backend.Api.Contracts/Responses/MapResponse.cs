@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace GameQueue.Backend.Api.Contracts.Responses;
+namespace GameQueue.Api.Contracts.Responses;
 
 public sealed record MapResponse
 {

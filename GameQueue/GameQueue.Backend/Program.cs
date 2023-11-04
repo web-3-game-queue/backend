@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
-using GameQueue.Backend.ExceptionFilters;
-using GameQueue.Backend.Extensions;
+using GameQueue.AppServices.Extensions;
 using GameQueue.DataAccess.Extensions;
+using GameQueue.Host.ExceptionFilters;
 using GameQueue.S3Access.Extensions;
 using Minio;
 

@@ -1,8 +1,9 @@
 ﻿using GameQueue.Core.Commands.SearchMapsRequests;
-using GameQueue.Core.Contracts.Services.Managers;
-using GameQueue.Core.Contracts.Services.Repositories;
+using GameQueue.Core.Entities;
 using GameQueue.Core.Exceptions;
 using GameQueue.Core.Models;
+using GameQueue.Core.Services.Managers;
+using GameQueue.Core.Services.Repositories;
 using Microsoft.Extensions.Configuration;
 
 namespace GameQueue.AppServices.Services.Managers;

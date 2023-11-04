@@ -1,7 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using GameQueue.Core.Models;
 
-namespace GameQueue.Core.Models;
+namespace GameQueue.Core.Entities;
 
 [Table("search_maps_requests")]
 public sealed record SearchMapsRequest

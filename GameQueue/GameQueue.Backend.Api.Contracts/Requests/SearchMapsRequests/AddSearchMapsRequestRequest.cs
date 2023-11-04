@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace GameQueue.Core.Backend.Api.Contracts.Requests.Maps;
+namespace GameQueue.Api.Contracts.Requests.SearchMapsRequests;
 
 public sealed record AddSearchMapsRequestRequest
 {

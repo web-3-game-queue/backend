@@ -1,7 +1,7 @@
 ﻿using GameQueue.Core.Commands.Users;
-using GameQueue.Core.Models;
+using GameQueue.Core.Entities;
 
-namespace GameQueue.Core.Contracts.Services.Managers;
+namespace GameQueue.Core.Services.Managers;
 
 public interface IUserManager
 {

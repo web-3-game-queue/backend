@@ -1,6 +1,7 @@
-﻿using GameQueue.Core.Contracts.Services.Repositories;
+﻿using GameQueue.Core.Entities;
 using GameQueue.Core.Exceptions;
 using GameQueue.Core.Models;
+using GameQueue.Core.Services.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace GameQueue.DataAccess.Repositories;

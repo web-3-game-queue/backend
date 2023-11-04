@@ -1,6 +1,6 @@
-﻿using GameQueue.Core.Models;
+﻿using GameQueue.Core.Entities;
 
-namespace GameQueue.Core.Contracts.Services.Repositories;
+namespace GameQueue.Core.Services.Repositories;
 
 public interface IUserRepository
 {
