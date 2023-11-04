@@ -21,12 +21,17 @@ internal class S3Manager : IS3Manager
         this.minioClient = minioClient;
     }
 
-    public async Task AddObjectAsync(string objectUrl, Stream data, CancellationToken token = default)
+    public async Task AddObjectAsync(string objectUrl, Stream data, string? contentType, CancellationToken token = default)
     {
         var putObjectArgs = new PutObjectArgs()
             .WithBucket(minioBucket)
             .WithObject(objectUrl)
-            .WithStreamData(data);
+            .WithStreamData(data)
+            .WithObjectSize(data.Length);
+        if (contentType != null)
+        {
+            putObjectArgs = putObjectArgs.WithContentType(contentType);
+        }
         await minioClient.PutObjectAsync(putObjectArgs, token);
     }
 

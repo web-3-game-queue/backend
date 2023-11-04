@@ -2,7 +2,7 @@
 
 public interface IS3Manager
 {
-    public Task AddObjectAsync(string objectUrl, Stream data, CancellationToken token = default);
+    public Task AddObjectAsync(string objectUrl, Stream data, string? contentType = null, CancellationToken token = default);
 
     public Task DeleteObjectAsync(string objectUrl, CancellationToken token = default);
 

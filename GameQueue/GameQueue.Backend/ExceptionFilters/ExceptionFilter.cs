@@ -1,4 +1,5 @@
 ﻿using GameQueue.Core.Exceptions;
+using GameQueue.Host.Exceptions;
 using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace GameQueue.Backend.ExceptionFilters;
@@ -18,14 +19,19 @@ public class ExceptionFilter : IAsyncExceptionFilter
                 await context.HttpContext.Response.WriteAsync(string.Format("Not found {0}", e.Message));
                 break;
 
-            case UnauthorizedException e:
-                context.HttpContext.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                await context.HttpContext.Response.WriteAsync(string.Format("Unauthorized: {0}", e.Message));
+            case InvalidContentTypeException e:
+                context.HttpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
+                await context.HttpContext.Response.WriteAsync(string.Format("Invalid request: {0}", e.Message));
                 break;
 
             case ValidationException e:
                 context.HttpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
                 await context.HttpContext.Response.WriteAsync(string.Format("Invalid request: {0}", e.Message));
+                break;
+
+            case UnauthorizedException e:
+                context.HttpContext.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                await context.HttpContext.Response.WriteAsync(string.Format("Unauthorized: {0}", e.Message));
                 break;
 
             default:

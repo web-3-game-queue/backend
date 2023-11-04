@@ -14,4 +14,6 @@ public interface IMapManager
     Task UpdateAsync(UpdateMapCommand updateMapCommand, CancellationToken token = default);
 
     Task DeleteAsync(int id, CancellationToken token = default);
+
+    Task ForceDeleteAsync(int id, CancellationToken token = default);
 }

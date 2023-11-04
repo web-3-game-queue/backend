@@ -29,11 +29,9 @@ internal class MapRepository : IMapRepository
         await db.SaveChangesAsync(token);
     }
 
-    public async Task DeleteAsync(int id, CancellationToken token = default)
+    public async Task DeleteAsync(Map map, CancellationToken token = default)
     {
-        var map = await findOrThrow(id, token);
-        map.Status = MapStatus.Deleted;
-        map.RequestsToMap.Clear();
+        db.Maps.Remove(map);
         await db.SaveChangesAsync(token);
     }
 

@@ -4,6 +4,7 @@ using GameQueue.Core.Backend.Api.Contracts.Requests.Maps;
 using GameQueue.Core.Commands.Maps;
 using GameQueue.Core.Extensions;
 using GameQueue.Core.Services.Managers;
+using GameQueue.Host.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GameQueue.Backend.Controllers;
@@ -12,6 +13,13 @@ namespace GameQueue.Backend.Controllers;
 public class MapController : ControllerBase, IMapController
 {
     private readonly IMapManager mapManager;
+
+    private static readonly string[] AllowedContentTypes = {
+        "image/gif",
+        "image/jpeg",
+        "image/png",
+        "image/webp"
+    };
 
     public MapController(IMapManager mapManager) => this.mapManager = mapManager;
 
@@ -30,10 +38,16 @@ public class MapController : ControllerBase, IMapController
 
     [HttpPost]
     public async Task Add(
-        [FromBody] AddMapRequest addMapRequest,
+        [FromForm] AddMapRequest addMapRequest,
+        IFormFile coverImageFile,
         CancellationToken token = default)
-            => await mapManager
-                .AddAsync(convertAddMapRequest(addMapRequest), token);
+    {
+        if (!AllowedContentTypes.Contains(coverImageFile.ContentType))
+        {
+            throw new InvalidContentTypeException(coverImageFile.ContentType, AllowedContentTypes);
+        }
+        await mapManager.AddAsync(convertAddMapRequest(addMapRequest, coverImageFile), token);
+    }
 
     [HttpPut("{id:int:min(0)}")]
     public async Task Update(
@@ -49,14 +63,22 @@ public class MapController : ControllerBase, IMapController
         CancellationToken token = default)
             => await mapManager.DeleteAsync(id, token);
 
-    private AddMapCommand convertAddMapRequest(AddMapRequest addMapRequest)
+    [HttpDelete("force_delete/{id:int:min(0)}")]
+    public async Task ForceDelete(
+        [FromRoute(Name = "id")] int id,
+        CancellationToken token = default)
+            => await mapManager.ForceDeleteAsync(id, token);
+
+    private AddMapCommand convertAddMapRequest(AddMapRequest addMapRequest, IFormFile coverImageFile)
         => new AddMapCommand {
             Name = addMapRequest.Name,
             Width = addMapRequest.Width,
             Height = addMapRequest.Height,
             MaxPlayersCount = addMapRequest.MaxPlayersCount,
             CoverImageUrl = addMapRequest.CoverImageUrl,
-            Price = addMapRequest.Price
+            Price = addMapRequest.Price,
+            CoverImageData = coverImageFile.OpenReadStream(),
+            ContentType = coverImageFile.ContentType
         };
 
     private UpdateMapCommand convertUpdateMapRequest(int id, UpdateMapRequest updateMapRequest)

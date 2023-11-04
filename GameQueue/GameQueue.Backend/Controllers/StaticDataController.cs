@@ -4,12 +4,11 @@ using Minio;
 using Minio.DataModel.Args;
 
 namespace GameQueue.Backend.Controllers;
-[Route("api/[controller]")]
+[Route("api/static_data")]
 [ApiController]
 public class StaticDataController : ControllerBase, IStaticDataController
 {
     private readonly string staticDataUrl;
-    private readonly string minioBucket;
 
     private readonly HttpClient httpClient;
     private readonly IMinioClient minioClient;
@@ -19,8 +18,10 @@ public class StaticDataController : ControllerBase, IStaticDataController
         IHttpClientFactory httpClientFactory,
         IMinioClient minioClient)
     {
-        staticDataUrl = configuration["STATIC_DATA_URL"] ?? throw new NullReferenceException("STATIC_DATA_URL");
-        minioBucket = configuration["MINIO_BUCKET"] ?? throw new NullReferenceException("MINIO_BUCKET");
+        var minioBucket = configuration["MINIO_BUCKET"] ?? throw new NullReferenceException("MINIO_BUCKET");
+        var staticDataHost = configuration["STATIC_DATA_HOST"] ?? throw new NullReferenceException("STATIC_DATA_HOST");
+
+        staticDataUrl = $"{staticDataHost}/{minioBucket}";
 
         httpClient = httpClientFactory.CreateClient();
         this.minioClient = minioClient;
@@ -30,12 +31,7 @@ public class StaticDataController : ControllerBase, IStaticDataController
     public async Task GetUrl(
         [FromRoute(Name = "urlSuffix")] string urlSuffix)
     {
-        var removeArgs = new RemoveObjectArgs()
-                            .WithBucket(minioBucket)
-                            .WithObject("static/DOTA.jpg");
-        await minioClient.RemoveObjectAsync(removeArgs);
-
-        var dataUrl = new Uri(new Uri(new Uri(staticDataUrl), minioBucket), urlSuffix);
+        var dataUrl = $"{staticDataUrl}/{urlSuffix}";
         var data = await httpClient.GetAsync(dataUrl);
         await copyResponseMessageIntoContext(HttpContext, data);
     }

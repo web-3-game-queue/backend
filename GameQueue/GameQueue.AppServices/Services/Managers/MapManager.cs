@@ -29,6 +29,7 @@ public class MapManager : IMapManager
     public async Task AddAsync(AddMapCommand addMapCommand, CancellationToken token = default)
     {
         var map = convertAddCommandToMap(addMapCommand);
+        await s3Manager.AddObjectAsync(addMapCommand.CoverImageUrl, addMapCommand.CoverImageData, addMapCommand.ContentType, token);
         await mapRepository.AddAsync(map, token);
     }
 
@@ -45,6 +46,13 @@ public class MapManager : IMapManager
 
     public async Task DeleteAsync(int id, CancellationToken token = default)
     {
+        var map = await mapRepository.GetByIdAsync(id, token);
+        map.Status = MapStatus.Deleted;
+        await mapRepository.UpdateAsync(map, token);
+    }
+
+    public async Task ForceDeleteAsync(int id, CancellationToken token = default)
+    {
         Map map;
         try
         {
@@ -54,8 +62,8 @@ public class MapManager : IMapManager
         {
             return;
         }
-        await mapRepository.DeleteAsync(id, token);
-        await s3Manager.DeleteObjectAsync(map.CoverImageUrl);
+        await mapRepository.DeleteAsync(map, token);
+        await s3Manager.DeleteObjectAsync(map.CoverImageUrl, token);
     }
 
     private Map convertAddCommandToMap(AddMapCommand addMapCommand)
