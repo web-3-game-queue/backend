@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33627.172
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameQueue.Host", "GameQueue.Backend\GameQueue.Host.csproj", "{014775C5-F0C9-4CFA-9856-76336EC2070D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameQueue.Host", "GameQueue.Host\GameQueue.Host.csproj", "{014775C5-F0C9-4CFA-9856-76336EC2070D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameQueue.Core", "GameQueue.Core\GameQueue.Core.csproj", "{7842C077-559F-4FB9-9D97-961C894F40D7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameQueue.Api.Contracts", "GameQueue.Backend.Api.Contracts\GameQueue.Api.Contracts.csproj", "{BE5A7EC2-60E4-43A0-9393-DB9A6A9B5FF0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameQueue.Api.Contracts", "GameQueue.Api.Contracts\GameQueue.Api.Contracts.csproj", "{BE5A7EC2-60E4-43A0-9393-DB9A6A9B5FF0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameQueue.AppServices", "GameQueue.AppServices\GameQueue.AppServices.csproj", "{0DDE5C64-9ED8-4948-BC60-CB917E31E8C5}"
 EndProject

@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GameQueue.Backend.Api.Contracts\GameQueue.Api.Contracts.csproj" />
+    <ProjectReference Include="..\GameQueue.Api.Contracts\GameQueue.Api.Contracts.csproj" />
   </ItemGroup>
 
 </Project>

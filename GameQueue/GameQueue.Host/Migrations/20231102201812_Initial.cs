@@ -3,7 +3,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace GameQueue.Backend.Migrations
+namespace GameQueue.Host.Migrations
 {
     /// <inheritdoc />
     public partial class Initial : Migration

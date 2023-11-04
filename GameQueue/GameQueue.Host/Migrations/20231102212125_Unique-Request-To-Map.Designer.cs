@@ -3,17 +3,20 @@ using System;
 using GameQueue.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace GameQueue.Backend.Migrations
+namespace GameQueue.Host.Migrations
 {
     [DbContext(typeof(GameQueueContext))]
-    partial class GameQueueContextModelSnapshot : ModelSnapshot
+    [Migration("20231102212125_Unique-Request-To-Map")]
+    partial class UniqueRequestToMap
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

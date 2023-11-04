@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace GameQueue.Backend.Migrations
+namespace GameQueue.Host.Migrations
 {
     [DbContext(typeof(GameQueueContext))]
     [Migration("20231102201812_Initial")]

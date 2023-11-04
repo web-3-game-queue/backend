@@ -7,14 +7,14 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["GameQueue.Backend/GameQueue.Host.csproj", "GameQueue.Backend/"]
+COPY ["GameQueue.Host/GameQueue.Host.csproj", "GameQueue.Host/"]
 COPY ["GameQueue.AppServices/GameQueue.AppServices.csproj", "GameQueue.AppServices/"]
 COPY ["GameQueue.Core/GameQueue.Core.csproj", "GameQueue.Core/"]
-COPY ["GameQueue.Backend.Api.Contracts/GameQueue.Api.Contracts.csproj", "GameQueue.Backend.Api.Contracts/"]
+COPY ["GameQueue.Api.Contracts/GameQueue.Api.Contracts.csproj", "GameQueue.Api.Contracts/"]
 COPY ["GameQueue.DataAccess/GameQueue.DataAccess.csproj", "GameQueue.DataAccess/"]
-RUN dotnet restore "GameQueue.Backend/GameQueue.Host.csproj"
+RUN dotnet restore "GameQueue.Host/GameQueue.Host.csproj"
 COPY . .
-WORKDIR "/src/GameQueue.Backend"
+WORKDIR "/src/GameQueue.Host"
 RUN dotnet build "GameQueue.Host.csproj" -c Release -o /app/build
 
 FROM build AS publish

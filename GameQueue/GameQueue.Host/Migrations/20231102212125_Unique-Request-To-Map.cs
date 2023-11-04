@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace GameQueue.Backend.Migrations
+namespace GameQueue.Host.Migrations
 {
     /// <inheritdoc />
     public partial class UniqueRequestToMap : Migration
