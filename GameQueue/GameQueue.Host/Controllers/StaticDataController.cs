@@ -36,20 +36,6 @@ public class StaticDataController : ControllerBase, IStaticDataController
         await copyResponseMessageIntoContext(HttpContext, data);
     }
 
-    [HttpGet("test_minio")]
-    public async Task TestMinio()
-    {
-        var bucketsList = await minioClient.ListBucketsAsync();
-        foreach (var bucket in bucketsList.Buckets)
-        {
-            var observable = minioClient.ListObjectsAsync(new ListObjectsArgs().WithBucket(bucket.Name).WithRecursive(true));
-            var subscription = observable.Subscribe(
-                item => Console.WriteLine($"Object: {item.Key}"),
-                ex => Console.WriteLine($"OnError: {ex}"),
-                () => Console.WriteLine($"Listed all objects in bucket {bucket.Name}\n"));
-        }
-    }
-
     private async Task copyResponseMessageIntoContext(
         HttpContext context,
         HttpResponseMessage responseMessage)
