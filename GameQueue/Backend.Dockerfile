@@ -12,6 +12,7 @@ COPY ["GameQueue.AppServices/GameQueue.AppServices.csproj", "GameQueue.AppServic
 COPY ["GameQueue.Core/GameQueue.Core.csproj", "GameQueue.Core/"]
 COPY ["GameQueue.Api.Contracts/GameQueue.Api.Contracts.csproj", "GameQueue.Api.Contracts/"]
 COPY ["GameQueue.DataAccess/GameQueue.DataAccess.csproj", "GameQueue.DataAccess/"]
+COPY ["GameQueue.S3Access/GameQueue.S3Access.csproj", "GameQueue.S3Access/"]
 RUN dotnet restore "GameQueue.Host/GameQueue.Host.csproj"
 COPY . .
 WORKDIR "/src/GameQueue.Host"
