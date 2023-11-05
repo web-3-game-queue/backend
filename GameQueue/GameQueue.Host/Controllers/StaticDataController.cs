@@ -1,7 +1,6 @@
 ﻿using GameQueue.Api.Contracts.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Minio;
-using Minio.DataModel.Args;
 
 namespace GameQueue.Host.Controllers;
 [Route("api/static_data")]
@@ -11,7 +10,6 @@ public class StaticDataController : ControllerBase, IStaticDataController
     private readonly string staticDataUrl;
 
     private readonly HttpClient httpClient;
-    private readonly IMinioClient minioClient;
 
     public StaticDataController(
         IConfiguration configuration,
