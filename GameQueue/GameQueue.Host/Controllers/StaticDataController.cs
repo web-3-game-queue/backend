@@ -13,8 +13,7 @@ public class StaticDataController : ControllerBase, IStaticDataController
 
     public StaticDataController(
         IConfiguration configuration,
-        IHttpClientFactory httpClientFactory,
-        IMinioClient minioClient)
+        IHttpClientFactory httpClientFactory)
     {
         var minioBucket = configuration["MINIO_BUCKET"] ?? throw new NullReferenceException("MINIO_BUCKET");
         var staticDataHost = configuration["STATIC_DATA_HOST"] ?? throw new NullReferenceException("STATIC_DATA_HOST");
@@ -22,7 +21,6 @@ public class StaticDataController : ControllerBase, IStaticDataController
         staticDataUrl = $"{staticDataHost}/{minioBucket}";
 
         httpClient = httpClientFactory.CreateClient();
-        this.minioClient = minioClient;
     }
 
     [HttpGet("{*urlSuffix}")]
