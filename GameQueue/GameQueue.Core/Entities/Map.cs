@@ -28,8 +28,7 @@ public sealed record Map
     [Range(0, int.MaxValue)]
     public int MaxPlayersCount { get; set; }
 
-    [Required]
-    public string CoverImageUrl { get; set; } = null!;
+    public string? CoverImageUrl { get; set; }
 
     [Required]
     [Range(0, double.MaxValue)]

@@ -14,5 +14,5 @@ public sealed record AddMapCommand
 
     public decimal Price { get; set; }
 
-    public CoverImageUploadModel CoverImageFile { get; set; } = null!;
+    public CoverImageUploadModel? CoverImageFile { get; set; }
 }

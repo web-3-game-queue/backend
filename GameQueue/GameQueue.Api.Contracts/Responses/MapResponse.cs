@@ -20,7 +20,7 @@ public sealed record MapResponse
     public int MaxPlayersCount { get; set; }
 
     [JsonPropertyName("coverImageUrl")]
-    public string CoverImageUrl { get; set; } = null!;
+    public string? CoverImageUrl { get; set; }
 
     [JsonPropertyName("price")]
     public decimal Price { get; set; }
