@@ -31,11 +31,14 @@ public class MapManager : IMapManager
     {
         var map = convertAddCommandToMap(addMapCommand);
         var image = addMapCommand.CoverImageFile;
-        await s3Manager.AddObjectAsync(
-            image.Url ?? throw new NullReferenceException(nameof(image.Url)),
-            image.FileData,
-            image.ContentType,
-            token);
+        if (image != null)
+        {
+            await s3Manager.AddObjectAsync(
+                image.Url ?? throw new NullReferenceException(nameof(image.Url)),
+                image.FileData,
+                image.ContentType,
+                token);
+        }
         await mapRepository.AddAsync(map, token);
     }
 
@@ -49,9 +52,14 @@ public class MapManager : IMapManager
         if (updateMapCommand.CoverImageFile != null)
         {
             var image = updateMapCommand.CoverImageFile;
-            await s3Manager.DeleteObjectAsync(map.CoverImageUrl, token);
+            if (map.CoverImageUrl != null)
+            {
+                await s3Manager.DeleteObjectAsync(map.CoverImageUrl, token);
+            }
             await s3Manager.AddObjectAsync(
-                image.Url ?? map.CoverImageUrl,
+                image.Url
+                    ?? map.CoverImageUrl
+                    ?? throw new ValidationException("If map doesn't have image, you must specify your image's url"),
                 image.FileData,
                 image.ContentType,
                 token);
@@ -79,7 +87,10 @@ public class MapManager : IMapManager
             return;
         }
         await mapRepository.DeleteAsync(map, token);
-        await s3Manager.DeleteObjectAsync(map.CoverImageUrl, token);
+        if (map.CoverImageUrl != null)
+        {
+            await s3Manager.DeleteObjectAsync(map.CoverImageUrl, token);
+        }
     }
 
     private Map convertAddCommandToMap(AddMapCommand addMapCommand)
@@ -88,7 +99,7 @@ public class MapManager : IMapManager
             Width = addMapCommand.Width,
             Height = addMapCommand.Height,
             MaxPlayersCount = addMapCommand.MaxPlayersCount,
-            CoverImageUrl = addMapCommand.CoverImageFile.Url ?? throw new NullReferenceException(nameof(addMapCommand.CoverImageFile.Url)),
+            CoverImageUrl = addMapCommand.CoverImageFile?.Url,
             Price = addMapCommand.Price
         };
 
