@@ -40,10 +40,10 @@ public class MapController : ControllerBase, IMapController
     [HttpPost]
     public async Task Add(
         [FromForm] AddMapRequest addMapRequest,
-        IFormFile coverImageFile,
+        IFormFile? coverImageFile,
         CancellationToken token = default)
     {
-        if (!AllowedContentTypes.Contains(coverImageFile.ContentType))
+        if (coverImageFile != null && !AllowedContentTypes.Contains(coverImageFile.ContentType))
         {
             throw new InvalidContentTypeException(coverImageFile.ContentType, AllowedContentTypes);
         }
@@ -71,18 +71,21 @@ public class MapController : ControllerBase, IMapController
         CancellationToken token = default)
             => await mapManager.ForceDeleteAsync(id, token);
 
-    private AddMapCommand convertAddMapRequest(AddMapRequest addMapRequest, IFormFile coverImageFile)
+    private AddMapCommand convertAddMapRequest(AddMapRequest addMapRequest, IFormFile? coverImageFile)
         => new AddMapCommand {
             Name = addMapRequest.Name,
             Width = addMapRequest.Width,
             Height = addMapRequest.Height,
             MaxPlayersCount = addMapRequest.MaxPlayersCount,
             Price = addMapRequest.Price,
-            CoverImageFile = new CoverImageUploadModel {
-                Url = addMapRequest.CoverImageUrl,
-                FileData = coverImageFile.OpenReadStream(),
-                ContentType = coverImageFile.ContentType
-            }
+            CoverImageFile =
+                coverImageFile != null
+                ? new CoverImageUploadModel {
+                    Url = addMapRequest.CoverImageUrl,
+                    FileData = coverImageFile.OpenReadStream(),
+                    ContentType = coverImageFile.ContentType
+                }
+                : null
         };
 
     private UpdateMapCommand convertUpdateMapRequest(int id, UpdateMapRequest updateMapRequest, IFormFile? coverImageFile)
