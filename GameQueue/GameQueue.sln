@@ -13,7 +13,20 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameQueue.AppServices", "Ga
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameQueue.DataAccess", "GameQueue.DataAccess\GameQueue.DataAccess.csproj", "{46DB940D-1FB7-4FED-953A-197925EC50FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameQueue.S3Access", "GameQueue.S3Access\GameQueue.S3Access.csproj", "{C2202831-91A0-42E0-BCEC-740D19A575B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameQueue.S3Access", "GameQueue.S3Access\GameQueue.S3Access.csproj", "{C2202831-91A0-42E0-BCEC-740D19A575B7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7169128E-21F6-4B7D-AB5B-5D57E6117F9E}"
+	ProjectSection(SolutionItems) = preProject
+		Backend.Dockerfile = Backend.Dockerfile
+		backend_build.sh = backend_build.sh
+		docker-compose.yml = docker-compose.yml
+		nginx.conf = nginx.conf
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "game-queue-backend", "game-queue-backend", "{2E5A2D02-42F5-42B7-8FA7-AE446144189B}"
+	ProjectSection(SolutionItems) = preProject
+		game-queue-backend\appsettings.json = game-queue-backend\appsettings.json
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -48,6 +61,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2E5A2D02-42F5-42B7-8FA7-AE446144189B} = {7169128E-21F6-4B7D-AB5B-5D57E6117F9E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {ABE1DEAB-BAA1-460B-9D4B-AC9529F4D37D}
