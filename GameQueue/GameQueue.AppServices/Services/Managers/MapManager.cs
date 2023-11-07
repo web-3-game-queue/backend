@@ -93,6 +93,16 @@ public class MapManager : IMapManager
         }
     }
 
+    public async Task MakeAvailable(int id, CancellationToken token = default)
+    {
+        var map = await mapRepository.GetByIdAsync(id, token);
+        map.Status = MapStatus.Available;
+        await mapRepository.UpdateAsync(map, token);
+    }
+
+    public async Task<ICollection<Map>> GetFiltered(string filterName, decimal maxPrice, CancellationToken token = default)
+        => await mapRepository.GetFiltered(filterName, maxPrice, token);
+
     private Map convertAddCommandToMap(AddMapCommand addMapCommand)
         => new Map {
             Name = addMapCommand.Name,

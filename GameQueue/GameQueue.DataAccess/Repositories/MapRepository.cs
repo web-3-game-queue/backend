@@ -1,5 +1,6 @@
 ﻿using GameQueue.Core.Entities;
 using GameQueue.Core.Exceptions;
+using GameQueue.Core.Models;
 using GameQueue.Core.Services.Repositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -38,4 +39,12 @@ internal class MapRepository : IMapRepository
     private async Task<Map> findOrThrow(int id, CancellationToken token)
         => await db.Maps.FindAsync(id, token)
             ?? throw new EntityNotFoundException(typeof(Map), id);
+
+    public async Task<ICollection<Map>> GetFiltered(string filterName, decimal maxPrice, CancellationToken token = default)
+        => await db.Maps
+            .Where(x =>
+                x.Name.Contains(filterName)
+                && x.Price <= maxPrice
+                && x.Status == MapStatus.Available)
+            .ToListAsync(token);
 }

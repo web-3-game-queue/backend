@@ -13,4 +13,6 @@ public interface IMapRepository
     Task UpdateAsync(Map map, CancellationToken token = default);
 
     Task DeleteAsync(Map map, CancellationToken token = default);
+
+    Task<ICollection<Map>> GetFiltered(string filterName, decimal maxPrice, CancellationToken token = default);
 }

@@ -25,17 +25,35 @@ public class MapController : ControllerBase, IMapController
     public MapController(IMapManager mapManager) => this.mapManager = mapManager;
 
     [HttpGet]
+    public async Task<ICollection<MapResponse>> GetFiltered(
+        [FromQuery] string? filterName,
+        [FromQuery] decimal? maxPrice,
+        CancellationToken token = default)
+    {
+        var maps = await mapManager.GetFiltered(
+            filterName ?? string.Empty,
+            maxPrice ?? decimal.MaxValue,
+            token);
+        return maps.Select(x => x.ToMapResponse()).ToList();
+    }
+
+    [HttpGet("all")]
     public async Task<ICollection<MapResponse>> GetAll(CancellationToken token = default)
-        => (await mapManager.GetAllAsync(token))
+    {
+        ICollection<Core.Entities.Map> maps = await mapManager.GetAllAsync(token);
+        return maps
                 .Select(x => x.ToMapResponse())
                 .ToList();
+    }
 
     [HttpGet("{id:int:min(0)}")]
     public async Task<MapResponse> GetById(
         [FromRoute(Name = "id")] int id,
         CancellationToken token = default)
-            => (await mapManager.GetByIdAsync(id, token))
-                .ToMapResponse();
+    {
+        var map = await mapManager.GetByIdAsync(id, token);
+        return map.ToMapResponse();
+    }
 
     [HttpPost]
     public async Task Add(
@@ -59,7 +77,7 @@ public class MapController : ControllerBase, IMapController
             => await mapManager
                 .UpdateAsync(convertUpdateMapRequest(id, updateMapRequest, coverImageFile), token);
 
-    [HttpDelete("{id:int:min(0)}")]
+    [HttpDelete("delete/{id:int:min(0)}")]
     public async Task Delete(
         [FromRoute(Name = "id")] int id,
         CancellationToken token = default)
@@ -70,6 +88,12 @@ public class MapController : ControllerBase, IMapController
         [FromRoute(Name = "id")] int id,
         CancellationToken token = default)
             => await mapManager.ForceDeleteAsync(id, token);
+
+    [HttpPut("make_available/{id:int:min(0)}")]
+    public async Task MakeAvailable(
+        int id, 
+        CancellationToken token = default)
+        => await mapManager.MakeAvailable(id);
 
     private AddMapCommand convertAddMapRequest(AddMapRequest addMapRequest, IFormFile? coverImageFile)
         => new AddMapCommand {

@@ -6,6 +6,8 @@ namespace GameQueue.Api.Contracts.Controllers;
 
 public interface IMapController
 {
+    Task<ICollection<MapResponse>> GetFiltered(string? filterName, decimal? maxPrice, CancellationToken token = default);
+
     Task<ICollection<MapResponse>> GetAll(CancellationToken token = default);
 
     Task<MapResponse> GetById(int id, CancellationToken token = default);
@@ -17,4 +19,6 @@ public interface IMapController
     Task Delete(int id, CancellationToken token = default);
 
     Task ForceDelete(int id, CancellationToken token = default);
+
+    Task MakeAvailable(int id, CancellationToken token = default);
 }

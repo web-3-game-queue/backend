@@ -17,6 +17,8 @@ var minioClient = new MinioClient()
     .WithSSL(false)
     .Build();
 
+builder.Services.AddCors();
+
 builder.Services.AddSingleton(minioClient);
 
 builder.Services
@@ -46,8 +48,13 @@ app.UseSwagger();
 app.UseSwaggerUI();
 //}
 
+app.UseCors(builder => 
+    builder
+        .AllowAnyOrigin()
+        .AllowAnyHeader()
+        .AllowAnyMethod());
+
 app
-    .UseHttpsRedirection()
     .UseAuthorization();
 
 app.MapControllers();
