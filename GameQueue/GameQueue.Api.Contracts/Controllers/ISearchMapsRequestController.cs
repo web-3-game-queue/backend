@@ -1,5 +1,4 @@
-﻿using GameQueue.Api.Contracts.Requests.SearchMapsRequests;
-using GameQueue.Api.Contracts.Responses;
+﻿using GameQueue.Api.Contracts.Responses;
 
 namespace GameQueue.Api.Contracts.Controllers;
 
@@ -9,11 +8,9 @@ public interface ISearchMapsRequestController
 
     Task<SearchMapsRequestResponseVerbose> GetById(int id, CancellationToken token = default);
 
-    Task Add(AddSearchMapsRequestRequest addSearchMapsRequestCommand, CancellationToken token = default);
+    Task AddMap(int mapId, CancellationToken token = default);
 
-    Task AddMap(int searchMapsRequestId, int mapId, CancellationToken token = default);
-
-    Task RemoveMap(int searchMapsRequestId, int mapId, CancellationToken token = default);
+    Task RemoveMap(int mapId, CancellationToken token = default);
 
     Task Compose(int creatorId, int id, CancellationToken token = default);
 

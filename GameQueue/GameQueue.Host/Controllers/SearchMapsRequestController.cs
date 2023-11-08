@@ -29,23 +29,17 @@ public class SearchMapsRequestController : ControllerBase, ISearchMapsRequestCon
             => (await searchMapsRequestManager.GetByIdAsync(id, token))
                 .ToSerchMapsRequestResponseVerbose();
 
-    [HttpPost]
-    public async Task Add(
-        [FromBody] AddSearchMapsRequestRequest addSearchMapsRequestCommand,
-        CancellationToken token = default)
-            => await searchMapsRequestManager.AddAsync(convertAddSearchMapsRequestRequest(addSearchMapsRequestCommand), token);
-
-    [HttpPut("{search_maps_request_id:int:min(0)}/add_map/{map_id:int:min(0)}")]
+    [HttpPut("add_map/{map_id:int:min(0)}/{search_maps_request_id:int:min(0)}")]
     public async Task AddMap(
-        [FromRoute(Name = "search_maps_request_id")] int searchMapsRequestId,
         [FromRoute(Name = "map_id")] int mapId,
+        [FromRoute(Name = "search_maps_request_id")] int searchMapsRequestId,
         CancellationToken token = default)
             => await searchMapsRequestManager.AddMap(searchMapsRequestId, mapId, token);
 
-    [HttpDelete("{search_maps_request_id:int:min(0)}/add_map/{map_id:int:min(0)}")]
+    [HttpDelete("remove_map/{map_id:int:min(0)}/{search_maps_request_id:int:min(0)}")]
     public async Task RemoveMap(
-        [FromRoute(Name = "search_maps_request_id")] int searchMapsRequestId,
         [FromRoute(Name = "map_id")] int mapId,
+        [FromRoute(Name = "search_maps_request_id")] int searchMapsRequestId,
         CancellationToken token = default)
             => await searchMapsRequestManager.RemoveMap(searchMapsRequestId, mapId, token);
 
