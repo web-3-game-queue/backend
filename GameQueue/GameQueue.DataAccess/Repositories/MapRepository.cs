@@ -36,11 +36,11 @@ internal class MapRepository : IMapRepository
         await db.SaveChangesAsync(token);
     }
 
-    public async Task<ICollection<Map>> GetFiltered(string filterName, decimal maxPrice, CancellationToken token = default)
+    public async Task<ICollection<Map>> GetFiltered(string filterName, int maxPlayersCount, CancellationToken token = default)
         => await db.Maps
             .Where(x =>
                 x.Name.Contains(filterName)
-                && x.Price <= maxPrice
+                && x.MaxPlayersCount <= maxPlayersCount
                 && x.Status == MapStatus.Available)
             .OrderBy(x => x.Id)
             .ToListAsync(token);

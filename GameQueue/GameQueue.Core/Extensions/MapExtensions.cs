@@ -13,7 +13,6 @@ public static class MapExtensions
             Height = map.Height,
             MaxPlayersCount = map.MaxPlayersCount,
             CoverImageUrl = map.CoverImageUrl,
-            Price = map.Price,
             Status = map.Status.ToMapStatusApi()
         };
 }

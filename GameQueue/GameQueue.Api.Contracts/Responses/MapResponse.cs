@@ -25,9 +25,6 @@ public sealed record MapResponse
     [JsonPropertyName("coverImageUrl")]
     public string? CoverImageUrl { get; set; }
 
-    [JsonPropertyName("price")]
-    public decimal Price { get; set; }
-
     [JsonPropertyName("mapStatus")]
     public MapStatusApi Status { get; set; } = MapStatusApi.Pending;
 }

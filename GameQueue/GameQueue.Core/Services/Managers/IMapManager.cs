@@ -17,7 +17,7 @@ public interface IMapManager
 
     Task ForceDeleteAsync(int id, CancellationToken token = default);
 
-    Task<ICollection<Map>> GetFiltered(string filterName, decimal maxPrice, CancellationToken token = default);
+    Task<ICollection<Map>> GetFiltered(string filterName, int maxPlayersCount, CancellationToken token = default);
 
     Task MakeAvailable(int id, CancellationToken token = default);
 }

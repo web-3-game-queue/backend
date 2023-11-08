@@ -6,7 +6,7 @@ namespace GameQueue.Api.Contracts.Controllers;
 
 public interface IMapController
 {
-    Task<ICollection<MapResponse>> GetFiltered(string? filterName, decimal? maxPrice, CancellationToken token = default);
+    Task<ICollection<MapResponse>> GetFiltered(string? filterName, int? maxPlayersCount, CancellationToken token = default);
 
     Task<ICollection<MapResponse>> GetAll(CancellationToken token = default);
 

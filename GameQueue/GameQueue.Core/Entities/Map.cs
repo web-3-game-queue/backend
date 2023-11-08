@@ -31,10 +31,6 @@ public sealed record Map
     public string? CoverImageUrl { get; set; }
 
     [Required]
-    [Range(0, double.MaxValue)]
-    public decimal Price { get; set; }
-
-    [Required]
     public MapStatus Status { get; set; } = MapStatus.Pending;
 
     public List<RequestToMap> RequestsToMap { get; } = new List<RequestToMap>();

@@ -17,7 +17,4 @@ public sealed record UpdateMapRequest
     public int? MaxPlayersCount { get; set; }
 
     public string? CoverImageUrl { get; set; } = null!;
-
-    [Range(0, double.MaxValue)]
-    public decimal? Price { get; set; }
 }

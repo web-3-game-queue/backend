@@ -27,12 +27,12 @@ public class MapController : ControllerBase, IMapController
     [HttpGet]
     public async Task<ICollection<MapResponse>> GetFiltered(
         [FromQuery] string? filterName,
-        [FromQuery] decimal? maxPrice,
+        [FromQuery] int? maxPlayersCount,
         CancellationToken token = default)
     {
         var maps = await mapManager.GetFiltered(
             filterName ?? string.Empty,
-            maxPrice ?? decimal.MaxValue,
+            maxPlayersCount ?? int.MaxValue,
             token);
         return maps.Select(x => x.ToMapResponse()).ToList();
     }
@@ -91,7 +91,7 @@ public class MapController : ControllerBase, IMapController
 
     [HttpPut("make_available/{id:int:min(0)}")]
     public async Task MakeAvailable(
-        int id, 
+        int id,
         CancellationToken token = default)
         => await mapManager.MakeAvailable(id);
 
@@ -101,7 +101,6 @@ public class MapController : ControllerBase, IMapController
             Width = addMapRequest.Width,
             Height = addMapRequest.Height,
             MaxPlayersCount = addMapRequest.MaxPlayersCount,
-            Price = addMapRequest.Price,
             CoverImageFile =
                 coverImageFile != null
                 ? new CoverImageUploadModel {
@@ -119,7 +118,6 @@ public class MapController : ControllerBase, IMapController
             Width = updateMapRequest.Width,
             Height = updateMapRequest.Height,
             MaxPlayersCount = updateMapRequest.MaxPlayersCount,
-            Price = updateMapRequest.Price,
             CoverImageFile = coverImageFile == null ? null : new CoverImageUploadModel {
                 Url = updateMapRequest.CoverImageUrl,
                 FileData = coverImageFile.OpenReadStream(),

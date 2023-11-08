@@ -100,8 +100,8 @@ public class MapManager : IMapManager
         await mapRepository.UpdateAsync(map, token);
     }
 
-    public async Task<ICollection<Map>> GetFiltered(string filterName, decimal maxPrice, CancellationToken token = default)
-        => await mapRepository.GetFiltered(filterName, maxPrice, token);
+    public async Task<ICollection<Map>> GetFiltered(string filterName, int maxPlayersCount, CancellationToken token = default)
+        => await mapRepository.GetFiltered(filterName, maxPlayersCount, token);
 
     private Map convertAddCommandToMap(AddMapCommand addMapCommand)
         => new Map {
@@ -109,8 +109,7 @@ public class MapManager : IMapManager
             Width = addMapCommand.Width,
             Height = addMapCommand.Height,
             MaxPlayersCount = addMapCommand.MaxPlayersCount,
-            CoverImageUrl = addMapCommand.CoverImageFile?.Url,
-            Price = addMapCommand.Price
+            CoverImageUrl = addMapCommand.CoverImageFile?.Url
         };
 
     private void updateMapFromCommand(UpdateMapCommand updateMapCommand, ref Map map)
@@ -120,6 +119,5 @@ public class MapManager : IMapManager
         map.Height = updateMapCommand.Height ?? map.Height;
         map.MaxPlayersCount = updateMapCommand.MaxPlayersCount ?? map.MaxPlayersCount;
         map.CoverImageUrl = updateMapCommand.CoverImageFile?.Url ?? map.CoverImageUrl;
-        map.Price = updateMapCommand.Price ?? map.Price;
     }
 }

@@ -20,8 +20,4 @@ public sealed record AddMapRequest
     public int MaxPlayersCount { get; set; }
 
     public string? CoverImageUrl { get; set; }
-
-    [Required]
-    [Range(0, double.MaxValue)]
-    public decimal Price { get; set; }
 }

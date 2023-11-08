@@ -12,7 +12,5 @@ public sealed record AddMapCommand
 
     public int MaxPlayersCount { get; set; }
 
-    public decimal Price { get; set; }
-
     public CoverImageUploadModel? CoverImageFile { get; set; }
 }
