@@ -3,6 +3,7 @@ using System;
 using GameQueue.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace GameQueue.Host.Migrations
 {
     [DbContext(typeof(GameQueueContext))]
-    partial class GameQueueContextModelSnapshot : ModelSnapshot
+    [Migration("20231108141005_Compose-And-Done-Dates-For-Requests")]
+    partial class ComposeAndDoneDatesForRequests
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

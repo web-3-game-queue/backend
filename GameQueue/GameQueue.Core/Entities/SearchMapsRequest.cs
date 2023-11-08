@@ -21,6 +21,10 @@ public sealed record SearchMapsRequest
     [Required]
     public DateTimeOffset CreationDate { get; set; } = DateTimeOffset.UtcNow;
 
+    public DateTimeOffset? ComposeDate { get; set; } = null;
+
+    public DateTimeOffset? DoneDate { get; set; } = null;
+
     public User CreatorUser { get; set; } = null!;
 
     public List<RequestToMap> RequestsToMap { get; } = new List<RequestToMap>();

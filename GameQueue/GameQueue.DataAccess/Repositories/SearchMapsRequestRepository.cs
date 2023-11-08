@@ -1,7 +1,9 @@
 ﻿using GameQueue.Core.Entities;
 using GameQueue.Core.Exceptions;
+using GameQueue.Core.Extensions;
 using GameQueue.Core.Models;
 using GameQueue.Core.Services.Repositories;
+using GameQueue.DataAccess.Exceptions;
 using Microsoft.EntityFrameworkCore;
 
 namespace GameQueue.DataAccess.Repositories;
@@ -71,7 +73,14 @@ internal class SearchMapsRequestRepository : ISearchMapsRequestRepository
     }
 
     public async Task ComposeAsync(int id, CancellationToken token = default)
-        => await updateStatus(id, SearchMapsRequestStatus.Composed);
+    {
+        var searchMapsRequest = await findOrThrow(id, token);
+        searchMapsRequest.Status.ValidateChangeTo(SearchMapsRequestStatus.Composed);
+        searchMapsRequest.Status = SearchMapsRequestStatus.Composed;
+        searchMapsRequest.ComposeDate = DateTimeOffset.UtcNow;
+        db.Update(searchMapsRequest);
+        await db.SaveChangesAsync(token);
+    }
 
     public async Task DeleteAsync(int id, CancellationToken token = default)
         => await updateStatus(id, SearchMapsRequestStatus.Deleted, token);
@@ -80,13 +89,21 @@ internal class SearchMapsRequestRepository : ISearchMapsRequestRepository
         => await updateStatus(id, SearchMapsRequestStatus.Cancelled, token);
 
     public async Task FinishAsync(int id, CancellationToken token = default)
-        => await updateStatus(id, SearchMapsRequestStatus.Done, token);
+    {
+        var searchMapsRequest = await findOrThrow(id, token);
+        searchMapsRequest.Status.ValidateChangeTo(SearchMapsRequestStatus.Done);
+        searchMapsRequest.Status = SearchMapsRequestStatus.Done;
+        searchMapsRequest.DoneDate = DateTimeOffset.UtcNow;
+        db.Update(searchMapsRequest);
+        await db.SaveChangesAsync(token);
+    }
 
     private async Task updateStatus(int id, SearchMapsRequestStatus status, CancellationToken token = default)
     {
-        var SearchMapsRequest = await findOrThrow(id, token);
-        db.Update(SearchMapsRequest);
-        SearchMapsRequest.Status = status;
+        var searchMapsRequest = await findOrThrow(id, token);
+        searchMapsRequest.Status.ValidateChangeTo(status);
+        searchMapsRequest.Status = status;
+        db.Update(searchMapsRequest);
         await db.SaveChangesAsync(token);
     }
 

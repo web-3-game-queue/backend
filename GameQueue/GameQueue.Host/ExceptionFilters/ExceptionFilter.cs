@@ -1,4 +1,5 @@
 ﻿using GameQueue.Core.Exceptions;
+using GameQueue.DataAccess.Exceptions;
 using GameQueue.Host.Exceptions;
 using Microsoft.AspNetCore.Mvc.Filters;
 
@@ -27,6 +28,11 @@ public class ExceptionFilter : IAsyncExceptionFilter
             case ValidationException e:
                 context.HttpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
                 await context.HttpContext.Response.WriteAsync(string.Format("Invalid request: {0}", e.Message));
+                break;
+
+            case InvalidSearchMapsRequestStatusUpdateException e:
+                context.HttpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
+                await context.HttpContext.Response.WriteAsync(string.Format("Invalid set status request: {0}", e.Message));
                 break;
 
             case UnauthorizedException e:

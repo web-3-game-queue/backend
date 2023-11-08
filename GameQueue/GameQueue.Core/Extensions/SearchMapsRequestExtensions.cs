@@ -11,6 +11,8 @@ public static class SearchMapsRequestExtensions
             CreatorUserId = searchMapsRequest.CreatorUserId,
             Status = searchMapsRequest.Status.ToSearchMapsRequestStatusApi(),
             CreationDate = searchMapsRequest.CreationDate,
+            ComposeDate = searchMapsRequest.ComposeDate,
+            DoneDate = searchMapsRequest.DoneDate,
             MapsCount = searchMapsRequest.RequestsToMap.Count
         };
 
@@ -19,6 +21,8 @@ public static class SearchMapsRequestExtensions
             Id = searchMapsRequest.Id,
             Status = searchMapsRequest.Status.ToSearchMapsRequestStatusApi(),
             CreationDate = searchMapsRequest.CreationDate,
+            ComposeDate = searchMapsRequest.ComposeDate,
+            DoneDate = searchMapsRequest.DoneDate,
             CreatorUser = searchMapsRequest.CreatorUser.ToUserResponse(),
             Maps = searchMapsRequest.RequestsToMap.Select(x => x.Map.ToMapResponse()).ToList()
         };

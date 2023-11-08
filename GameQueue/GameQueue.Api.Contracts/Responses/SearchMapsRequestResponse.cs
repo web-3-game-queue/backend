@@ -17,6 +17,12 @@ public sealed record SearchMapsRequestResponse
     [JsonPropertyName("creationDate")]
     public DateTimeOffset CreationDate { get; set; } = DateTimeOffset.UtcNow;
 
+    [JsonPropertyName("composeDate")]
+    public DateTimeOffset? ComposeDate { get; set; } = null;
+
+    [JsonPropertyName("doneDate")]
+    public DateTimeOffset? DoneDate { get; set; } = null;
+
     [JsonPropertyName("mapsCount")]
     public int MapsCount { get; set; }
 }
