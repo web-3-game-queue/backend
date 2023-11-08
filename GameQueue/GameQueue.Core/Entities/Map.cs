@@ -30,6 +30,8 @@ public sealed record Map
 
     public string? CoverImageUrl { get; set; }
 
+    public string? Description { get; set; }
+
     [Required]
     public MapStatus Status { get; set; } = MapStatus.Pending;
 

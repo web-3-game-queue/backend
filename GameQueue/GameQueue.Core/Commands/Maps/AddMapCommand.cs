@@ -13,4 +13,6 @@ public sealed record AddMapCommand
     public int MaxPlayersCount { get; set; }
 
     public CoverImageUploadModel? CoverImageFile { get; set; }
+
+    public string? Description { get; set; }
 }

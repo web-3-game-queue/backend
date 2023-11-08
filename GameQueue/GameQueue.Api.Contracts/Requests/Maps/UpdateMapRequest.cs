@@ -17,4 +17,6 @@ public sealed record UpdateMapRequest
     public int? MaxPlayersCount { get; set; }
 
     public string? CoverImageUrl { get; set; } = null!;
+
+    public string? Description { get; set; }
 }

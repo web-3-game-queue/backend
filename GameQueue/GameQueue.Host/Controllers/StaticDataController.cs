@@ -1,6 +1,5 @@
 ﻿using GameQueue.Api.Contracts.Controllers;
 using Microsoft.AspNetCore.Mvc;
-using Minio;
 
 namespace GameQueue.Host.Controllers;
 [Route("api/static_data")]

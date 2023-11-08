@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Net.NetworkInformation;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 using GameQueue.Api.Contracts.Models;
 
 namespace GameQueue.Api.Contracts.Responses;
@@ -24,6 +22,9 @@ public sealed record MapResponse
 
     [JsonPropertyName("coverImageUrl")]
     public string? CoverImageUrl { get; set; }
+
+    [JsonPropertyName("description")]
+    public string? Description { get; set; }
 
     [JsonPropertyName("mapStatus")]
     public MapStatusApi Status { get; set; } = MapStatusApi.Pending;

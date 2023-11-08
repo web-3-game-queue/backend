@@ -1,7 +1,5 @@
 ﻿using GameQueue.Api.Contracts.Controllers;
-using GameQueue.Api.Contracts.Requests.SearchMapsRequests;
 using GameQueue.Api.Contracts.Responses;
-using GameQueue.Core.Commands.SearchMapsRequests;
 using GameQueue.Core.Extensions;
 using GameQueue.Core.Services.Managers;
 using Microsoft.AspNetCore.Mvc;
@@ -70,11 +68,4 @@ public class SearchMapsRequestController : ControllerBase, ISearchMapsRequestCon
         [FromRoute(Name = "id")] int id,
         CancellationToken token = default)
             => await searchMapsRequestManager.FinishAsync(moderatorId, id, token);
-
-    private AddSearchMapsRequestCommand convertAddSearchMapsRequestRequest(AddSearchMapsRequestRequest request)
-        => new AddSearchMapsRequestCommand {
-            CreatorUserId = request.CreatorUserId,
-            MapId = request.MapId,
-            CreationDate = request.CreationDate
-        };
 }

@@ -109,7 +109,8 @@ public class MapManager : IMapManager
             Width = addMapCommand.Width,
             Height = addMapCommand.Height,
             MaxPlayersCount = addMapCommand.MaxPlayersCount,
-            CoverImageUrl = addMapCommand.CoverImageFile?.Url
+            CoverImageUrl = addMapCommand.CoverImageFile?.Url,
+            Description = addMapCommand.Description,
         };
 
     private void updateMapFromCommand(UpdateMapCommand updateMapCommand, ref Map map)
@@ -119,5 +120,6 @@ public class MapManager : IMapManager
         map.Height = updateMapCommand.Height ?? map.Height;
         map.MaxPlayersCount = updateMapCommand.MaxPlayersCount ?? map.MaxPlayersCount;
         map.CoverImageUrl = updateMapCommand.CoverImageFile?.Url ?? map.CoverImageUrl;
+        map.Description = updateMapCommand.Description;
     }
 }

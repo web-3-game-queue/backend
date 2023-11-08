@@ -16,10 +16,13 @@ public sealed record UpdateMapCommand
 
     public CoverImageUploadModel? CoverImageFile { get; set; }
 
+    public string? Description { get; set; }
+
     public bool FieldsAreEmpty()
         => Name == null
             && Width == null
             && Height == null
             && MaxPlayersCount == null
-            && CoverImageFile == null;
+            && CoverImageFile == null
+            && Description == null;
 }

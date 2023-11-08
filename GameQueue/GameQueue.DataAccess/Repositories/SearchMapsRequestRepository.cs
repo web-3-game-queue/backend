@@ -3,7 +3,6 @@ using GameQueue.Core.Exceptions;
 using GameQueue.Core.Extensions;
 using GameQueue.Core.Models;
 using GameQueue.Core.Services.Repositories;
-using GameQueue.DataAccess.Exceptions;
 using Microsoft.EntityFrameworkCore;
 
 namespace GameQueue.DataAccess.Repositories;

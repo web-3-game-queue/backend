@@ -8,9 +8,9 @@ public interface ISearchMapsRequestController
 
     Task<SearchMapsRequestResponseVerbose> GetById(int id, CancellationToken token = default);
 
-    Task AddMap(int mapId, CancellationToken token = default);
+    Task AddMap(int mapId, int searchMapsRequestId, CancellationToken token = default);
 
-    Task RemoveMap(int mapId, CancellationToken token = default);
+    Task RemoveMap(int mapId, int searchMapsRequestId, CancellationToken token = default);
 
     Task Compose(int creatorId, int id, CancellationToken token = default);
 

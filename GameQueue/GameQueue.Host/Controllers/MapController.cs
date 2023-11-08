@@ -102,13 +102,13 @@ public class MapController : ControllerBase, IMapController
             Height = addMapRequest.Height,
             MaxPlayersCount = addMapRequest.MaxPlayersCount,
             CoverImageFile =
-                coverImageFile != null
-                ? new CoverImageUploadModel {
+                coverImageFile == null ? null
+                : new CoverImageUploadModel {
                     Url = addMapRequest.CoverImageUrl,
                     FileData = coverImageFile.OpenReadStream(),
                     ContentType = coverImageFile.ContentType
-                }
-                : null
+                },
+            Description = addMapRequest.Description
         };
 
     private UpdateMapCommand convertUpdateMapRequest(int id, UpdateMapRequest updateMapRequest, IFormFile? coverImageFile)
@@ -122,6 +122,7 @@ public class MapController : ControllerBase, IMapController
                 Url = updateMapRequest.CoverImageUrl,
                 FileData = coverImageFile.OpenReadStream(),
                 ContentType = coverImageFile.ContentType
-            }
+            },
+            Description = updateMapRequest.Description
         };
 }
