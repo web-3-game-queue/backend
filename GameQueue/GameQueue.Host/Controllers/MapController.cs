@@ -70,7 +70,7 @@ public class MapController : ControllerBase, IMapController
         await mapManager.AddAsync(convertAddMapRequest(addMapRequest, coverImageFile), token);
     }
 
-    [Authorize(Roles = "Administrator")]
+    //[Authorize(Roles = "Administrator")]
     [HttpPut("{id:int:min(0)}")]
     public async Task Update(
         [FromRoute(Name = "id")] int id,
