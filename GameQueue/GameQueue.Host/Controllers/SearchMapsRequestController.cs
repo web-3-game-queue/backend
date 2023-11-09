@@ -1,7 +1,9 @@
-﻿using GameQueue.Api.Contracts.Controllers;
+﻿using System.Data;
+using GameQueue.Api.Contracts.Controllers;
 using GameQueue.Api.Contracts.Responses;
 using GameQueue.Core.Extensions;
 using GameQueue.Core.Services.Managers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GameQueue.Host.Controllers;
@@ -55,6 +57,7 @@ public class SearchMapsRequestController : ControllerBase, ISearchMapsRequestCon
         CancellationToken token = default)
             => await searchMapsRequestManager.DeleteAsync(creatorId, id, token);
 
+    [Authorize(Roles = "Administrator, Moderator")]
     [HttpPut("cancel/{id:int:min(0)}")]
     public async Task Cancel(
         [FromQuery(Name = "moderator_id")] int moderatorId,
@@ -62,6 +65,7 @@ public class SearchMapsRequestController : ControllerBase, ISearchMapsRequestCon
         CancellationToken token = default)
             => await searchMapsRequestManager.CancelAsync(moderatorId, id, token);
 
+    [Authorize(Roles = "Administrator, Moderator")]
     [HttpPut("finish/{id:int:min(0)}")]
     public async Task Finish(
         [FromQuery(Name = "moderator_id")] int moderatorId,

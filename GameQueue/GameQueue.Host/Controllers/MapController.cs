@@ -57,6 +57,7 @@ public class MapController : ControllerBase, IMapController
         return map.ToMapResponse();
     }
 
+    [Authorize(Roles = "Administrator")]
     [HttpPost]
     public async Task Add(
         [FromForm] AddMapRequest addMapRequest,
@@ -70,7 +71,7 @@ public class MapController : ControllerBase, IMapController
         await mapManager.AddAsync(convertAddMapRequest(addMapRequest, coverImageFile), token);
     }
 
-    //[Authorize(Roles = "Administrator")]
+    [Authorize(Roles = "Administrator")]
     [HttpPut("{id:int:min(0)}")]
     public async Task Update(
         [FromRoute(Name = "id")] int id,
@@ -81,18 +82,21 @@ public class MapController : ControllerBase, IMapController
         await mapManager.UpdateAsync(convertUpdateMapRequest(id, updateMapRequest, coverImageFile), token);
     }
 
+    [Authorize(Roles = "Administrator")]
     [HttpDelete("delete/{id:int:min(0)}")]
     public async Task Delete(
         [FromRoute(Name = "id")] int id,
         CancellationToken token = default)
             => await mapManager.DeleteAsync(id, token);
 
+    [Authorize(Roles = "Administrator")]
     [HttpDelete("force_delete/{id:int:min(0)}")]
     public async Task ForceDelete(
         [FromRoute(Name = "id")] int id,
         CancellationToken token = default)
             => await mapManager.ForceDeleteAsync(id, token);
 
+    [Authorize(Roles = "Administrator")]
     [HttpPut("make_available/{id:int:min(0)}")]
     public async Task MakeAvailable(
         int id,
