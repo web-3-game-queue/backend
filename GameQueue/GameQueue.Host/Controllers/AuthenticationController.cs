@@ -2,6 +2,7 @@
 using GameQueue.Api.Contracts.Controllers;
 using GameQueue.Api.Contracts.Exceptions;
 using GameQueue.Core.Services.Managers;
+using GameQueue.Host.Extensions;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -31,10 +32,7 @@ public class AuthenticationController : ControllerBase, IAuthenticationControlle
             throw new UnauthorizedException();
         }
 
-        var claims = new List<Claim> {
-            new Claim(ClaimTypes.Name, user.Name),
-            new Claim(ClaimTypes.Role, user.Role.ToString())
-        };
+        var claims = user.ToClaimsList();
         var claimsIdentity = new ClaimsIdentity(
             claims,
             CookieAuthenticationDefaults.AuthenticationScheme);

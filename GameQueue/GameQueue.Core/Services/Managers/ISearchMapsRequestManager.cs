@@ -9,7 +9,15 @@ public interface ISearchMapsRequestManager
 
     Task<SearchMapsRequest> GetByIdAsync(int id, CancellationToken token = default);
 
+    Task<SearchMapsRequest> GetByIdAndUserId(int id, int userId, CancellationToken token = default);
+
+    Task<ICollection<SearchMapsRequest>> GetUserRequests(int userId, CancellationToken token = default);
+
     Task AddAsync(AddSearchMapsRequestCommand addSearchMapsRequestCommand, CancellationToken token = default);
+
+    Task AddMapToUser(int mapId, int userId, CancellationToken token = default);
+
+    Task RemoveMapFromUser(int mapId, int userId, CancellationToken token = default);
 
     Task AddMap(int searchMapsRequestId, int mapId, CancellationToken token = default);
 

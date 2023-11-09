@@ -30,6 +30,42 @@ internal class SearchMapsRequestRepository : ISearchMapsRequestRepository
         return searchMapsRequest;
     }
 
+    public async Task<SearchMapsRequest> GetByIdAndUserId(int id, int userId, CancellationToken token = default)
+    {
+        var searchMapsRequest = await db.SearchMapsRequests
+            .Include(x => x.RequestsToMap)
+            .ThenInclude(y => y.Map)
+            .Include(x => x.CreatorUser)
+            .Where(x =>
+                x.Id == id
+                && x.CreatorUserId == userId)
+            .SingleOrDefaultAsync(token)
+            ?? throw new EntityNotFoundException(typeof(SearchMapsRequest), id);
+        return searchMapsRequest;
+    }
+
+    public async Task<ICollection<SearchMapsRequest>> GetUserRequestsAsync(int userId, CancellationToken token = default)
+        => await db
+            .SearchMapsRequests
+            .Where(x => x.CreatorUserId == userId)
+            .ToListAsync();
+
+    public async Task<SearchMapsRequest> GetOrCreateUserCurrentRequestAsync(int userId, CancellationToken token = default)
+    {
+        var searchMapsRequest = await db
+            .SearchMapsRequests
+            .Where(x => x.CreatorUserId == userId
+                    && x.Status == SearchMapsRequestStatus.Draft)
+            .SingleOrDefaultAsync(token);
+        if (searchMapsRequest == null)
+        {
+            searchMapsRequest = new SearchMapsRequest { CreatorUserId = userId };
+            await db.SearchMapsRequests.AddAsync(searchMapsRequest);
+            await db.SaveChangesAsync();
+        }
+        return searchMapsRequest;
+    }
+
     public async Task AddAsync(SearchMapsRequest SearchMapsRequest, CancellationToken token = default)
     {
         await db.SearchMapsRequests.AddAsync(SearchMapsRequest, token);

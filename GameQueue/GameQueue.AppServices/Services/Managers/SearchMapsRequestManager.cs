@@ -34,6 +34,12 @@ internal class SearchMapsRequestManager : ISearchMapsRequestManager
     public async Task<SearchMapsRequest> GetByIdAsync(int id, CancellationToken token = default)
         => await searchMapsRequestRepository.GetByIdAsync(id, token);
 
+    public async Task<SearchMapsRequest> GetByIdAndUserId(int id, int userId, CancellationToken token = default)
+        => await searchMapsRequestRepository.GetByIdAndUserId(id, userId, token);
+
+    public async Task<ICollection<SearchMapsRequest>> GetUserRequests(int userId, CancellationToken token = default)
+        => await searchMapsRequestRepository.GetUserRequestsAsync(userId, token);
+
     public async Task AddAsync(AddSearchMapsRequestCommand addSearchMapsRequestCommand, CancellationToken token = default)
     {
         var user = await userRepository.GetByIdAsync(addSearchMapsRequestCommand.CreatorUserId, token);
@@ -54,6 +60,18 @@ internal class SearchMapsRequestManager : ISearchMapsRequestManager
 
     public async Task RemoveMap(int searchMapsRequestId, int mapId, CancellationToken token = default)
         => await searchMapsRequestRepository.RemoveMap(searchMapsRequestId, mapId, token);
+
+    public async Task AddMapToUser(int mapId, int userId, CancellationToken token = default)
+    {
+        var searchMapsRequest = await searchMapsRequestRepository.GetOrCreateUserCurrentRequestAsync(userId, token);
+        await searchMapsRequestRepository.AddMap(searchMapsRequest.Id, mapId, token);
+    }
+
+    public async Task RemoveMapFromUser(int mapId, int userId, CancellationToken token = default)
+    {
+        var searchMapsRequest = await searchMapsRequestRepository.GetOrCreateUserCurrentRequestAsync(userId, token);
+        await searchMapsRequestRepository.RemoveMap(searchMapsRequest.Id, mapId, token);
+    }
 
     public async Task ComposeAsync(int clientId, int id, CancellationToken token = default)
     {
