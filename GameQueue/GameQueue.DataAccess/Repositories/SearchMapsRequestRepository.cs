@@ -47,6 +47,7 @@ internal class SearchMapsRequestRepository : ISearchMapsRequestRepository
     public async Task<ICollection<SearchMapsRequest>> GetUserRequestsAsync(int userId, CancellationToken token = default)
         => await db
             .SearchMapsRequests
+            .Include(x => x.RequestsToMap)
             .Where(x => x.CreatorUserId == userId)
             .ToListAsync();
 
