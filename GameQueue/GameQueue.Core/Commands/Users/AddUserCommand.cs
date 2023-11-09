@@ -1,4 +1,6 @@
-﻿namespace GameQueue.Core.Commands.Users;
+﻿using GameQueue.Core.Models;
+
+namespace GameQueue.Core.Commands.Users;
 
 public sealed record AddUserCommand
 {
@@ -7,4 +9,6 @@ public sealed record AddUserCommand
     public string Password { get; set; } = null!;
 
     public int Level { get; set; }
+
+    public UserRole Role { get; set; } = UserRole.Client;
 }

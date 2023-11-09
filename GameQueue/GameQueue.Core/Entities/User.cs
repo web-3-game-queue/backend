@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using GameQueue.Core.Models;
 
 namespace GameQueue.Core.Entities;
 
@@ -21,6 +22,9 @@ public sealed record class User
     [Required]
     [Range(0, int.MaxValue)]
     public int Level { get; set; }
+
+    [Required]
+    public UserRole Role { get; set; } = UserRole.Client;
 
     public List<SearchMapsRequest> SearchMapsRequests { get; } = new List<SearchMapsRequest>();
 }

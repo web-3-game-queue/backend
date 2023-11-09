@@ -37,6 +37,7 @@ internal class UserManager : IUserManager
         var user = new User {
             Name = addUserCommand.Name,
             Level = addUserCommand.Level,
+            Role = addUserCommand.Role
         };
         user.HashedPassword = passwordHasher.HashPassword(user, addUserCommand.Password);
         return user;

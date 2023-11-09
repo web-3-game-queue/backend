@@ -41,6 +41,7 @@ public class UserController : ControllerBase, IUserController
         => new AddUserCommand {
             Name = request.Name,
             Password = request.Password,
-            Level = request.Level
+            Level = request.Level,
+            Role = request.Role.ToUserRole()
         };
 }
