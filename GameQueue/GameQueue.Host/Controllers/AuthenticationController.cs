@@ -4,6 +4,7 @@ using GameQueue.Api.Contracts.Exceptions;
 using GameQueue.Core.Services.Managers;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GameQueue.Host.Controllers;
@@ -45,4 +46,12 @@ public class AuthenticationController : ControllerBase, IAuthenticationControlle
     {
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
     }
+
+    [HttpGet]
+    public Task<ICollection<string>> Me(CancellationToken token)
+        => Task.FromResult(
+            (ICollection<string>)User
+                .Claims
+                .Select(x => x.Value)
+                .ToList());
 }

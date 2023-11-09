@@ -70,7 +70,7 @@ public class MapController : ControllerBase, IMapController
         await mapManager.AddAsync(convertAddMapRequest(addMapRequest, coverImageFile), token);
     }
 
-    [Authorize]
+    [Authorize(Roles = "Administrator")]
     [HttpPut("{id:int:min(0)}")]
     public async Task Update(
         [FromRoute(Name = "id")] int id,
@@ -78,10 +78,6 @@ public class MapController : ControllerBase, IMapController
         IFormFile? coverImageFile,
         CancellationToken token = default)
     {
-        if (!User.IsInRole(UserRole.Administrator.ToString()))
-        {
-            throw new UnauthorizedException();
-        }
         await mapManager.UpdateAsync(convertUpdateMapRequest(id, updateMapRequest, coverImageFile), token);
     }
 
