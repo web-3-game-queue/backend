@@ -3,6 +3,7 @@ using GameQueue.Api.Contracts.Controllers;
 using GameQueue.Api.Contracts.Exceptions;
 using GameQueue.Core.Services.Managers;
 using GameQueue.Host.Extensions;
+using GameQueue.Host.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -14,10 +15,14 @@ namespace GameQueue.Host.Controllers;
 public class AuthenticationController : ControllerBase, IAuthenticationController
 {
     private readonly IUserManager userManager;
+    private readonly IJwtService jwtService;
 
-    public AuthenticationController(IUserManager userManager)
+    public AuthenticationController(
+        IUserManager userManager,
+        IJwtService jwtService)
     {
         this.userManager = userManager;
+        this.jwtService = jwtService;
     }
 
     [HttpPost("login")]
@@ -31,6 +36,8 @@ public class AuthenticationController : ControllerBase, IAuthenticationControlle
         {
             throw new UnauthorizedException();
         }
+
+        var jwtToken = jwtService.GenerateToken(user);
 
         var claims = user.ToClaimsList();
         var claimsIdentity = new ClaimsIdentity(
