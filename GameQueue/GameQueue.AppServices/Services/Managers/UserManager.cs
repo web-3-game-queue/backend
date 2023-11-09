@@ -37,7 +37,7 @@ internal class UserManager : IUserManager
     {
         var user = await userRepository.GetByUsername(username, token);
         var hashedPassword = passwordHasher.HashPassword(user, password);
-        if(hashedPassword != user.HashedPassword)
+        if (hashedPassword != user.HashedPassword)
         {
             return null;
         }
@@ -52,6 +52,8 @@ internal class UserManager : IUserManager
             user = await userRepository.GetByUsername(username, token);
         }
         catch (EntityNotFoundException)
+        { }
+        catch (InvalidOperationException)
         { }
         if (user != null)
         {

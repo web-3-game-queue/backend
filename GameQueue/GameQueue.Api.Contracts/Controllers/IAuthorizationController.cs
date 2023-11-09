@@ -2,5 +2,5 @@
 
 public interface IAuthorizationController
 {
-    public Task Register(string username, string password);
+    public Task Register(string username, string password, CancellationToken token);
 }
