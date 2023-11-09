@@ -82,6 +82,7 @@ internal class SearchMapsRequestRepository : ISearchMapsRequestRepository
             SearchMapsRequestId = searchMapsRequest.Id,
             MapId = map.Id
         }, token);
+        await db.SaveChangesAsync();
     }
 
     public async Task RemoveMap(int searchMapsRequestId, int mapId, CancellationToken token = default)
