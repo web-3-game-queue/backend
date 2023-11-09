@@ -10,4 +10,8 @@ public interface IUserManager
     Task<User> GetByIdAsync(int id, CancellationToken token = default);
 
     Task AddAsync(AddUserCommand addUserCommand, CancellationToken token = default);
+
+    Task<User?> TryLogin(string username, string password, CancellationToken token = default);
+
+    Task Register(string username, string password, CancellationToken token = default);
 }

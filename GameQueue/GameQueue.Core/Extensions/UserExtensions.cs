@@ -10,5 +10,6 @@ public static class UserExtensions
             Id = user.Id,
             Name = user.Name,
             Level = user.Level,
+            Role = user.Role.ToUserRoleApi()
         };
 }

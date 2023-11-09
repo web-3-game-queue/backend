@@ -1,4 +1,4 @@
-﻿namespace GameQueue.Core.Exceptions;
+﻿namespace GameQueue.Api.Contracts.Exceptions;
 
 public class UnauthorizedException : Exception
 {

@@ -1,5 +1,6 @@
 ﻿using GameQueue.Core.Commands.Users;
 using GameQueue.Core.Entities;
+using GameQueue.Core.Exceptions;
 using GameQueue.Core.Services;
 using GameQueue.Core.Services.Managers;
 using GameQueue.Core.Services.Repositories;
@@ -30,6 +31,39 @@ internal class UserManager : IUserManager
     {
         var user = convertAddCommandToUser(addUserCommand);
         await userRepository.AddAsync(user, token);
+    }
+
+    public async Task<User?> TryLogin(string username, string password, CancellationToken token = default)
+    {
+        var user = await userRepository.GetByUsername(username, token);
+        var hashedPassword = passwordHasher.HashPassword(user, password);
+        if(hashedPassword != user.HashedPassword)
+        {
+            return null;
+        }
+        return user;
+    }
+
+    public async Task Register(string username, string password, CancellationToken token = default)
+    {
+        User? user = null;
+        try
+        {
+            user = await userRepository.GetByUsername(username, token);
+        }
+        catch (EntityNotFoundException)
+        { }
+        if (user != null)
+        {
+            throw new EntityAlreadyExistsException(typeof(User), user.Id);
+        }
+        var addUserCommand = new AddUserCommand {
+            Name = username,
+            Level = 1,
+            Password = password,
+            Role = Core.Models.UserRole.Client
+        };
+        await AddAsync(addUserCommand, token);
     }
 
     private User convertAddCommandToUser(AddUserCommand addUserCommand)

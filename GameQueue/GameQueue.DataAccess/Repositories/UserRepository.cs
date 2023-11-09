@@ -22,4 +22,7 @@ internal class UserRepository : IUserRepository
         await db.Users.AddAsync(user);
         await db.SaveChangesAsync(token);
     }
+
+    public async Task<User> GetByUsername(string username, CancellationToken token = default)
+        => await db.Users.Where(x => x.Name == username).SingleAsync();
 }

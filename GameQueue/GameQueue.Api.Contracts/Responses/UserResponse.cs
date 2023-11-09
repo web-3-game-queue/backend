@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using GameQueue.Api.Contracts.Models;
 
 namespace GameQueue.Api.Contracts.Responses;
 
@@ -12,4 +13,7 @@ public sealed record UserResponse
 
     [JsonPropertyName("level")]
     public int Level { get; set; }
+
+    [JsonPropertyName("role")]
+    public UserRoleApi Role { get; set; }
 }

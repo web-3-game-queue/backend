@@ -3,6 +3,7 @@ using GameQueue.AppServices.Extensions;
 using GameQueue.DataAccess.Extensions;
 using GameQueue.Host.ExceptionFilters;
 using GameQueue.S3Access.Extensions;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Minio;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +17,11 @@ var minioClient = new MinioClient()
         configuration["MINIO_SECRET_KEY"])
     .WithSSL(false)
     .Build();
+
+builder.Services
+    .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie();
+builder.Services.AddAuthorization();
 
 builder.Services.AddCors();
 
@@ -48,7 +54,7 @@ app.UseSwagger();
 app.UseSwaggerUI();
 //}
 
-app.UseCors(builder => 
+app.UseCors(builder =>
     builder
         .AllowAnyOrigin()
         .AllowAnyHeader()

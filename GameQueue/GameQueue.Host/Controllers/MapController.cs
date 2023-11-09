@@ -1,4 +1,5 @@
 ﻿using GameQueue.Api.Contracts.Controllers;
+using GameQueue.Api.Contracts.Exceptions;
 using GameQueue.Api.Contracts.Requests.Maps;
 using GameQueue.Api.Contracts.Responses;
 using GameQueue.Core.Commands.Maps;
@@ -6,6 +7,7 @@ using GameQueue.Core.Extensions;
 using GameQueue.Core.Models;
 using GameQueue.Core.Services.Managers;
 using GameQueue.Host.Exceptions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GameQueue.Host.Controllers;
@@ -68,14 +70,20 @@ public class MapController : ControllerBase, IMapController
         await mapManager.AddAsync(convertAddMapRequest(addMapRequest, coverImageFile), token);
     }
 
+    [Authorize]
     [HttpPut("{id:int:min(0)}")]
     public async Task Update(
         [FromRoute(Name = "id")] int id,
         [FromForm] UpdateMapRequest updateMapRequest,
         IFormFile? coverImageFile,
         CancellationToken token = default)
-            => await mapManager
-                .UpdateAsync(convertUpdateMapRequest(id, updateMapRequest, coverImageFile), token);
+    {
+        if (!User.IsInRole(UserRole.Administrator.ToString()))
+        {
+            throw new UnauthorizedException();
+        }
+        await mapManager.UpdateAsync(convertUpdateMapRequest(id, updateMapRequest, coverImageFile), token);
+    }
 
     [HttpDelete("delete/{id:int:min(0)}")]
     public async Task Delete(

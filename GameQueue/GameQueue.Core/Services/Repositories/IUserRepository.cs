@@ -9,4 +9,6 @@ public interface IUserRepository
     Task<User> GetByIdAsync(int id, CancellationToken token = default);
 
     Task AddAsync(User user, CancellationToken token = default);
+
+    Task<User> GetByUsername(string username, CancellationToken token = default);
 }
