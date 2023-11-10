@@ -11,6 +11,7 @@ COPY ["GameQueue.Host/GameQueue.Host.csproj", "GameQueue.Host/"]
 COPY ["GameQueue.AppServices/GameQueue.AppServices.csproj", "GameQueue.AppServices/"]
 COPY ["GameQueue.Core/GameQueue.Core.csproj", "GameQueue.Core/"]
 COPY ["GameQueue.Api.Contracts/GameQueue.Api.Contracts.csproj", "GameQueue.Api.Contracts/"]
+COPY ["GameQueue.AuthTokensCache/GameQueue.AuthTokensCache.csproj", "GameQueue.AuthTokensCache/"]
 COPY ["GameQueue.DataAccess/GameQueue.DataAccess.csproj", "GameQueue.DataAccess/"]
 COPY ["GameQueue.S3Access/GameQueue.S3Access.csproj", "GameQueue.S3Access/"]
 RUN dotnet restore "GameQueue.Host/GameQueue.Host.csproj"

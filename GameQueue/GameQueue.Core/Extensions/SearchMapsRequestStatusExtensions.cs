@@ -1,4 +1,5 @@
 ﻿using GameQueue.Api.Contracts.Models;
+using GameQueue.Core.Exceptions;
 using GameQueue.Core.Models;
 using System.ComponentModel;
 

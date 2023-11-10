@@ -74,6 +74,18 @@ services:
     networks:
       - game-queue-network
 
+  game-queue-auth-redis:
+    image: redis:7.2.3-alpine
+    container_name: game-queue-auth-redis
+    ports:
+      - 6379:6379
+
+    volumes:
+      - "redis-data:/var/lib/redis"
+
+    networks:
+      - game-queue-network
+
   nginx:
     image: nginx:1.19.2-alpine
 
@@ -142,6 +154,7 @@ volumes:
   data3-2:
   data4-1:
   data4-2:
+  redis-data:
 
 
 networks:

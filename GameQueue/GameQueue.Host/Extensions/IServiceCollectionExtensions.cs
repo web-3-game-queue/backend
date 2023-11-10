@@ -33,6 +33,9 @@ public static class IServiceCollectionExtensions
             .AddJwtBearer(jwtOptions =>
             {
                 jwtOptions.TokenValidationParameters = tokenValidationParameters;
+                //jwtOptions.Events = new JwtBearerEvents {
+                //    OnChallenge = (c) => { c.HttpContext.RequestServices.GetRequiredService; c.Succ }
+                //};
             });
 
         services.AddScoped<IJwtService, JwtService>();

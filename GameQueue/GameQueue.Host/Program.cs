@@ -1,5 +1,7 @@
 using System.Text.Json.Serialization;
 using GameQueue.AppServices.Extensions;
+using GameQueue.AuthTokensCache.Authorization;
+using GameQueue.AuthTokensCache.Extensions;
 using GameQueue.DataAccess.Extensions;
 using GameQueue.Host.ExceptionFilters;
 using GameQueue.Host.Extensions;
@@ -23,7 +25,13 @@ var minioClient = new MinioClient()
 //    .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
 //    .AddCookie();
 builder.Services.AddJwtAuth(configuration);
-builder.Services.AddAuthorization();
+builder.Services.AddJwtAuthWithTokenCache(configuration);
+//builder.Services.AddAuthorization(options =>
+//{
+//    options.AddPolicy(
+//        CacheTokenRequirement.Name,
+//        policy => policy.Requirements.Add(new CacheTokenRequirement()));
+//});
 
 builder.Services.AddCors();
 

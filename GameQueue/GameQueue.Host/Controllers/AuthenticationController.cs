@@ -1,9 +1,11 @@
-﻿using GameQueue.Api.Contracts.Controllers;
+﻿using System.Security.Claims;
+using GameQueue.Api.Contracts.Controllers;
 using GameQueue.Api.Contracts.Exceptions;
+using GameQueue.AuthTokensCache;
+using GameQueue.AuthTokensCache.Authorization;
 using GameQueue.Core.Services.Managers;
 using GameQueue.Host.Services;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GameQueue.Host.Controllers;
@@ -13,13 +15,16 @@ public class AuthenticationController : ControllerBase, IAuthenticationControlle
 {
     private readonly IUserManager userManager;
     private readonly IJwtService jwtService;
+    private readonly RedisAuthTokensCache tokensCache;
 
     public AuthenticationController(
         IUserManager userManager,
-        IJwtService jwtService)
+        IJwtService jwtService,
+        RedisAuthTokensCache tokensCache)
     {
         this.userManager = userManager;
         this.jwtService = jwtService;
+        this.tokensCache = tokensCache;
     }
 
     [HttpPost("login")]
@@ -35,15 +40,19 @@ public class AuthenticationController : ControllerBase, IAuthenticationControlle
         }
 
         var jwtToken = jwtService.GenerateToken(user);
+        await tokensCache.SetKeyValue(user.Id.ToString(), user.Name, token);
         return jwtToken;
     }
 
     [HttpGet("logout")]
     public async Task Logout(CancellationToken token = default)
     {
-        await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+        var userId = User.FindFirst(ClaimTypes.Sid) ?? throw new UnauthorizedException();
+        var userIdStr = userId.Value;
+        await tokensCache.RemoveKey(userIdStr, token);
     }
 
+    [Authorize(Policy = CacheTokenRequirement.Name)]
     [HttpGet]
     public Task<ICollection<string>> Me(CancellationToken token)
         => Task.FromResult(
