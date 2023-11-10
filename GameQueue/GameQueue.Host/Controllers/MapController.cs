@@ -1,5 +1,4 @@
 ﻿using GameQueue.Api.Contracts.Controllers;
-using GameQueue.Api.Contracts.Exceptions;
 using GameQueue.Api.Contracts.Requests.Maps;
 using GameQueue.Api.Contracts.Responses;
 using GameQueue.Core.Commands.Maps;

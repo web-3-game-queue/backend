@@ -1,6 +1,5 @@
 ﻿using GameQueue.Api.Contracts.Exceptions;
 using GameQueue.Core.Exceptions;
-using GameQueue.DataAccess.Exceptions;
 using GameQueue.Host.Exceptions;
 using Microsoft.AspNetCore.Mvc.Filters;
 

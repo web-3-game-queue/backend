@@ -1,5 +1,4 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 using System.Text;
 using GameQueue.Core.Entities;
 using GameQueue.Host.Extensions;

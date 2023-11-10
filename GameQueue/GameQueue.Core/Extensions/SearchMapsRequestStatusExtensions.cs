@@ -1,6 +1,5 @@
 ﻿using GameQueue.Api.Contracts.Models;
 using GameQueue.Core.Models;
-using GameQueue.DataAccess.Exceptions;
 using System.ComponentModel;
 
 namespace GameQueue.Core.Extensions;

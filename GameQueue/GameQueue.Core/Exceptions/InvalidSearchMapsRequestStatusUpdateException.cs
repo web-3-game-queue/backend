@@ -1,6 +1,6 @@
 ﻿using GameQueue.Core.Models;
 
-namespace GameQueue.DataAccess.Exceptions;
+namespace GameQueue.Core.Exceptions;
 
 public class InvalidSearchMapsRequestStatusUpdateException : Exception
 {

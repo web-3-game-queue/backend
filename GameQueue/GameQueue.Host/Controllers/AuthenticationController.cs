@@ -1,13 +1,9 @@
-﻿using System.Security.Claims;
-using GameQueue.Api.Contracts.Controllers;
+﻿using GameQueue.Api.Contracts.Controllers;
 using GameQueue.Api.Contracts.Exceptions;
 using GameQueue.Core.Services.Managers;
-using GameQueue.Host.Extensions;
 using GameQueue.Host.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GameQueue.Host.Controllers;

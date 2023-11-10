@@ -1,7 +1,5 @@
 ﻿using GameQueue.Api.Contracts.Controllers;
 using GameQueue.Core.Services.Managers;
-using GameQueue.Host.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GameQueue.Host.Controllers;

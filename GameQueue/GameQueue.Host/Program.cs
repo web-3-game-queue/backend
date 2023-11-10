@@ -4,7 +4,6 @@ using GameQueue.DataAccess.Extensions;
 using GameQueue.Host.ExceptionFilters;
 using GameQueue.Host.Extensions;
 using GameQueue.S3Access.Extensions;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.OpenApi.Models;
 using Minio;
 

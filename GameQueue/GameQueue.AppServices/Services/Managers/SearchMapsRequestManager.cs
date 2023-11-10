@@ -1,7 +1,6 @@
 ﻿using GameQueue.Api.Contracts.Exceptions;
 using GameQueue.Core.Commands.SearchMapsRequests;
 using GameQueue.Core.Entities;
-using GameQueue.Core.Exceptions;
 using GameQueue.Core.Services.Managers;
 using GameQueue.Core.Services.Repositories;
 using Microsoft.Extensions.Configuration;

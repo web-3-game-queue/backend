@@ -1,5 +1,4 @@
 ﻿using System.Security.Claims;
-using GameQueue.Core.Entities;
 
 namespace GameQueue.Host.Extensions;
 
