@@ -6,6 +6,7 @@ using GameQueue.Host.Extensions;
 using GameQueue.Host.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,7 +27,7 @@ public class AuthenticationController : ControllerBase, IAuthenticationControlle
     }
 
     [HttpPost("login")]
-    public async Task Login(
+    public async Task<string> Login(
         [FromQuery(Name = "login")] string username,
         [FromQuery(Name = "password")] string password,
         CancellationToken token = default)
@@ -38,12 +39,7 @@ public class AuthenticationController : ControllerBase, IAuthenticationControlle
         }
 
         var jwtToken = jwtService.GenerateToken(user);
-
-        var claims = user.ToClaimsList();
-        var claimsIdentity = new ClaimsIdentity(
-            claims,
-            CookieAuthenticationDefaults.AuthenticationScheme);
-        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+        return jwtToken;
     }
 
     [HttpGet("logout")]

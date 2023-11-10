@@ -2,7 +2,7 @@
 
 public interface IAuthenticationController
 {
-    public Task Login(string username, string password, CancellationToken token);
+    public Task<string> Login(string username, string password, CancellationToken token);
 
     public Task Logout(CancellationToken token);
 

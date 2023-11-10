@@ -18,8 +18,8 @@ public class JwtService : IJwtService
     {
         var jwtConfig = configuration.GetRequiredSection("Jwt");
         var lifetimeSeconds = double.Parse(
-            jwtConfig["Lifetime"]
-            ?? throw new NullReferenceException("jwtConfig[Lifetime]"));
+            jwtConfig["LifetimeSeconds"]
+            ?? throw new NullReferenceException("jwtConfig[LifetimeSeconds]"));
 
         issuer = jwtConfig["Issuer"]
             ?? throw new NullReferenceException("jwtConfig[Issuer]");

@@ -1,4 +1,5 @@
-﻿using GameQueue.Core.Entities;
+﻿using System.IdentityModel.Tokens.Jwt;
+using GameQueue.Core.Entities;
 
 namespace GameQueue.Host.Services;
 
