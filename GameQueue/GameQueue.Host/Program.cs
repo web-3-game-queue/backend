@@ -5,6 +5,7 @@ using GameQueue.Host.ExceptionFilters;
 using GameQueue.Host.Extensions;
 using GameQueue.S3Access.Extensions;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.OpenApi.Models;
 using Minio;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -44,9 +45,33 @@ builder.Services
     .AddJsonOptions(options
         => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
-builder.Services
-    .AddEndpointsApiExplorer()
-    .AddSwaggerGen();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo {
+        Title = "game-queue API",
+        Version = "v1"
+    });
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme {
+        In = ParameterLocation.Header,
+        Description = "JWT",
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey
+    });
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] { }
+        }
+    });
+});
 
 var app = builder.Build();
 
