@@ -32,7 +32,8 @@ internal class SearchMapsRequestRepository : ISearchMapsRequestRepository
 
     public async Task<SearchMapsRequest> GetByIdAndUserId(int id, int userId, CancellationToken token = default)
     {
-        var searchMapsRequest = await db.SearchMapsRequests
+        var searchMapsRequest = await db
+            .SearchMapsRequests
             .Include(x => x.RequestsToMap)
             .ThenInclude(y => y.Map)
             .Include(x => x.CreatorUser)
@@ -55,6 +56,9 @@ internal class SearchMapsRequestRepository : ISearchMapsRequestRepository
     {
         var searchMapsRequest = await db
             .SearchMapsRequests
+            .Include(x => x.RequestsToMap)
+            .ThenInclude(y => y.Map)
+            .Include(x => x.CreatorUser)
             .Where(x => x.CreatorUserId == userId
                     && x.Status == SearchMapsRequestStatus.Draft)
             .SingleOrDefaultAsync(token);

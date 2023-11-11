@@ -33,6 +33,9 @@ internal class SearchMapsRequestManager : ISearchMapsRequestManager
     public async Task<ICollection<SearchMapsRequest>> GetUserRequests(int userId, CancellationToken token = default)
         => await searchMapsRequestRepository.GetUserRequestsAsync(userId, token);
 
+    public async Task<SearchMapsRequest> GetUsersCurrentRequest(int userId, CancellationToken token = default)
+        => await searchMapsRequestRepository.GetOrCreateUserCurrentRequestAsync(userId, token);
+
     public async Task AddAsync(AddSearchMapsRequestCommand addSearchMapsRequestCommand, CancellationToken token = default)
     {
         var user = await userRepository.GetByIdAsync(addSearchMapsRequestCommand.CreatorUserId, token);

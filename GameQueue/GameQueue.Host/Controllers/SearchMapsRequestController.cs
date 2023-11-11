@@ -56,6 +56,15 @@ public class SearchMapsRequestController : ControllerBase, ISearchMapsRequestCon
     }
 
     [Authorize]
+    [HttpGet("current")]
+    public async Task<SearchMapsRequestResponseVerbose> GetCurrentSearchMapsRequest(CancellationToken token = default)
+    {
+        var userId = User.Id();
+        var searchMapsRequest = await searchMapsRequestManager.GetUsersCurrentRequest(userId, token);
+        return searchMapsRequest.ToSerchMapsRequestResponseVerbose();
+    }
+
+    [Authorize]
     [HttpPut("add_map/{map_id:int:min(0)}")]
     public async Task<int> AddMap(
         [FromRoute(Name = "map_id")] int mapId,
