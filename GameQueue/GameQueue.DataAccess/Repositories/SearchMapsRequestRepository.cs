@@ -54,6 +54,7 @@ internal class SearchMapsRequestRepository : ISearchMapsRequestRepository
 
     public async Task<SearchMapsRequest> GetOrCreateUserCurrentRequestAsync(int userId, CancellationToken token = default)
     {
+        var user = await db.Users.FindAsync(userId);
         var searchMapsRequest = await db
             .SearchMapsRequests
             .Include(x => x.RequestsToMap)
@@ -64,16 +65,18 @@ internal class SearchMapsRequestRepository : ISearchMapsRequestRepository
             .SingleOrDefaultAsync(token);
         if (searchMapsRequest == null)
         {
-            searchMapsRequest = new SearchMapsRequest { CreatorUserId = userId };
-            await db.SearchMapsRequests.AddAsync(searchMapsRequest);
-            await db.SaveChangesAsync();
+            var newSearchMapsRequest = new SearchMapsRequest { CreatorUserId = userId };
+            db.SearchMapsRequests.Add(newSearchMapsRequest);
+            await db.SaveChangesAsync(token);
+            newSearchMapsRequest.CreatorUser = user ?? throw new NullReferenceException(nameof(user));
+            return newSearchMapsRequest;
         }
         return searchMapsRequest;
     }
 
     public async Task AddAsync(SearchMapsRequest SearchMapsRequest, CancellationToken token = default)
     {
-        await db.SearchMapsRequests.AddAsync(SearchMapsRequest, token);
+        db.SearchMapsRequests.Add(SearchMapsRequest);
         await db.SaveChangesAsync(token);
     }
 
