@@ -10,7 +10,7 @@ public interface ISearchMapsRequestController
 
     Task<SearchMapsRequestResponseVerbose> GetById(int id, CancellationToken token = default);
 
-    Task AddMap(int mapId, CancellationToken token = default);
+    Task<int> AddMap(int mapId, CancellationToken token = default);
 
     Task RemoveMap(int mapId, CancellationToken token = default);
 

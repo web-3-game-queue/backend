@@ -26,7 +26,7 @@ public class SearchMapsRequestController : ControllerBase, ISearchMapsRequestCon
             .ToList();
 
     [Authorize(Roles = "Administrator, Moderator, Client")]
-    [HttpGet("my")]
+    [HttpGet("me")]
     public async Task<ICollection<SearchMapsRequestResponse>> GetUserRequests(CancellationToken token)
     {
         var userId = User.Id();
@@ -55,17 +55,18 @@ public class SearchMapsRequestController : ControllerBase, ISearchMapsRequestCon
         return searchMapsRequest.ToSerchMapsRequestResponseVerbose();
     }
 
-    [Authorize(Roles = "Client")]
+    [Authorize]
     [HttpPut("add_map/{map_id:int:min(0)}")]
-    public async Task AddMap(
+    public async Task<int> AddMap(
         [FromRoute(Name = "map_id")] int mapId,
         CancellationToken token = default)
     {
         var userId = User.Id();
-        await searchMapsRequestManager.AddMapToUser(mapId, userId, token);
+        var requestId = await searchMapsRequestManager.AddMapToUser(mapId, userId, token);
+        return requestId;
     }
 
-    [Authorize(Roles = "Client")]
+    [Authorize]
     [HttpDelete("remove_map/{map_id:int:min(0)}")]
     public async Task RemoveMap(
         [FromRoute(Name = "map_id")] int mapId,
@@ -75,7 +76,7 @@ public class SearchMapsRequestController : ControllerBase, ISearchMapsRequestCon
         await searchMapsRequestManager.RemoveMapFromUser(mapId, userId, token);
     }
 
-    [Authorize(Roles = "Client")]
+    [Authorize]
     [HttpPut("compose/{id:int:min(0)}")]
     public async Task Compose(
         [FromRoute(Name = "id")] int id,
@@ -84,7 +85,7 @@ public class SearchMapsRequestController : ControllerBase, ISearchMapsRequestCon
         await searchMapsRequestManager.ComposeAsync(User.Id(), id, token);
     }
 
-    [Authorize(Roles = "Client")]
+    [Authorize]
     [HttpDelete("delete/{id:int:min(0)}")]
     public async Task Delete(
         [FromRoute(Name = "id")] int id,

@@ -1,4 +1,6 @@
-﻿namespace GameQueue.Api.Contracts.Controllers;
+﻿using GameQueue.Api.Contracts.Responses;
+
+namespace GameQueue.Api.Contracts.Controllers;
 
 public interface IAuthenticationController
 {
@@ -6,5 +8,5 @@ public interface IAuthenticationController
 
     public Task Logout(CancellationToken token);
 
-    public Task<ICollection<string>> Me(CancellationToken token);
+    public Task<UserResponse> Me(CancellationToken token);
 }

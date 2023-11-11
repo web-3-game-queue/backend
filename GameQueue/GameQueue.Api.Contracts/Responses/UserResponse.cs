@@ -16,4 +16,7 @@ public sealed record UserResponse
 
     [JsonPropertyName("role")]
     public UserRoleApi Role { get; set; }
+
+    [JsonPropertyName("claims")]
+    public ICollection<string>? Claims { get; set; } = null;
 }

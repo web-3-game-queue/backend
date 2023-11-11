@@ -1,9 +1,7 @@
-﻿using GameQueue.Api.Contracts.Exceptions;
-using GameQueue.Core.Commands.SearchMapsRequests;
+﻿using GameQueue.Core.Commands.SearchMapsRequests;
 using GameQueue.Core.Entities;
 using GameQueue.Core.Services.Managers;
 using GameQueue.Core.Services.Repositories;
-using Microsoft.Extensions.Configuration;
 
 namespace GameQueue.AppServices.Services.Managers;
 
@@ -56,10 +54,11 @@ internal class SearchMapsRequestManager : ISearchMapsRequestManager
     public async Task RemoveMap(int searchMapsRequestId, int mapId, CancellationToken token = default)
         => await searchMapsRequestRepository.RemoveMap(searchMapsRequestId, mapId, token);
 
-    public async Task AddMapToUser(int mapId, int userId, CancellationToken token = default)
+    public async Task<int> AddMapToUser(int mapId, int userId, CancellationToken token = default)
     {
         var searchMapsRequest = await searchMapsRequestRepository.GetOrCreateUserCurrentRequestAsync(userId, token);
         await searchMapsRequestRepository.AddMap(searchMapsRequest.Id, mapId, token);
+        return searchMapsRequest.Id;
     }
 
     public async Task RemoveMapFromUser(int mapId, int userId, CancellationToken token = default)

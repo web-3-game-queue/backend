@@ -1,9 +1,12 @@
 ﻿using System.Security.Claims;
 using GameQueue.Api.Contracts.Controllers;
 using GameQueue.Api.Contracts.Exceptions;
+using GameQueue.Api.Contracts.Responses;
 using GameQueue.AuthTokensCache;
 using GameQueue.AuthTokensCache.Authorization;
+using GameQueue.Core.Extensions;
 using GameQueue.Core.Services.Managers;
+using GameQueue.Host.Extensions;
 using GameQueue.Host.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -54,10 +57,16 @@ public class AuthenticationController : ControllerBase, IAuthenticationControlle
 
     [Authorize(Policy = CacheTokenRequirement.Name)]
     [HttpGet]
-    public Task<ICollection<string>> Me(CancellationToken token)
-        => Task.FromResult(
-            (ICollection<string>)User
-                .Claims
-                .Select(x => x.Value)
-                .ToList());
+    public async Task<UserResponse> Me(CancellationToken token)
+    {
+        var claims = (ICollection<string>)User
+                    .Claims
+                    .Select(x => x.Value)
+                    .ToList();
+        var userId = User.Id();
+        var user = await userManager.GetByIdAsync(userId, token);
+        var userResponse = user.ToUserResponse();
+        userResponse.Claims = claims;
+        return userResponse;
+    }
 }
