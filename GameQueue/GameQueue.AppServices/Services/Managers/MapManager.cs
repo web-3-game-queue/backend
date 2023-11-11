@@ -11,13 +11,16 @@ namespace GameQueue.AppServices.Services.Managers;
 public class MapManager : IMapManager
 {
     private IMapRepository mapRepository;
+    private IRequestToMapRepository requestToMapRepository;
     private IS3Manager s3Manager;
 
     public MapManager(
         IMapRepository mapRepository,
+        IRequestToMapRepository requestToMapRepository,
         IS3Manager s3Manager)
     {
         this.mapRepository = mapRepository;
+        this.requestToMapRepository = requestToMapRepository;
         this.s3Manager = s3Manager;
     }
 
@@ -72,6 +75,7 @@ public class MapManager : IMapManager
     {
         var map = await mapRepository.GetByIdAsync(id, token);
         map.Status = MapStatus.Deleted;
+        await requestToMapRepository.RemoveRequestsToMap(id, token);
         await mapRepository.UpdateAsync(map, token);
     }
 

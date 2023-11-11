@@ -17,5 +17,6 @@ public static class ServiceCollectionExtensions
         => services
             .AddScoped<IMapRepository, MapRepository>()
             .AddScoped<ISearchMapsRequestRepository, SearchMapsRequestRepository>()
-            .AddScoped<IUserRepository, UserRepository>();
+            .AddScoped<IUserRepository, UserRepository>()
+            .AddScoped<IRequestToMapRepository, RequestToMapRepository>();
 }
