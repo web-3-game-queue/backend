@@ -13,18 +13,14 @@ internal class SearchMapsRequestManager : ISearchMapsRequestManager
     private readonly IUserRepository userRepository;
     private readonly IMapRepository mapRepository;
 
-    private readonly int moderatorId;
-
     public SearchMapsRequestManager(
         ISearchMapsRequestRepository searchMapsRequestRepository,
         IUserRepository userRepository,
-        IMapRepository mapRepository,
-        IConfiguration configuration)
+        IMapRepository mapRepository)
     {
         this.searchMapsRequestRepository = searchMapsRequestRepository;
         this.userRepository = userRepository;
         this.mapRepository = mapRepository;
-        moderatorId = int.Parse(configuration["ModeratorId"] ?? throw new NullReferenceException("ModeratorId"));
     }
 
     public async Task<ICollection<SearchMapsRequest>> GetAllAsync(CancellationToken token = default)
@@ -74,39 +70,23 @@ internal class SearchMapsRequestManager : ISearchMapsRequestManager
 
     public async Task ComposeAsync(int clientId, int id, CancellationToken token = default)
     {
-        var request = await searchMapsRequestRepository.GetByIdAsync(id);
-        if (clientId != request.CreatorUserId)
-        {
-            throw new UnauthorizedException("Client ids do not match");
-        }
+        await searchMapsRequestRepository.GetByIdAndUserId(id, clientId, token);
         await searchMapsRequestRepository.ComposeAsync(id, token);
     }
 
     public async Task DeleteAsync(int clientId, int id, CancellationToken token = default)
     {
-        var request = await searchMapsRequestRepository.GetByIdAsync(id);
-        if (clientId != request.CreatorUserId)
-        {
-            throw new UnauthorizedException("Client ids do not match");
-        }
+        await searchMapsRequestRepository.GetByIdAndUserId(id, clientId, token);
         await searchMapsRequestRepository.DeleteAsync(id, token);
     }
 
-    public async Task CancelAsync(int moderatorId, int id, CancellationToken token = default)
+    public async Task CancelAsync(int id, CancellationToken token = default)
     {
-        if (moderatorId != this.moderatorId)
-        {
-            throw new UnauthorizedException("Invalid moderator id");
-        }
         await searchMapsRequestRepository.CancelAsync(id, token);
     }
 
-    public async Task FinishAsync(int moderatorId, int id, CancellationToken token = default)
+    public async Task FinishAsync(int id, CancellationToken token = default)
     {
-        if (moderatorId != this.moderatorId)
-        {
-            throw new UnauthorizedException("Invalid moderator id");
-        }
         await searchMapsRequestRepository.FinishAsync(id, token);
     }
 }

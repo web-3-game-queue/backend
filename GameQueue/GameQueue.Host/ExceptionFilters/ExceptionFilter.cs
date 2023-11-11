@@ -35,11 +35,6 @@ public class ExceptionFilter : IAsyncExceptionFilter
                 await context.HttpContext.Response.WriteAsync(string.Format("Invalid set status request: {0}", e.Message));
                 break;
 
-            case UnauthorizedException e:
-                context.HttpContext.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                await context.HttpContext.Response.WriteAsync(string.Format("Unauthorized: {0}", e.Message));
-                break;
-
             default:
                 context.HttpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
                 await context.HttpContext.Response.WriteAsync(string.Format("Internal error: {0}", exception.Message));

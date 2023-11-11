@@ -28,7 +28,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "game-queue-backend", "game-
 		game-queue-backend\appsettings.json = game-queue-backend\appsettings.json
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameQueue.AuthTokensCache", "GameQueue.AuthTokensCache\GameQueue.AuthTokensCache.csproj", "{2403859A-A58D-4AEA-9AE5-E961F8CF054C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameQueue.AuthTokensCache", "GameQueue.AuthTokensCache\GameQueue.AuthTokensCache.csproj", "{2403859A-A58D-4AEA-9AE5-E961F8CF054C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

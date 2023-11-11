@@ -78,32 +78,36 @@ public class SearchMapsRequestController : ControllerBase, ISearchMapsRequestCon
     [Authorize(Roles = "Client")]
     [HttpPut("compose/{id:int:min(0)}")]
     public async Task Compose(
-        [FromQuery(Name = "creator_id")] int creatorId,
         [FromRoute(Name = "id")] int id,
         CancellationToken token = default)
-            => await searchMapsRequestManager.ComposeAsync(creatorId, id, token);
+    {
+        await searchMapsRequestManager.ComposeAsync(User.Id(), id, token);
+    }
 
     [Authorize(Roles = "Client")]
     [HttpDelete("delete/{id:int:min(0)}")]
     public async Task Delete(
-        [FromQuery(Name = "creator_id")] int creatorId,
         [FromRoute(Name = "id")] int id,
         CancellationToken token = default)
-            => await searchMapsRequestManager.DeleteAsync(creatorId, id, token);
+    {
+        await searchMapsRequestManager.DeleteAsync(User.Id(), id, token);
+    }
 
     [Authorize(Roles = "Administrator, Moderator")]
     [HttpPut("cancel/{id:int:min(0)}")]
     public async Task Cancel(
-        [FromQuery(Name = "moderator_id")] int moderatorId,
         [FromRoute(Name = "id")] int id,
         CancellationToken token = default)
-            => await searchMapsRequestManager.CancelAsync(moderatorId, id, token);
+    {
+        await searchMapsRequestManager.CancelAsync(id, token);
+    }
 
     [Authorize(Roles = "Administrator, Moderator")]
     [HttpPut("finish/{id:int:min(0)}")]
     public async Task Finish(
-        [FromQuery(Name = "moderator_id")] int moderatorId,
         [FromRoute(Name = "id")] int id,
         CancellationToken token = default)
-            => await searchMapsRequestManager.FinishAsync(moderatorId, id, token);
+    {
+        await searchMapsRequestManager.FinishAsync(id, token);
+    }
 }
