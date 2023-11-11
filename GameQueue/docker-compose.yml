@@ -50,11 +50,26 @@ services:
     depends_on:
       - game-queue-db
       - nginx
+      - game-queue-auth-redis
 
     volumes:
       - type: bind
         source: ./game-queue-backend/appsettings.json
         target: /app/appsettings.json
+  
+  game-queue-front-host:
+    image: alordash/game-queue-front-host:latest
+    networks:
+      - game-queue-network
+    
+    ports:
+      - "8000:8000"
+    
+    environment:
+      - EXPRESS_PORT=8000
+    
+    depends_on:
+      - game-queue-backend
 
   game-queue-db:
     image: postgres:14
