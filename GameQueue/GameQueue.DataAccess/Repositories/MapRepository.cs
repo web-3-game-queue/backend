@@ -40,8 +40,7 @@ internal class MapRepository : IMapRepository
         => await db.Maps
             .Where(x =>
                 x.Name.Contains(filterName)
-                && x.MaxPlayersCount <= maxPlayersCount
-                && x.Status == MapStatus.Available)
+                && x.MaxPlayersCount <= maxPlayersCount)
             .OrderBy(x => x.Id)
             .ToListAsync(token);
 
