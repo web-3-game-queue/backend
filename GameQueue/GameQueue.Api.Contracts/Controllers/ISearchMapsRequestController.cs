@@ -4,7 +4,11 @@ namespace GameQueue.Api.Contracts.Controllers;
 
 public interface ISearchMapsRequestController
 {
-    Task<ICollection<SearchMapsRequestResponse>> GetAll(CancellationToken token = default);
+    Task<ICollection<SearchMapsRequestResponse>> GetAll(
+        DateTimeOffset? beginDate,
+        DateTimeOffset? endDate,
+        string? username,
+        CancellationToken token = default);
 
     Task<ICollection<SearchMapsRequestResponse>> GetUserRequests(CancellationToken token);
 

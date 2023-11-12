@@ -21,8 +21,16 @@ internal class SearchMapsRequestManager : ISearchMapsRequestManager
         this.mapRepository = mapRepository;
     }
 
-    public async Task<ICollection<SearchMapsRequest>> GetAllAsync(CancellationToken token = default)
-        => await searchMapsRequestRepository.GetAllAsync(token);
+    public async Task<ICollection<SearchMapsRequest>> GetAllAsync(
+        DateTimeOffset? beginDate,
+        DateTimeOffset? endDate,
+        string? username,
+        CancellationToken token = default)
+        => await searchMapsRequestRepository.GetAllAsync(
+            beginDate ?? DateTimeOffset.MinValue,
+            endDate ?? DateTimeOffset.MaxValue,
+            username ?? string.Empty,
+            token);
 
     public async Task<SearchMapsRequest> GetByIdAsync(int id, CancellationToken token = default)
         => await searchMapsRequestRepository.GetByIdAsync(id, token);

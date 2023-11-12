@@ -4,7 +4,11 @@ namespace GameQueue.Core.Services.Repositories;
 
 public interface ISearchMapsRequestRepository
 {
-    Task<ICollection<SearchMapsRequest>> GetAllAsync(CancellationToken token = default);
+    Task<ICollection<SearchMapsRequest>> GetAllAsync(
+        DateTimeOffset beginDate,
+        DateTimeOffset endDate,
+        string username,
+        CancellationToken token = default);
 
     Task<SearchMapsRequest> GetByIdAsync(int id, CancellationToken token = default);
 

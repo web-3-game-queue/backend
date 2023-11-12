@@ -31,10 +31,21 @@ public class SearchMapsRequestController : ControllerBase, ISearchMapsRequestCon
 
     [Authorize(Roles = "Administrator, Moderator")]
     [HttpGet("all")]
-    public async Task<ICollection<SearchMapsRequestResponse>> GetAll(CancellationToken token = default)
-        => (await searchMapsRequestManager.GetAllAsync(token))
-            .Select(x => x.ToSearchMapsRequestResponse())
-            .ToList();
+    public async Task<ICollection<SearchMapsRequestResponse>> GetAll(
+        [FromQuery(Name = "begin_date")] DateTimeOffset? beginDate,
+        [FromQuery(Name = "end_date")] DateTimeOffset? endDate,
+        [FromQuery(Name = "username")] string? username,
+        CancellationToken token = default)
+    {
+        var searchMapsRequest = await searchMapsRequestManager.GetAllAsync(
+            beginDate,
+            endDate,
+            username,
+            token);
+        return searchMapsRequest
+                .Select(x => x.ToSearchMapsRequestResponse())
+                .ToList();
+    }
 
     [Authorize(Roles = "Administrator, Moderator, Client")]
     [HttpGet("{id:int:min(0)}")]

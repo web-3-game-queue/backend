@@ -5,14 +5,18 @@ namespace GameQueue.Core.Services.Managers;
 
 public interface ISearchMapsRequestManager
 {
-    Task<ICollection<SearchMapsRequest>> GetAllAsync(CancellationToken token = default);
+    Task<ICollection<SearchMapsRequest>> GetAllAsync(
+        DateTimeOffset? beginDate,
+        DateTimeOffset? endDate,
+        string? username,
+        CancellationToken token = default);
 
     Task<SearchMapsRequest> GetByIdAsync(int id, CancellationToken token = default);
 
     Task<SearchMapsRequest> GetByIdAndUserId(int id, int userId, CancellationToken token = default);
 
     Task<ICollection<SearchMapsRequest>> GetUserRequests(int userId, CancellationToken token = default);
-    
+
     Task<SearchMapsRequest?> GetUserCurrentRequestAsync(int userId, CancellationToken token = default);
 
     Task<SearchMapsRequest> GetOrCreateUserCurrentRequest(int userId, CancellationToken token = default);

@@ -14,10 +14,21 @@ internal class SearchMapsRequestRepository : ISearchMapsRequestRepository
 
     public SearchMapsRequestRepository(GameQueueContext db) => this.db = db;
 
-    public async Task<ICollection<SearchMapsRequest>> GetAllAsync(CancellationToken token = default)
-        => await db.SearchMapsRequests
-            .Include(x => x.RequestsToMap)
-            .ToListAsync(token);
+    public async Task<ICollection<SearchMapsRequest>> GetAllAsync(
+        DateTimeOffset beginDate,
+        DateTimeOffset endDate,
+        string username,
+        CancellationToken token = default)
+    {
+
+        var query = db.SearchMapsRequests
+                .Include(x => x.RequestsToMap)
+                .Where(x =>
+                    x.CreationDate >= beginDate
+                    && x.CreationDate <= endDate
+                    && x.CreatorUser.Name.Contains(username));
+        return await query.ToListAsync(token);
+    }
 
     public async Task<SearchMapsRequest> GetByIdAsync(int id, CancellationToken token = default)
     {
