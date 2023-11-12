@@ -18,15 +18,8 @@ public class SearchMapsRequestController : ControllerBase, ISearchMapsRequestCon
     public SearchMapsRequestController(ISearchMapsRequestManager searchMapsRequestManager)
         => this.searchMapsRequestManager = searchMapsRequestManager;
 
-    [Authorize(Roles = "Administrator, Moderator")]
-    [HttpGet]
-    public async Task<ICollection<SearchMapsRequestResponse>> GetAll(CancellationToken token = default)
-        => (await searchMapsRequestManager.GetAllAsync(token))
-            .Select(x => x.ToSearchMapsRequestResponse())
-            .ToList();
-
     [Authorize(Roles = "Administrator, Moderator, Client")]
-    [HttpGet("me")]
+    [HttpGet]
     public async Task<ICollection<SearchMapsRequestResponse>> GetUserRequests(CancellationToken token)
     {
         var userId = User.Id();
@@ -35,6 +28,13 @@ public class SearchMapsRequestController : ControllerBase, ISearchMapsRequestCon
             .Select(x => x.ToSearchMapsRequestResponse())
             .ToList();
     }
+
+    [Authorize(Roles = "Administrator, Moderator")]
+    [HttpGet("all")]
+    public async Task<ICollection<SearchMapsRequestResponse>> GetAll(CancellationToken token = default)
+        => (await searchMapsRequestManager.GetAllAsync(token))
+            .Select(x => x.ToSearchMapsRequestResponse())
+            .ToList();
 
     [Authorize(Roles = "Administrator, Moderator, Client")]
     [HttpGet("{id:int:min(0)}")]
