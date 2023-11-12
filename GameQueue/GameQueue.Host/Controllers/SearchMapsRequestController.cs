@@ -57,11 +57,11 @@ public class SearchMapsRequestController : ControllerBase, ISearchMapsRequestCon
 
     [Authorize]
     [HttpGet("current")]
-    public async Task<SearchMapsRequestResponseVerbose> GetCurrentSearchMapsRequest(CancellationToken token = default)
+    public async Task<SearchMapsRequestResponseVerbose?> GetCurrentSearchMapsRequest(CancellationToken token = default)
     {
         var userId = User.Id();
-        var searchMapsRequest = await searchMapsRequestManager.GetUsersCurrentRequest(userId, token);
-        return searchMapsRequest.ToSerchMapsRequestResponseVerbose();
+        var searchMapsRequest = await searchMapsRequestManager.GetUserCurrentRequestAsync(userId, token);
+        return searchMapsRequest?.ToSerchMapsRequestResponseVerbose();
     }
 
     [Authorize]

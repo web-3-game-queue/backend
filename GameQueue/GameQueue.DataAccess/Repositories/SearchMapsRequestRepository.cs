@@ -1,4 +1,5 @@
-﻿using GameQueue.Core.Entities;
+﻿using System.Data;
+using GameQueue.Core.Entities;
 using GameQueue.Core.Exceptions;
 using GameQueue.Core.Extensions;
 using GameQueue.Core.Models;
@@ -51,6 +52,16 @@ internal class SearchMapsRequestRepository : ISearchMapsRequestRepository
             .Include(x => x.RequestsToMap)
             .Where(x => x.CreatorUserId == userId)
             .ToListAsync();
+
+    public async Task<SearchMapsRequest?> GetUserCurrentRequestAsync(int userId, CancellationToken token = default)
+        => await db
+            .SearchMapsRequests
+            .Include(x => x.RequestsToMap)
+            .ThenInclude(y => y.Map)
+            .Include(x => x.CreatorUser)
+            .Where(x => x.CreatorUserId == userId
+                    && x.Status == SearchMapsRequestStatus.Draft)
+            .SingleOrDefaultAsync(token);
 
     public async Task<SearchMapsRequest> GetOrCreateUserCurrentRequestAsync(int userId, CancellationToken token = default)
     {

@@ -12,6 +12,8 @@ public interface ISearchMapsRequestRepository
 
     Task<ICollection<SearchMapsRequest>> GetUserRequestsAsync(int userId, CancellationToken token = default);
 
+    Task<SearchMapsRequest?> GetUserCurrentRequestAsync(int userId, CancellationToken token = default);
+
     Task<SearchMapsRequest> GetOrCreateUserCurrentRequestAsync(int userId, CancellationToken token = default);
 
     Task AddAsync(SearchMapsRequest request, CancellationToken token = default);
