@@ -1,0 +1,1 @@
+docker build . -f Backend.Dockerfile -t alordash/game-queue-backend:latest

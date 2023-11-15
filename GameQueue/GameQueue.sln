@@ -3,7 +3,32 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33627.172
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameQueue.Backend", "GameQueue.Backend\GameQueue.Backend.csproj", "{014775C5-F0C9-4CFA-9856-76336EC2070D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameQueue.Host", "GameQueue.Host\GameQueue.Host.csproj", "{014775C5-F0C9-4CFA-9856-76336EC2070D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameQueue.Core", "GameQueue.Core\GameQueue.Core.csproj", "{7842C077-559F-4FB9-9D97-961C894F40D7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameQueue.Api.Contracts", "GameQueue.Api.Contracts\GameQueue.Api.Contracts.csproj", "{BE5A7EC2-60E4-43A0-9393-DB9A6A9B5FF0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameQueue.AppServices", "GameQueue.AppServices\GameQueue.AppServices.csproj", "{0DDE5C64-9ED8-4948-BC60-CB917E31E8C5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameQueue.DataAccess", "GameQueue.DataAccess\GameQueue.DataAccess.csproj", "{46DB940D-1FB7-4FED-953A-197925EC50FC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameQueue.S3Access", "GameQueue.S3Access\GameQueue.S3Access.csproj", "{C2202831-91A0-42E0-BCEC-740D19A575B7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7169128E-21F6-4B7D-AB5B-5D57E6117F9E}"
+	ProjectSection(SolutionItems) = preProject
+		Backend.Dockerfile = Backend.Dockerfile
+		backend_build.sh = backend_build.sh
+		docker-compose.yml = docker-compose.yml
+		nginx.conf = nginx.conf
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "game-queue-backend", "game-queue-backend", "{2E5A2D02-42F5-42B7-8FA7-AE446144189B}"
+	ProjectSection(SolutionItems) = preProject
+		game-queue-backend\appsettings.json = game-queue-backend\appsettings.json
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameQueue.AuthTokensCache", "GameQueue.AuthTokensCache\GameQueue.AuthTokensCache.csproj", "{2403859A-A58D-4AEA-9AE5-E961F8CF054C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +40,36 @@ Global
 		{014775C5-F0C9-4CFA-9856-76336EC2070D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{014775C5-F0C9-4CFA-9856-76336EC2070D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{014775C5-F0C9-4CFA-9856-76336EC2070D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7842C077-559F-4FB9-9D97-961C894F40D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7842C077-559F-4FB9-9D97-961C894F40D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7842C077-559F-4FB9-9D97-961C894F40D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7842C077-559F-4FB9-9D97-961C894F40D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE5A7EC2-60E4-43A0-9393-DB9A6A9B5FF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE5A7EC2-60E4-43A0-9393-DB9A6A9B5FF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE5A7EC2-60E4-43A0-9393-DB9A6A9B5FF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE5A7EC2-60E4-43A0-9393-DB9A6A9B5FF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0DDE5C64-9ED8-4948-BC60-CB917E31E8C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DDE5C64-9ED8-4948-BC60-CB917E31E8C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DDE5C64-9ED8-4948-BC60-CB917E31E8C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0DDE5C64-9ED8-4948-BC60-CB917E31E8C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46DB940D-1FB7-4FED-953A-197925EC50FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46DB940D-1FB7-4FED-953A-197925EC50FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46DB940D-1FB7-4FED-953A-197925EC50FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46DB940D-1FB7-4FED-953A-197925EC50FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2202831-91A0-42E0-BCEC-740D19A575B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2202831-91A0-42E0-BCEC-740D19A575B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2202831-91A0-42E0-BCEC-740D19A575B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2202831-91A0-42E0-BCEC-740D19A575B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2403859A-A58D-4AEA-9AE5-E961F8CF054C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2403859A-A58D-4AEA-9AE5-E961F8CF054C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2403859A-A58D-4AEA-9AE5-E961F8CF054C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2403859A-A58D-4AEA-9AE5-E961F8CF054C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2E5A2D02-42F5-42B7-8FA7-AE446144189B} = {7169128E-21F6-4B7D-AB5B-5D57E6117F9E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {ABE1DEAB-BAA1-460B-9D4B-AC9529F4D37D}

@@ -1,0 +1,177 @@
+version: '3.8'
+
+x-minio-common: &minio-common
+  image: quay.io/minio/minio:RELEASE.2022-10-15T19-57-03Z
+
+  command: server --console-address ":9001" http://minio{1...4}/data{1...2}
+
+  environment:
+    MINIO_ROOT_USER: minioadmin
+    MINIO_ROOT_PASSWORD: minioadmin
+
+  expose:
+    - "9000"
+    - "9001"
+
+  networks:
+    - game-queue-network
+
+  healthcheck:
+    test:
+      [
+        "CMD",
+        "curl",
+        "-f",
+        "http://localhost:9000/minio/health/live"
+      ]
+    interval: 30s
+    timeout: 20s
+    retries: 3
+
+services:
+  game-queue-backend:
+    image: alordash/game-queue-backend:latest
+    build:
+      context: .
+      dockerfile: ./Backend.Dockerfile
+
+    networks:
+      - game-queue-network
+
+    ports:
+      - "2023:80"
+
+    environment:
+      - MINIO_ENDPOINT=nginx:9000
+      - MINIO_BUCKET=root
+      - STATIC_DATA_HOST=http://nginx:9000
+      - DOTNET_USE_POLLING_FILE_WATCHER=true
+
+    depends_on:
+      - game-queue-db
+      - nginx
+      - game-queue-auth-redis
+
+    volumes:
+      - type: bind
+        source: ./game-queue-backend/appsettings.json
+        target: /app/appsettings.json
+  
+  game-queue-front-host:
+    image: alordash/game-queue-front-host:latest
+    networks:
+      - game-queue-network
+    
+    ports:
+      - "8000:8000"
+    
+    environment:
+      - EXPRESS_PORT=8000
+    
+    depends_on:
+      - game-queue-backend
+
+  game-queue-db:
+    image: postgres:14
+    container_name: game-queue-db
+    ports:
+      - "7432:7432"
+
+    environment:
+      POSTGRES_DB: "sos-planets-db"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+      PGPORT: "7432"
+
+    volumes:
+      - "db-data:/var/lib/postgresql/data"
+
+    networks:
+      - game-queue-network
+
+  game-queue-auth-redis:
+    image: redis:7.2.3-alpine
+    container_name: game-queue-auth-redis
+    ports:
+      - 6379:6379
+
+    volumes:
+      - "redis-data:/var/lib/redis"
+
+    networks:
+      - game-queue-network
+
+  nginx:
+    image: nginx:1.19.2-alpine
+
+    hostname: nginx
+
+    volumes:
+      - type: bind
+        source: ./nginx.conf
+        target: /etc/nginx/nginx.conf
+
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+
+    depends_on:
+      - minio1
+      - minio2
+      - minio3
+      - minio4
+
+    networks:
+      - game-queue-network
+
+  minio1:
+    <<: *minio-common
+    hostname: minio1
+
+    volumes:
+      - data1-1:/data1
+      - data1-2:/data2
+
+  minio2:
+    <<: *minio-common
+
+    hostname: minio2
+
+    volumes:
+      - data2-1:/data1
+      - data2-2:/data2
+
+  minio3:
+    <<: *minio-common
+
+    hostname: minio3
+
+    volumes:
+      - data3-1:/data1
+      - data3-2:/data2
+
+  minio4:
+    <<: *minio-common
+
+    hostname: minio4
+
+    volumes:
+      - data4-1:/data1
+      - data4-2:/data2
+
+volumes:
+  db-data:
+  data1-1:
+  data1-2:
+  data2-1:
+  data2-2:
+  data3-1:
+  data3-2:
+  data4-1:
+  data4-2:
+  redis-data:
+
+
+networks:
+  game-queue-network:
+    driver: bridge
