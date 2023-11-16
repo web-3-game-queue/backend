@@ -25,7 +25,11 @@ public sealed record SearchMapsRequest
 
     public DateTimeOffset? DoneDate { get; set; } = null;
 
+    public int? HandledByUserId { get; set; } = null;
+
     public User CreatorUser { get; set; } = null!;
+
+    public User? HandledByUser { get; set; } = null;
 
     public List<RequestToMap> RequestsToMap { get; } = new List<RequestToMap>();
 }

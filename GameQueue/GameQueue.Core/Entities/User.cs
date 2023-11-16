@@ -27,4 +27,6 @@ public sealed record class User
     public UserRole Role { get; set; } = UserRole.Client;
 
     public List<SearchMapsRequest> SearchMapsRequests { get; } = new List<SearchMapsRequest>();
+
+    public List<SearchMapsRequest> HandledMapsRequests { get; } = new List<SearchMapsRequest>();
 }

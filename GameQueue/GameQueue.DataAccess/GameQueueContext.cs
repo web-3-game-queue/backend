@@ -34,6 +34,16 @@ public class GameQueueContext : DbContext
                 v => (SearchMapsRequestStatus)Enum.Parse(typeof(SearchMapsRequestStatus), v)
             );
 
+        modelBuilder.Entity<SearchMapsRequest>()
+            .HasOne(m => m.CreatorUser)
+            .WithMany(u => u.SearchMapsRequests)
+            .HasForeignKey(m => m.CreatorUserId);
+
+        modelBuilder.Entity<SearchMapsRequest>()
+            .HasOne(m => m.HandledByUser)
+            .WithMany(u => u.HandledMapsRequests)
+            .HasForeignKey(m => m.HandledByUserId);
+
         modelBuilder
             .Entity<RequestToMap>()
             .HasAlternateKey("SearchMapsRequestId", "MapId");

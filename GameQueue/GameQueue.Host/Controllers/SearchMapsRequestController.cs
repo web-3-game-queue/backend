@@ -116,30 +116,12 @@ public class SearchMapsRequestController : ControllerBase, ISearchMapsRequestCon
     }
 
     [Authorize(Roles = "Administrator, Moderator")]
-    [HttpPut("cancel/{id:int:min(0)}")]
-    public async Task Cancel(
-        [FromRoute(Name = "id")] int id,
-        CancellationToken token = default)
-    {
-        await searchMapsRequestManager.CancelAsync(id, token);
-    }
-
-    [Authorize(Roles = "Administrator, Moderator")]
-    [HttpPut("finish/{id:int:min(0)}")]
-    public async Task Finish(
-        [FromRoute(Name = "id")] int id,
-        CancellationToken token = default)
-    {
-        await searchMapsRequestManager.FinishAsync(id, token);
-    }
-
-    [Authorize(Roles = "Administrator, Moderator")]
     [HttpPut("status/{id:int:min(0)}")]
     public Task SetStatus(int id, SetStatusRequest status, CancellationToken token = default)
     {
         return status switch {
-            SetStatusRequest.Finished => searchMapsRequestManager.FinishAsync(id, token),
-            SetStatusRequest.Cancelled => searchMapsRequestManager.CancelAsync(id, token),
+            SetStatusRequest.Finished => searchMapsRequestManager.FinishAsync(User.Id(), id, token),
+            SetStatusRequest.Cancelled => searchMapsRequestManager.CancelAsync(User.Id(), id, token),
             _ => throw new NotImplementedException()
         };
     }

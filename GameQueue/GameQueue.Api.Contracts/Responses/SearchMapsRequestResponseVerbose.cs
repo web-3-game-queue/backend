@@ -23,6 +23,9 @@ public sealed record SearchMapsRequestResponseVerbose
     [JsonPropertyName("doneDate")]
     public DateTimeOffset? DoneDate { get; set; } = null;
 
+    [JsonPropertyName("handledByUserId")]
+    public int? HandeldByUserId { get; set; }
+
     [JsonPropertyName("maps")]
     public List<MapResponse> Maps { get; set; } = null!;
 }

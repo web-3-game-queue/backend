@@ -13,7 +13,8 @@ public static class SearchMapsRequestExtensions
             CreationDate = searchMapsRequest.CreationDate,
             ComposeDate = searchMapsRequest.ComposeDate,
             DoneDate = searchMapsRequest.DoneDate,
-            MapsCount = searchMapsRequest.RequestsToMap.Count
+            MapsCount = searchMapsRequest.RequestsToMap.Count,
+            HandeldByUserId = searchMapsRequest.HandledByUserId
         };
 
     public static SearchMapsRequestResponseVerbose ToSerchMapsRequestResponseVerbose(this SearchMapsRequest searchMapsRequest)
@@ -24,6 +25,7 @@ public static class SearchMapsRequestExtensions
             ComposeDate = searchMapsRequest.ComposeDate,
             DoneDate = searchMapsRequest.DoneDate,
             CreatorUser = searchMapsRequest.CreatorUser.ToUserResponse(),
+            HandeldByUserId = searchMapsRequest.HandledByUserId,
             Maps = searchMapsRequest.RequestsToMap.Select(x => x.Map.ToMapResponse()).ToList()
         };
 }

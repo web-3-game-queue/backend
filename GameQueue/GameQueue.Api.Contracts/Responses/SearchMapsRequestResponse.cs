@@ -25,4 +25,7 @@ public sealed record SearchMapsRequestResponse
 
     [JsonPropertyName("mapsCount")]
     public int MapsCount { get; set; }
+
+    [JsonPropertyName("handledByUserId")]
+    public int? HandeldByUserId { get; set; }
 }

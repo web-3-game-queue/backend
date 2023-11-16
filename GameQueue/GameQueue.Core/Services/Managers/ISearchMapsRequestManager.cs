@@ -35,7 +35,7 @@ public interface ISearchMapsRequestManager
 
     Task DeleteAsync(int creatorId, int id, CancellationToken token = default);
 
-    Task CancelAsync(int id, CancellationToken token = default);
+    Task CancelAsync(int handlerUserId, int id, CancellationToken token = default);
 
-    Task FinishAsync(int id, CancellationToken token = default);
+    Task FinishAsync(int handlerUserId, int id, CancellationToken token = default);
 }

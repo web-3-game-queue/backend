@@ -93,13 +93,13 @@ internal class SearchMapsRequestManager : ISearchMapsRequestManager
         await searchMapsRequestRepository.DeleteAsync(id, token);
     }
 
-    public async Task CancelAsync(int id, CancellationToken token = default)
+    public async Task CancelAsync(int handlerUserId, int id, CancellationToken token = default)
     {
-        await searchMapsRequestRepository.CancelAsync(id, token);
+        await searchMapsRequestRepository.CancelAsync(handlerUserId, id, token);
     }
 
-    public async Task FinishAsync(int id, CancellationToken token = default)
+    public async Task FinishAsync(int handlerUserId, int id, CancellationToken token = default)
     {
-        await searchMapsRequestRepository.FinishAsync(id, token);
+        await searchMapsRequestRepository.FinishAsync(handlerUserId, id, token);
     }
 }

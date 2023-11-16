@@ -149,26 +149,31 @@ internal class SearchMapsRequestRepository : ISearchMapsRequestRepository
     }
 
     public async Task DeleteAsync(int id, CancellationToken token = default)
-        => await updateStatus(id, SearchMapsRequestStatus.Deleted, token);
+    {
+        var searchMapsRequest = await findOrThrow(id, token);
+        searchMapsRequest.Status.ValidateChangeTo(SearchMapsRequestStatus.Deleted);
+        searchMapsRequest.Status = SearchMapsRequestStatus.Deleted;
+        db.Update(searchMapsRequest);
+        await db.SaveChangesAsync(token);
+    }
 
-    public async Task CancelAsync(int id, CancellationToken token = default)
-        => await updateStatus(id, SearchMapsRequestStatus.Cancelled, token);
+    public async Task CancelAsync(int handlerUserId, int id, CancellationToken token = default)
+    {
+        var searchMapsRequest = await findOrThrow(id, token);
+        searchMapsRequest.Status.ValidateChangeTo(SearchMapsRequestStatus.Cancelled);
+        searchMapsRequest.Status = SearchMapsRequestStatus.Cancelled;
+        searchMapsRequest.HandledByUserId = handlerUserId;
+        db.Update(searchMapsRequest);
+        await db.SaveChangesAsync(token);
+    }
 
-    public async Task FinishAsync(int id, CancellationToken token = default)
+    public async Task FinishAsync(int handlerUserId, int id, CancellationToken token = default)
     {
         var searchMapsRequest = await findOrThrow(id, token);
         searchMapsRequest.Status.ValidateChangeTo(SearchMapsRequestStatus.Done);
         searchMapsRequest.Status = SearchMapsRequestStatus.Done;
         searchMapsRequest.DoneDate = DateTimeOffset.UtcNow;
-        db.Update(searchMapsRequest);
-        await db.SaveChangesAsync(token);
-    }
-
-    private async Task updateStatus(int id, SearchMapsRequestStatus status, CancellationToken token = default)
-    {
-        var searchMapsRequest = await findOrThrow(id, token);
-        searchMapsRequest.Status.ValidateChangeTo(status);
-        searchMapsRequest.Status = status;
+        searchMapsRequest.HandledByUserId = handlerUserId;
         db.Update(searchMapsRequest);
         await db.SaveChangesAsync(token);
     }
