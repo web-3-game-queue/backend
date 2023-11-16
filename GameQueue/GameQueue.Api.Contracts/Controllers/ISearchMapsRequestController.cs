@@ -1,4 +1,5 @@
-﻿using GameQueue.Api.Contracts.Responses;
+﻿using GameQueue.Api.Contracts.Requests.SearchMapsRequest;
+using GameQueue.Api.Contracts.Responses;
 
 namespace GameQueue.Api.Contracts.Controllers;
 
@@ -24,7 +25,5 @@ public interface ISearchMapsRequestController
 
     Task Delete(int id, CancellationToken token = default);
 
-    Task Cancel(int id, CancellationToken token = default);
-
-    Task Finish(int id, CancellationToken token = default);
+    Task SetStatus(int id, SetStatusRequest request, CancellationToken token = default);
 }

@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using GameQueue.Api.Contracts.Controllers;
+using GameQueue.Api.Contracts.Requests.SearchMapsRequest;
 using GameQueue.Api.Contracts.Responses;
 using GameQueue.Core.Entities;
 using GameQueue.Core.Extensions;
@@ -130,5 +131,16 @@ public class SearchMapsRequestController : ControllerBase, ISearchMapsRequestCon
         CancellationToken token = default)
     {
         await searchMapsRequestManager.FinishAsync(id, token);
+    }
+
+    [Authorize(Roles = "Administrator, Moderator")]
+    [HttpPut("status/{id:int:min(0)}")]
+    public Task SetStatus(int id, SetStatusRequest status, CancellationToken token = default)
+    {
+        return status switch {
+            SetStatusRequest.Finished => searchMapsRequestManager.FinishAsync(id, token),
+            SetStatusRequest.Cancelled => searchMapsRequestManager.CancelAsync(id, token),
+            _ => throw new NotImplementedException()
+        };
     }
 }
