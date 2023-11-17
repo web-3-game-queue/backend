@@ -28,7 +28,7 @@ internal class UserRepository : IUserRepository
 
     public async Task SetLevel(int userId, int level, CancellationToken token = default)
     {
-        var user = await db.Users.FindAsync(userId, token) ?? throw new EntityNotFoundException(typeof(User), id);
+        var user = await db.Users.FindAsync(userId, token) ?? throw new EntityNotFoundException(typeof(User), userId);
         user.Level = level;
         await db.SaveChangesAsync(token);
     }
