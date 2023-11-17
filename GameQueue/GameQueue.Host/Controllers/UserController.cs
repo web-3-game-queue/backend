@@ -37,6 +37,15 @@ public class UserController : ControllerBase, IUserController
         CancellationToken token = default)
             => await userManager.AddAsync(convertAddUserRequest(addUserRequest), token);
 
+    [HttpPut("{id:int:min(0)}")]
+    public Task SetLevel(
+        [FromRoute(Name = "id")] int userId,
+        [FromQuery(Name = "level")] int level,
+        CancellationToken token = default)
+    {
+        throw new NotImplementedException();
+    }
+
     private AddUserCommand convertAddUserRequest(AddUserRequest request)
         => new AddUserCommand {
             Name = request.Name,

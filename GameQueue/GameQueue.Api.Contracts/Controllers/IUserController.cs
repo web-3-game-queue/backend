@@ -10,4 +10,6 @@ public interface IUserController
     Task<UserResponse> GetByIdAsync(int id, CancellationToken token = default);
 
     Task AddAsync(AddUserRequest addUserRequest, CancellationToken token = default);
+
+    Task SetLevel(int userId, int level, CancellationToken token = default);
 }

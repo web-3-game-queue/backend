@@ -14,4 +14,6 @@ public interface IUserManager
     Task<User?> TryLogin(string username, string password, CancellationToken token = default);
 
     Task Register(string username, string password, CancellationToken token = default);
+
+    Task SetLevel(int userId, int level, CancellationToken token = default);
 }

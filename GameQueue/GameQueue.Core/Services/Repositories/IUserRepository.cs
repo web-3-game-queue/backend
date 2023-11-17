@@ -11,4 +11,6 @@ public interface IUserRepository
     Task AddAsync(User user, CancellationToken token = default);
 
     Task<User> GetByUsername(string username, CancellationToken token = default);
+
+    Task SetLevel(int userId, int level, CancellationToken token = default);
 }

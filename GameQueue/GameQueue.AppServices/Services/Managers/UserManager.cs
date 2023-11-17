@@ -68,6 +68,9 @@ internal class UserManager : IUserManager
         await AddAsync(addUserCommand, token);
     }
 
+    public async Task SetLevel(int userId, int level, CancellationToken token = default)
+        => await userRepository.SetLevel(userId, level, token);
+
     private User convertAddCommandToUser(AddUserCommand addUserCommand)
     {
         var user = new User {

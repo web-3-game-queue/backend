@@ -25,4 +25,11 @@ internal class UserRepository : IUserRepository
 
     public async Task<User> GetByUsername(string username, CancellationToken token = default)
         => await db.Users.Where(x => x.Name == username).SingleAsync();
+
+    public async Task SetLevel(int userId, int level, CancellationToken token = default)
+    {
+        var user = await db.Users.FindAsync(userId, token) ?? throw new EntityNotFoundException(typeof(User), id);
+        user.Level = level;
+        await db.SaveChangesAsync(token);
+    }
 }
