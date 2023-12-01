@@ -9,6 +9,7 @@ using GameQueue.Core.Services.Managers;
 using GameQueue.Host.Extensions;
 using GameQueue.Host.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GameQueue.Host.Controllers;
@@ -43,16 +44,14 @@ public class AuthenticationController : ControllerBase, IAuthenticationControlle
         }
 
         var jwtToken = jwtService.GenerateToken(user);
-        await tokensCache.SetKeyValue(user.Id.ToString(), user.Name, token);
         return jwtToken;
     }
 
     [HttpGet("logout")]
     public async Task Logout(CancellationToken token = default)
     {
-        var userId = User.FindFirst(ClaimTypes.Sid) ?? throw new UnauthorizedException();
-        var userIdStr = userId.Value;
-        await tokensCache.RemoveKey(userIdStr, token);
+        var jwt = await HttpContext.GetTokenAsync("access_token");
+        await tokensCache.SetKeyValue(jwt, "1", token);
     }
 
     [Authorize(Policy = CacheTokenRequirement.Name)]

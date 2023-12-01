@@ -1,5 +1,7 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
 
 namespace GameQueue.AuthTokensCache.Authorization;
 
@@ -12,18 +14,11 @@ internal class CacheTokenHandler : AuthorizationHandler<CacheTokenRequirement>
 
     protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, CacheTokenRequirement requirement)
     {
-        var userIdClaim = context.User.FindFirst(ClaimTypes.Sid);
-        var userNameClaim = context.User.FindFirst(ClaimTypes.Name);
-        if (userIdClaim == null || userNameClaim == null)
-        {
-            context.Fail();
-            return;
-        }
-        var userIdStr = userIdClaim.Value;
-        var userNameStr = userNameClaim.Value;
-        var savedUserName = await cache.GetKey(userIdStr);
+        var ctx = (DefaultHttpContext)context.Resource!;
+        var jwt = await ctx.GetTokenAsync("access_token");
 
-        if (userNameStr != savedUserName)
+        var blackListedJwt = await cache.GetKey(jwt);
+        if (blackListedJwt != null)
         {
             context.Fail();
             return;
