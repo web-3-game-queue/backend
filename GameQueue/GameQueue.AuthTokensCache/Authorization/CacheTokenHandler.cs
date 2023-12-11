@@ -16,6 +16,11 @@ internal class CacheTokenHandler : AuthorizationHandler<CacheTokenRequirement>
     {
         var ctx = (DefaultHttpContext)context.Resource!;
         var jwt = await ctx.GetTokenAsync("access_token");
+        if(string.IsNullOrEmpty(jwt))
+        {
+            context.Fail();
+            return;
+        }
 
         var blackListedJwt = await cache.GetKey(jwt);
         if (blackListedJwt != null)
